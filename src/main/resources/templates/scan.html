@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mint D | 음성인식</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/assets/css/style.css">
+</head>
+<style>
+
+    @font-face {
+        font-family: 'NIXGONM-Vb'; !important;
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    *{
+        font-family: 'NIXGONM-Vb';
+    }
+
+
+    :root {
+        /* Base font size */
+        font-size: 10px;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: #fafafa;
+    }
+
+    .container {
+        max-width: 100rem;
+        margin: 0 auto;
+        padding: 0 2rem 2rem;
+    }
+
+    .heading span {
+        display: block;
+    }
+
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        /* Compensate for excess margin on outer gallery flex items */
+        margin: -1rem -1rem;
+    }
+
+    .gallery-item {
+        /* Minimum width of 24rem and grow to fit available space */
+        flex: 1 0 24rem;
+        /* Margin value should be half of grid-gap value as margins on flex items don't collapse */
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .gallery-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 400ms ease-out;
+    }
+
+    .gallery-image:hover {
+        transform: scale(1.15);
+    }
+
+    /*
+
+    The following rule will only run if your browser supports CSS grid.
+
+    Remove or comment-out the code block below to see how the browser will fall-back to flexbox styling.
+
+    */
+
+    @supports (display: grid) {
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+            grid-gap: 2rem;
+        }
+
+        .gallery,
+        .gallery-item {
+            margin: 0;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0px;
+    }
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu a::after {
+        transform: rotate(-90deg);
+        position: absolute;
+        right: 6px;
+        top: .8em;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-left: .1rem;
+        margin-right: .1rem;
+    }
+
+    /*--------------------------------------------------------------
+    # Header
+    --------------------------------------------------------------*/
+    #header {
+        height: 70px;
+        z-index: 997;
+        transition: all 0.5s ease-in-out;
+        background: #fff;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #header .logo h1 {
+        font-size: 28px;
+        margin: 0;
+        line-height: 0;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    #header .logo h1 a,
+    #header .logo h1 a:hover {
+        color: #3c4133;
+        text-decoration: none;
+    }
+
+    #header .logo img {
+        padding: 0;
+        margin: 0;
+        max-height: 40px;
+    }
+
+    /*--------------------------------------------------------------
+    # Navigation Menu
+    --------------------------------------------------------------*/
+    /**
+    * Desktop Navigation
+    */
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        align-items: center;
+    }
+
+    .navbar li {
+        position: relative;
+    }
+
+    .navbar a,
+    .navbar a:focus {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0 10px 30px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #565e49;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+
+    .navbar a i,
+    .navbar a:focus i {
+        font-size: 12px;
+        line-height: 0;
+        margin-left: 5px;
+    }
+
+    .navbar a:hover,
+    .navbar .active,
+    .navbar .active:focus,
+    .navbar li:hover>a {
+        color: #94c045;
+    }
+
+    .navbar .getstarted,
+    .navbar .getstarted:focus {
+        background: #58A581;
+        padding: 8px 20px;
+        margin-left: 30px;
+        border-radius: 50px;
+        color: #fff;
+    }
+
+    .navbar .getstarted:hover,
+    .navbar .getstarted:focus:hover {
+        color: #fff;
+        background: #9fc658;
+    }
+
+    .navbar .dropdown ul {
+        display: block;
+        position: absolute;
+        left: 28px;
+        top: calc(100% + 30px);
+        margin: 0;
+        padding: 10px 0;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        background: #fff;
+        box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+        transition: 0.3s;
+    }
+
+    .navbar .dropdown ul li {
+        min-width: 200px;
+    }
+
+    .navbar .dropdown ul a {
+        padding: 10px 20px;
+        font-size: 15px;
+        text-transform: none;
+    }
+
+    .navbar .dropdown ul a i {
+        font-size: 12px;
+    }
+
+    .navbar .dropdown ul a:hover,
+    .navbar .dropdown ul .active:hover,
+    .navbar .dropdown ul li:hover>a {
+        color: #94c045;
+    }
+
+    .navbar .dropdown:hover>ul {
+        opacity: 1;
+        top: 100%;
+        visibility: visible;
+    }
+
+    .navbar .dropdown .dropdown ul {
+        top: 0;
+        left: calc(100% - 30px);
+        visibility: hidden;
+    }
+
+    .navbar .dropdown .dropdown:hover>ul {
+        opacity: 1;
+        top: 0;
+        left: 100%;
+        visibility: visible;
+    }
+
+    @media (max-width: 1366px) {
+        .navbar .dropdown .dropdown ul {
+            left: -90%;
+        }
+
+        .navbar .dropdown .dropdown:hover>ul {
+            left: -100%;
+        }
+    }
+
+    /**
+    * Mobile Navigation
+    */
+    .mobile-nav-toggle {
+        color: #3c4133;
+        font-size: 28px;
+        cursor: pointer;
+        display: none;
+        line-height: 0;
+        transition: 0.5s;
+    }
+
+    .mobile-nav-toggle.bi-x {
+        color: #fff;
+    }
+
+    @media (max-width: 991px) {
+        .mobile-nav-toggle {
+            display: block;
+        }
+
+        .navbar ul {
+            display: none;
+        }
+    }
+
+    .navbar-mobile {
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(34, 36, 29, 0.9);
+        transition: 0.3s;
+        z-index: 999;
+    }
+
+    .navbar-mobile .mobile-nav-toggle {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .navbar-mobile ul {
+        display: block;
+        position: absolute;
+        top: 55px;
+        right: 15px;
+        bottom: 15px;
+        left: 15px;
+        padding: 10px 0;
+        background-color: #fff;
+        overflow-y: auto;
+        transition: 0.3s;
+    }
+
+    .navbar-mobile a,
+    .navbar-mobile a:focus {
+        padding: 10px 20px;
+        font-size: 15px;
+        color: #3c4133;
+    }
+
+    .navbar-mobile a:hover,
+    .navbar-mobile .active,
+    .navbar-mobile li:hover>a {
+        color: #94c045;
+    }
+
+    .navbar-mobile .getstarted,
+    .navbar-mobile .getstarted:focus {
+        margin: 15px;
+    }
+
+    .navbar-mobile .dropdown ul {
+        position: static;
+        display: none;
+        margin: 10px 20px;
+        padding: 10px 0;
+        z-index: 99;
+        opacity: 1;
+        visibility: visible;
+        background: #fff;
+        box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    }
+
+    .navbar-mobile .dropdown ul li {
+        min-width: 200px;
+    }
+
+    .navbar-mobile .dropdown ul a {
+        padding: 10px 20px;
+    }
+
+    .navbar-mobile .dropdown ul a i {
+        font-size: 12px;
+    }
+
+    .navbar-mobile .dropdown ul a:hover,
+    .navbar-mobile .dropdown ul .active:hover,
+    .navbar-mobile .dropdown ul li:hover>a {
+        color: #94c045;
+    }
+
+    .navbar-mobile .dropdown>.dropdown-active {
+        display: block;
+    }
+
+    #searchText {
+        padding: 10px;
+        border: none;
+        border-radius: 25px;
+        background-color: #F1F1F1;
+        outline: none;
+        width: 90%;
+    }
+    #searchText:focus {
+        background-color: #e0e0e0;
+    }
+
+    .search-input {
+        margin-top: -3px;  /* 이 값을 조정하여 원하는 위치로 이동시킬 수 있습니다. */
+        margin-left: 16%;
+    }
+
+    .search-input input::placeholder {
+        color: #C6C6C6;
+    }
+    ul.menu > li {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    /* 로그아웃 아이콘 및 텍스트 위치 왼쪽으로 40px 이동 (따라서 화면상에서는 오른쪽으로 보임) */
+    .navbar ul li:first-child a {
+        margin-left: 12%; /* 원하는 간격에 따라 값을 조절하세요 */
+    }
+
+    .custom-logo {
+        margin-left: 35%;
+    }
+
+    a {
+        color: #6e6e6e;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #6e6e6e;
+        text-decoration: none;
+    }
+    /*
+
+    All grid code is placed in a 'supports' rule (feature query) at the bottom of the CSS (Line 310).
+
+    The 'supports' rule will only run if your browser supports CSS grid.
+
+    Flexbox and floats are used as a fallback so that browsers which don't support grid will still recieve a similar layout.
+
+    */
+
+    /* Base Styles */
+
+    :root {
+        font-size: 10px;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: "Open Sans", Arial, sans-serif;
+        min-height: 100vh;
+        background-color: #fafafa;
+        color: #262626;
+        padding-bottom: 3rem;
+    }
+
+    img {
+        display: block;
+    }
+
+    .container {
+        max-width: 110.5rem;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+
+    /* Profile Section */
+
+
+    .profile-stats li {
+        display: inline-block;
+        font-size: 1.6rem;
+        line-height: 1.5;
+        margin-right: 4rem;
+        cursor: pointer;
+    }
+
+    .profile-stats li:last-of-type {
+        margin-right: 0;
+    }
+
+    /* Gallery Section */
+
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -1rem -1rem;
+        padding-bottom: 3rem;
+    }
+
+    .gallery-item {
+        position: relative;
+        flex: 1 0 22rem;
+        margin: 1rem;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .gallery-item:hover .gallery-item-info,
+    .gallery-item:focus .gallery-item-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+
+    .gallery-item-info li {
+        display: inline-block;
+        font-size: 1.7rem;
+        font-weight: 600;
+    }
+
+
+    /* Loader */
+
+    .loader {
+        width: 5rem;
+        height: 5rem;
+        border: 0.6rem solid #999;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        margin: 0 auto;
+        animation: loader 500ms linear infinite;
+    }
+
+    /* Media Query */
+
+    @media screen and (max-width: 40rem) {
+        .profile {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 4rem 0;
+        }
+
+        .profile::after {
+            display: none;
+        }
+
+        .profile-image,
+        .profile-user-settings,
+        .profile-bio,
+        .profile-stats {
+            float: none;
+            width: auto;
+        }
+
+        .profile-image img {
+            width: 7.7rem;
+        }
+
+
+        .profile-stats ul {
+            display: flex;
+            text-align: center;
+            padding: 1.2rem 0;
+            border-top: 0.1rem solid #dadada;
+            border-bottom: 0.1rem solid #dadada;
+        }
+
+        .profile-stats li {
+            font-size: 1.4rem;
+            flex: 1;
+            margin: 0;
+        }
+
+        .profile-stat-count {
+            display: block;
+        }
+    }
+
+    /* Spinner Animation */
+
+    @keyframes loader {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    @supports (display: grid) {
+
+
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+            grid-gap: 2rem;
+        }
+
+        .gallery-item,
+        .gallery {
+            width: auto;
+            margin: 0;
+        }
+    }
+    .message2 p {
+        margin-top: 200px;
+        font-weight: 400;
+        color: #58A581;
+        text-decoration: none;
+        font-size: 40px;
+        text-align: center;
+        letter-spacing: -2px;
+        /* 자간 */
+
+    }
+
+    /* 입력 방식 선택 페이지 */
+    .form button a {
+        font-family: 'NIXGONM-Vb';
+        font-weight: 500;
+        color: #1C553A;
+        text-decoration: none;
+        font-size: 37px;
+        text-align: center;
+        letter-spacing: 1px;
+
+    }
+</style>
+<!-- jQuery 라이브러리 로드 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.message a').click(function() {
+            $('form').animate({
+                height: "toggle",
+                opacity: "toggle"
+            }, "slow");
+        });
+    });
+</script>
+
+<body>
+
+<main>
+
+    <div class="container" style="padding-top: 1%">
+        <h1 style="text-align: center; color: #58A581; padding-top: 5%;">오늘 하루는 어떠셨나요?</h1>
+        <h1 style="text-align: center; color: #58A581;"><strong>음성으로 표현해주세요</strong></h1><br><br><br><br>
+
+        <div style="padding-left: 38%">
+            <button class="dictate" style="width: 38%; height: 75%; border-radius: 100%; border: none; background-color: #58A581;">
+                <i class="ic-mike"></i>
+                <svg width="9.25rem" height="23.25rem" viewBox="0 0 100 100">
+                    <g stroke="#fff" stroke-width="15">
+                        <path d="M50,50 50,130">
+                            <animate attributeName="d" values="M20,40 20,60;M20,20 20,80;M20,40 20,60" dur="1s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M100,60 100,140">
+                            <animate attributeName="d" values="M50,10 50,90;M50,40 50,60;M50,10 50,90" dur="1s" repeatCount="indefinite" />
+                        </path>
+                        <path d="M50,50 50,130">
+                            <animate attributeName="d" values="M80,40 80,60;M80,20 80,80;M80,40 80,60" dur="1s" repeatCount="indefinite" />
+                        </path>
+                    </g>
+                </svg>
+            </button>
+        </div>
+        <div class="gallery" style="padding-top: 25%; padding-left: 24%">
+            <button style="background-color: #ACEDCE; font-size: 22px; width: 36%; border: none;height: 60px; border-radius: 50px; ; padding: 3px 2px; position: relative; top: -100px; box-shadow: 6px 6px 6px #C2C2C2; margin-bottom: 20px;"><a href="#">다시하기</a></button>
+            <button type="submit" style="background-color: #68D7A2; font-size: 22px; border: none;  width: 36%; height: 60px; border-radius: 50px; padding: 3px 2px; position: relative; top: -100px; box-shadow: 6px 6px 6px #C2C2C2; margin-bottom: 20px;"><a href="/write/makingKeyword">완료</a></button>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

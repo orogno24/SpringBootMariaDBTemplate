@@ -52,7 +52,6 @@ public class NoticeController {
         // 로그인된 사용자 아이디는 Session에 저장함
         // 교육용으로 아직 로그인을 구현하지 않았기 때문에 Session에 데이터를 저장하지 않았음
         // 추후 로그인을 구현할 것으로 가정하고, 공지사항 리스트 출력하는 함수에서 로그인 한 것처럼 Session 값을 생성함
-        session.setAttribute("SESSION_USER_ID", "USER01");
 
         // 공지사항 리스트 조회하기
         // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
@@ -90,6 +89,20 @@ public class NoticeController {
         return "notice/noticeReg";
     }
 
+    @GetMapping("/redirect")
+    public String redirectPage(HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception {
+        log.info(this.getClass().getName() + ".redirect 페이지 보여주는 함수 실행");
+
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+
+        String msg = userName + "님 어서오세요!";
+
+        modelMap.addAttribute("msg", msg);
+        modelMap.addAttribute("url", "/main");
+
+        return "/redirect";
+    }
+
     /**
      * 게시판 글 등록
      * <p>
@@ -103,13 +116,14 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".noticeInsert Start!");
 
         String msg = ""; // 메시지 내용
+        String url = "/notice/noticeReg";
 
         MsgDTO dto = null; // 결과 메시지 구조
 
         try {
             // 로그인된 사용자 아이디를 가져오기
             // 로그인을 아직 구현하지 않았기에 공지사항 리스트에서 로그인 한 것처럼 Session 값을 저장함
-            String userId = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
+            String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
@@ -241,7 +255,7 @@ public class NoticeController {
         MsgDTO dto = null; // 결과 메시지 구조
 
         try {
-            String userId = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID")); // 아이디
+            String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID")); // 아이디
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부

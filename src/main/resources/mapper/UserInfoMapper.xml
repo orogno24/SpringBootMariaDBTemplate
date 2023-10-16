@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.mapper.IUserInfoMapper">
+
+    <!--    로그인-->
+    <select id="getLogin" resultType="UserInfoDTO">
+        SELECT USER_ID, USER_NAME, EMAIL
+        FROM USER_INFO
+        WHERE USER_ID = #{userId}
+          AND PASSWORD = #{password}
+    </select>
+
+    <!--    회원가입-->
+    <insert id="insertUserInfo" parameterType="UserInfoDTO">
+        INSERT INTO USER_INFO
+        (USER_ID,
+         USER_NAME,
+         PASSWORD,
+         EMAIL,
+         REG_ID,
+         REG_DT,
+         CHG_ID,
+         CHG_DT)
+        VALUES (#{userId},
+                #{userName},
+                #{password},
+                #{email},
+                #{userId},
+                NOW(),
+                #{userId},
+                NOW())
+    </insert>
+
+    <!--    아이디 중복확인-->
+    <select id="getUserIdExists" parameterType="UserInfoDTO" resultType="UserInfoDTO">
+        SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'Y' END AS EXISTS_YN
+        FROM USER_INFO
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <!--    이메일 중복확인-->
+    <select id="getEmailExists" parameterType="UserInfoDTO" resultType="UserInfoDTO">
+        SELECT CASE WHEN COUNT(1) = 0 THEN 'N' ELSE 'Y' END AS EXISTS_YN
+        FROM USER_INFO
+        WHERE EMAIL = #{email}
+    </select>
+
+</mapper>
