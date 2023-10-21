@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,19 @@ public class MainController {
     @GetMapping("/main")
     public String main() throws Exception {
         log.info(this.getClass().getName() + ".main 함수 실행");
-        return "/main";
+        return "main";
+    }
+
+    @GetMapping("/pluton")
+    public String pluton() throws Exception {
+        log.info(this.getClass().getName() + ".pluton 함수 실행");
+        return "pluton";
+    }
+
+    @GetMapping("/chart")
+    public String chart() throws Exception {
+        log.info(this.getClass().getName() + ".chart 함수 실행");
+        return "chart";
     }
 
     @GetMapping("/redirect")
@@ -33,7 +44,6 @@ public class MainController {
 
         return "/redirect";
     }
-
 
     @GetMapping("/redirect2")
     public String redirectPage2(HttpServletRequest request, ModelMap modelMap) throws Exception {
