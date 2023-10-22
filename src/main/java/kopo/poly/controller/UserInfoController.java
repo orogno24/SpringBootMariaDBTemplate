@@ -8,6 +8,7 @@ import kopo.poly.util.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -159,6 +160,34 @@ public class UserInfoController {
         log.info(this.getClass().getName() + ".user/searchUserId End!");
 
         return "/user/searchUserId";
+    }
+
+    @PostMapping(value = "searchUserIdProc")
+    public String searchUserIdProc(HttpServletRequest request, ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".user/searchUserIdProc Start!");
+
+        String userName = CmmUtil.nvl(request.getParameter("userName"));
+        String email = CmmUtil.nvl(request.getParameter("email"));
+
+        log.info("userName : " + userName);
+        log.info("email : " + email);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserName(userName);
+        pDTO.setEmail(EncryptUtil.encAES128CBC(email));
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO))
+                .orElseGet(UserInfoDTO::new);
+
+        log.info("userId : " + rDTO.getUserId());
+        log.info("email : " + rDTO.getEmail());
+
+        model.addAttribute("rDTO", rDTO);
+
+        log.info(this.getClass().getName() + ".user/searchUserIdProc End!");
+
+        return "/user/searchUserIdResult";
     }
 
     @GetMapping(value = "searchPassword")

@@ -44,7 +44,7 @@ public class MainController {
     @GetMapping("/redirect2")
     public String redirectPage2(HttpServletRequest request, ModelMap modelMap) throws Exception {
         log.info(this.getClass().getName() + ".redirect2 페이지 보여주는 함수 실행");
-        String msg = CmmUtil.nvl(request.getParameter("msg"), "메인 페이지로 이동합니다.");
+        String msg = CmmUtil.nvl(request.getParameter("msg"), "로그인 페이지로 이동합니다.");
         modelMap.addAttribute("msg", msg);
         return "/redirect2";
     }

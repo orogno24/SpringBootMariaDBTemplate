@@ -28,6 +28,17 @@ public class UserInfoService implements IUserInfoService {
     private final IMailService mailService; // MailService 가져오기
 
     @Override
+    public UserInfoDTO searchUserIdOrPasswordProc(UserInfoDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".searchUserIdOrPasswordProc Start!");
+
+        UserInfoDTO rDTO = userInfoMapper.getUserId(pDTO);
+
+        log.info(this.getClass().getName() + ".searchUserIdOrPasswordProc End!");
+
+        return rDTO;
+    }
+
+    @Override
     public UserInfoDTO getUserIdExists(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".getUserIdExists 시작!");
