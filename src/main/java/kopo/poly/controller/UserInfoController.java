@@ -24,7 +24,7 @@ import java.util.Optional;
 @Controller
 public class UserInfoController {
 
-    private final IUserInfoService userInfoService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언 !!!
+    private final IUserInfoService userInfoService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언함.
 
     /**
      * 회원가입 화면으로 이동!
