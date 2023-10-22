@@ -14,15 +14,11 @@ import javax.servlet.http.HttpSession;
 public class MainController {
 
     @GetMapping("/main")
-    public String main() throws Exception {
+    public String main(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".main 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
         return "main";
-    }
-
-    @GetMapping("/pluton")
-    public String pluton() throws Exception {
-        log.info(this.getClass().getName() + ".pluton 함수 실행");
-        return "pluton";
     }
 
     @GetMapping("/chart")
@@ -54,8 +50,10 @@ public class MainController {
     }
 
     @GetMapping("/scan")
-    public String searchFeed() throws Exception {
+    public String scan(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".scan 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
         return "/scan";
     }
 

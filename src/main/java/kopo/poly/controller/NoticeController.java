@@ -64,6 +64,9 @@ public class NoticeController {
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".noticeList End!");
 
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+
         // 함수 처리가 끝나고 보여줄 HTML (Thymeleaf) 파일명
         // templates/notice/noticeList.html
         return "notice/noticeList";

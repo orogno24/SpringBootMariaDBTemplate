@@ -52,6 +52,10 @@
             text-align: center;
             letter-spacing: 1px;
         }
+
+        .username-color {
+            color: #15c6e5;
+        }
     </style>
     
     <body>
@@ -71,11 +75,13 @@
                         <ul class="nav" id="top-navigation">
                             <li class="active"><a href="#home">메인 페이지</a></li>
                             <li><a href="/scan">자세 측정</a></li>
-                            <li><a href="/notice/noticeList">게시판</a></li>
                             <li><a href="#about">거북목 진단</a></li>
-                            <li><a href="#clients">환경설정</a></li>
-                            <li><a href="#price">개인정보 수정</a></li>
                             <li><a href="/chart">통계</a></li>
+                            <li><a href="/notice/noticeList">게시판</a></li>
+                            <li><a href="#price">개인정보 수정</a></li>
+                            <li><span>&nbsp;&nbsp;</span></li>
+                            <li><a href="">    <span class="username-color">[[${userName}]]</span>님, 환영합니다!
+                                </span></a></li>
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -751,59 +757,6 @@
                 </div>
             </div>
         </div>
-        <div class="section third-section">
-            <div class="container centered">
-                <div class="sub-section">
-                    <div class="title clearfix">
-                        <div class="pull-left">
-                            <h3>Our Clients</h3>
-                        </div>
-                        <ul class="client-nav pull-right">
-                            <li id="client-prev"></li>
-                            <li id="client-next"></li>
-                        </ul>
-                    </div>
-                    <ul class="row client-slider" id="clint-slider">
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo01.png" alt="client logo 1">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 2">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo03.png" alt="client logo 3">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 4">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo05.png" alt="client logo 5">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 6">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 7">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         <!-- Newsletter section start -->
         <div class="section third-section">
             <div class="container newsletter">
@@ -836,7 +789,8 @@
         <!-- Contact section edn -->
         <!-- Footer section start -->
         <div class="footer">
-            <pShared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
+            <pShared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">COPYRIGHT ©2020 NIMBLE NEURON CORPORATION. ALL RIGHTS RESERVED.
+            PARTNERSHIP INQUIRIES: eternalreturn@nimbleneuron.com</a>
 </p>
         </div>
         <!-- Footer section end -->

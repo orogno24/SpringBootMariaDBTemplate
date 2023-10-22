@@ -1,43 +1,205 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>공지 리스트</title>
-    <link rel="stylesheet" href="/css/table.css"/>
-    <script type="text/javascript">
+    <title>게시판 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn-icons-pkg.bringhub.com/bootstrap-icons-font/v1.10.0/bootstrap-icons-font.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/css/search-bar.css">
+    <link rel="stylesheet" href="/css/articles/table-header.css">
+    <style>
+        @font-face {
+            font-family: 'NIXGONM-Vb';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-        //상세보기 이동
+        * {
+            font-family: 'NIXGONM-Vb';
+        }
+
+        button {
+            padding: 12px 35px;
+            border: none;
+            background-color: #ababab;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        #btnWrite {
+            background-color: #5ab2c5; /* 빨간색 배경 */
+        }
+
+        /* btnLogin에 대한 hover 효과 */
+        #btnWrite:hover {
+            background-color: #448a9a; /* 새로운 배경색 */;
+        }
+
+
+        body {
+            background-color: #FFFBF5;
+        }
+
+        header {
+            background-color: #33343f;
+            color: white;
+            padding: 20px;
+            border-bottom: 3px solid #2D8DB6;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        footer {
+            background-color: #33343f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .black-section {
+            background-color: #33343f; /* 검정색 배경 */
+            height: 500px; /* 높이 지정, 필요에 따라 조정 */
+        }
+
+        .username-color {
+            color: #15c6e5;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        var currentPage = 1; // 현재 페이지
+        var cardsPerPage = 10; // 한 페이지당 보여질 카드 수
+        var totalCards = 500;
+        var currentCardsCount = 0;
+
+        // 페이지가 로드될 때 초기화
+        $(document).ready(function () {
+            updatePagination();
+            showCards();
+            $("#btnWrite").on("click", function () {
+                location.href = "/notice/noticeReg";
+            })
+        });
+
+        // 이전 페이지로 이동
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePagination();
+                showCards();
+            }
+        }
+
+        // 다음 페이지로 이동
+        function nextPage() {
+            if(currentCardsCount <= 9) {
+                return;
+            }
+
+            var totalPages = Math.ceil(totalCards / cardsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePagination();
+                showCards();
+            }
+        }
+
+        // 페이지 번호 업데이트
+        function updatePagination() {
+            var totalPages = Math.ceil(totalCards / cardsPerPage);
+            $("#prevPage").prop("disabled", currentPage === 1);
+            $("#nextPage").prop("disabled", currentPage === totalPages);
+        }
+
+        // 카드를 보여주는 로직
+        function showCards() {
+            // 모든 카드를 숨깁니다.
+            $(".card").hide();
+
+            // 현재 페이지에 해당하는 카드만 보여줍니다.
+            var startIndex = (currentPage - 1) * cardsPerPage;
+            var endIndex = startIndex + cardsPerPage;
+
+            var currentCards = $(".card").slice(startIndex, endIndex).show();
+            currentCardsCount = currentCards.length; // 현재 페이지의 게시물 수를 업데이트
+        }
+
         function doDetail(seq) {
             location.href = "/notice/noticeInfo?nSeq=" + seq;
         }
 
+
     </script>
 </head>
 <body>
-<h2>공지사항</h2>
-<hr/>
-<br/>
-<div class="divTable minimalistBlack">
-    <div class="divTableHeading">
-        <div class="divTableRow">
-            <div class="divTableHead">순번</div>
-            <div class="divTableHead">제목</div>
-            <div class="divTableHead">조회수</div>
-            <div class="divTableHead">등록자</div>
-            <div class="divTableHead">등록일</div>
+<header class="p-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <img src="/assets/img/logo3.png" width="155" height="40" alt="Logo">
+        <div><span id="username" class="me-2">
+    <span class="username-color">[[${userName}]]</span>님, 환영합니다!
+    </span>
+            <a role="button" id="login" class="btn btn-outline-light me-2">Edit</a>
+            <a role="button" id="logout" class="btn btn-outline-light me-2">Logout</a>
         </div>
     </div>
-    <div class="divTableBody">
-        <div class="divTableRow" th:each="dto: ${rList}">
-            <div class="divTableCell" th:if="${dto.noticeYn=='Y'}" th:text="공지사항"></div>
-            <div class="divTableCell" th:unless="${dto.noticeYn=='Y'}" th:text="${dto.noticeSeq}"></div>
-            <div class="divTableCell" th:text="${dto.title}" th:onclick="doDetail([[${dto.noticeSeq}]])"></div>
-            <div class="divTableCell" th:text="${dto.readCnt}"></div>
-            <div class="divTableCell" th:text="${dto.userName}"></div>
-            <div class="divTableCell" th:text="${dto.regDt}"></div>
+</header>
+<main class="container my-5">
+    <h2 class="text-center mb-4">이용자 게시판</h2>
+
+    <div class="row">
+        <div class="col-md-6" th:each="dto: ${rList}">
+            <div class="card" th:onclick="doDetail([[${dto.noticeSeq}]])">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${dto.title}"></h5>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-person"></i> <span th:text="${dto.userName}"
+                                                               style="font-weight: bold; color: #2D8DB6;"></span>
+                            &middot;
+                            <i class="bi bi-calendar"></i> <span th:text="${dto.regDt}"></span> &middot;
+                            <i class="bi bi-eye"></i> <span th:text="'조회수 : ' + ${dto.readCnt}"></span>
+                        </small>
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<a href="/notice/noticeReg">글쓰기</a>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <ul class="pagination">
+                <li>
+                    <a onclick="prevPage()" style="font-size: 30px; color: #a8a5a3; cursor: pointer; margin-right: 80px;"><strong>&lt;</strong></a>
+                </li>
+                <li>
+                    <a onclick="nextPage()" style="font-size: 30px; color: #a8a5a3; cursor: pointer; margin-left: 80px;"><strong>&gt;</strong></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <button id="btnWrite" type="button">글쓰기</button>
+    </div>
+</main>
+<footer>
+    <p>OpenCV를 활용한 거북목 개선 프로젝트</p>
+    <a href="#" class="text-light">메인페이지로</a>
+</footer>
+<div class="black-section"></div>
 </body>
 </html>
