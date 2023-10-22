@@ -25,7 +25,7 @@ import java.util.Optional;
 @Controller
 public class MailController {
 
-    private final IMailService mailService; // 메일 발송을 위한 서비스 객체를 사용하기
+    private final IMailService mailService; // 메일 발송을 위한 서비스 객체를 사용하기 !!!
 
     /**
      * 메일 발송하기폼
