@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 자바스크립트에서 $ == 제이쿼리 문법을 쓸 수 있게 해주는 코드-->
+    <script type="text/javascript">
+
+        let userNameCheck = "Y";
+
+        // HTML로딩이 완료되고, 실행됨
+        $(document).ready(function () {
+
+            let f = document.getElementById("f"); // form 태그
+
+            // 아이디 중복체크
+            $("#btnUserName").on("click", function () { // 버튼 클릭했을때, 발생되는 이벤트 생성함(onclick 이벤트와 동일함)
+                getUserNameExists(f)
+            })
+        })
+
+
+        // 회원아이디 중복 체크
+        function getUserNameExists(f) {
+
+            if (f.userName.value === "") {
+                alert("닉네임을 입력하세요.");
+                f.userName.focus();
+                return;
+            }
+
+            // Ajax 호출해서 아이디 중복체크
+            $.ajax({
+                    url: "/user/getUserNameExists",
+                    type: "post", // 전송방식은 Post
+                    dataType: "JSON", // 전송 결과는 JSON으로 받기
+                    data: $("#f").serialize(), // form 태그 내 input 등 객체를 자동으로 전송할 형태로 변경하기
+                    success: function (json) { // 호출이 성공했다면..
+                        if (json.existsYn === "Y") {
+                            alert("이미 같은 닉네임이 존재합니다.");
+                            f.userName.focus();
+                        } else {
+                            alert("닉네임이 성공적으로 변경되었습니다.");
+                            userNameCheck = "N";
+                        }
+                    }
+                }
+            )
+        }
+    </script>
+<body>
+<div class="page">
+    <div class="container">
+        <div class="left">
+            <div class="login">닉네임 변경</div>
+        </div>
+        <div class="right">
+            <form class="register-form" action="/user/changeUserName" id="f">
+
+                <div class="form" style="padding-top: 10%;">
+
+                    <label for="userName" style="display: inline-block">변경할 닉네임을 입력해주세요.</label>&nbsp;&nbsp;
+                    <input type="text" name="userName" id="userName">
+                    <button id="btnUserName" type="button">중복확인</button>
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

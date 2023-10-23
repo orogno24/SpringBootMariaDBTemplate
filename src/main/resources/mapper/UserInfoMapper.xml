@@ -68,4 +68,10 @@
         AND USER_NAME = #{userName}
     </select>
 
+    <!--    닉네임 변경하기-->
+    <update id="changeUserName" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET USERNAME = #{userName}
+        WHERE USER_ID = #{userId}
+    </update>
 </mapper>
