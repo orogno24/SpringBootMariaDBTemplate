@@ -27,6 +27,13 @@ public class MainController {
         return "chart";
     }
 
+    @GetMapping("/pose")
+    public String pose() throws Exception {
+        log.info(this.getClass().getName() + ".pose 함수 실행");
+        return "pose";
+    }
+
+
     @GetMapping("/redirect")
     public String redirectPage(HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".redirect 페이지 보여주는 함수 실행");

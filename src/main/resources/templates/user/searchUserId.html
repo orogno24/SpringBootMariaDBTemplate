@@ -14,10 +14,14 @@
         font-weight: normal;
         font-style: normal;
     }
-    *{
+
+    * {
         font-family: 'NIXGONM-Vb';
     }
-    * { box-sizing:border-box; }
+
+    * {
+        box-sizing: border-box;
+    }
 
     body {
         background: white;
@@ -35,15 +39,21 @@
     }
 
     hgroup {
-        text-align:center;
+        text-align: center;
         margin-top: 4em;
     }
 
-    h1, h3 { font-weight: 300; }
+    h1, h3 {
+        font-weight: 300;
+    }
 
-    h1 { color: #636363; }
+    h1 {
+        color: #636363;
+    }
 
-    h3 { color: #4a89dc; }
+    h3 {
+        color: #4a89dc;
+    }
 
     form {
         width: 380px;
@@ -51,7 +61,7 @@
         padding: 3em 2em 2em 2em;
         background: #FAEDDA;
         border: 1px solid #ebebeb;
-        box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+        box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
     }
 
     .group {
@@ -72,86 +82,36 @@
         border-bottom: 1px solid #757575;
     }
 
-    input:focus { outline: none; }
+    input:focus {
+        outline: none;
+    }
 
 
     /* Label */
 
     label {
-        color: #999;
-        font-size: 18px;
-        font-weight: normal;
-        position: absolute;
-        pointer-events: none;
-        left: 5px;
-        top: 10px;
-        transition: all 0.2s ease;
-    }
-
-
-    /* active */
-
-    input:focus ~ label, input.used ~ label {
-        top: -20px;
-        transform: scale(.75); left: -2px;
-        /* font-size: 14px; */
-        color: #4a89dc;
-    }
-
-
-    /* Underline */
-
-    .bar {
-        position: relative;
+        color: #2d2d2d;
         display: block;
-        width: 100%;
+        font-size: 15px;
+        height: 16px;
+        margin-top: 20px;
+        margin-bottom: 5px;
     }
 
-    .bar:before, .bar:after {
-        content: '';
-        height: 2px;
-        width: 0;
-        bottom: 1px;
-        position: absolute;
-        background: #4a89dc;
-        transition: all 0.2s ease;
+    input:focus ~ .bar:before, input:focus ~ .bar:after {
+        width: 50%;
     }
-
-    .bar:before { left: 50%; }
-
-    .bar:after { right: 50%; }
-
-
-    /* active */
-
-    input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
-
-
-    /* Highlight */
-
-    .highlight {
-        position: absolute;
-        height: 60%;
-        width: 100px;
-        top: 25%;
-        left: 0;
-        pointer-events: none;
-        opacity: 0.5;
-    }
-
-
-    /* active */
-
-    input:focus ~ .highlight {
-        animation: inputHighlighter 0.3s ease;
-    }
-
 
     /* Animations */
 
     @keyframes inputHighlighter {
-        from { background: #4a89dc; }
-        to 	{ width: 0; background: transparent; }
+        from {
+            background: #4a89dc;
+        }
+        to {
+            width: 0;
+            background: transparent;
+        }
     }
 
 
@@ -176,7 +136,10 @@
         cursor: pointer;
         transition: all 0.15s ease;
     }
-    .button:focus { outline: 0; }
+
+    .button:focus {
+        outline: 0;
+    }
 
 
     /* Button modifiers */
@@ -186,7 +149,9 @@
         /*text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);*/
     }
 
-    .buttonBlue:hover { background: #58A570; }
+    .buttonBlue:hover {
+        background: #58A570;
+    }
 
 
     /* Ripples container */
@@ -199,6 +164,19 @@
         height: 100%;
         overflow: hidden;
         background: transparent;
+    }
+
+    input {
+        background: white;
+        border: 2px solid #FAEDDA;
+        border-radius: 30px;
+        color: #626378;
+        font-size: 16px; /* 절대적인 픽셀 크기로 설정 */
+        height: 45px; /* 절대적인 픽셀 크기로 설정 */
+        line-height: 40px; /* 절대적인 픽셀 크기로 설정 */
+        outline: none !important;
+        padding: 0 10px; /* 내용과 테두리 사이의 여백을 절대적인 픽셀 크기로 설정 */
+        width: 100%; /* 너비를 뷰포트 너비(%) 대신 절대적인 픽셀 크기로 설정 */
     }
 
 
@@ -224,9 +202,13 @@
     /* Ripples animation */
 
     @keyframes ripples {
-        0% { opacity: 0; }
+        0% {
+            opacity: 0;
+        }
 
-        25% { opacity: 1; }
+        25% {
+            opacity: 1;
+        }
 
         100% {
             width: 200%;
@@ -237,9 +219,9 @@
 
 </style>
 <script>
-    $(window, document, undefined).ready(function() {
+    $(window, document, undefined).ready(function () {
 
-        $('input').blur(function() {
+        $('input').blur(function () {
             var $this = $(this);
             if ($this.val())
                 $this.addClass('used');
@@ -249,7 +231,7 @@
 
         var $ripples = $('.ripples');
 
-        $ripples.on('click.Ripples', function(e) {
+        $ripples.on('click.Ripples', function (e) {
 
             var $this = $(this);
             var $offset = $this.parent().offset();
@@ -267,7 +249,7 @@
 
         });
 
-        $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function(e) {
+        $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function (e) {
             $(this).removeClass('is-active');
         });
 
@@ -275,23 +257,26 @@
 </script>
 <body>
 <div class="page">
-<hgroup>
-    <h1 style="color: #564F47">아이디찾기</h1>
-</hgroup>
-<form class="login-form" method="post" action="/user/searchUserIdProc" id="">
-    <div class="group">
-        <input type="text" name="userName" placeholder="닉네임을 입력해주세요."><span class="highlight"></span><span class="bar"></span>
-        <!--        <label>이메일을 입력해주세요</label>-->
-    </div>
-    <div class="group">
-        <input type="text" name="email" placeholder="이메일을 입력해주세요."><span class="highlight"></span><span class="bar"></span>
-        <!--    <label>Email</label>-->
-    </div>
-    <button type="submit" id="btnSearchUserId" class="button buttonBlue" style="background-color: #656579; color: #fff">아이디찾기
-        <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
-    </button>
-    <h5 style="color: #888888">이미 계정이 있으신가요?&nbsp;<a href = "/user/login" style="color: #656579"><strong>로그인하기</strong></a></h5>
-</form>
+    <hgroup>
+        <h1 style="color: #2a2722">아이디 찾기</h1>
+    </hgroup>
+    <form class="login-form" method="post" action="/user/searchUserIdProc" id="">
+
+        <label for="userName" style="color: #737383"><strong>아이디를 입력해주세요.</strong></label>
+        <input type="text" id="userName" name="userName">
+
+        <label for="email" style="color: #737383"><strong>이메일을 입력해주세요.</strong></label>
+        <input type="text" id="email" name="email">
+
+        <br>  <br>
+
+        <button type="submit" id="btnSearchUserId" class="button buttonBlue"
+                style="background-color: #656579; color: #fff">아이디 찾기
+            <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+        </button>
+        <h5 style="color: #888888">이미 계정이 있으신가요?&nbsp;<a href="/user/login"
+                                                         style="color: #656579"><strong>로그인하기</strong></a></h5>
+    </form>
 </div>
 </body>
 </html>
