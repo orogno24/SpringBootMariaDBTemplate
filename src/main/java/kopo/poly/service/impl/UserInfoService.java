@@ -51,6 +51,20 @@ public class UserInfoService implements IUserInfoService {
     }
 
     @Override
+    public UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getUserNameExists 시작!");
+
+        UserInfoDTO rDTO = userInfoMapper.getUserNameExists(pDTO);
+
+        log.info(rDTO.getExistsYn());
+
+        log.info(this.getClass().getName() + ".getUserNameExists 끝!");
+
+        return rDTO;
+    }
+
+    @Override
     public UserInfoDTO getEmailExists(UserInfoDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".getEmailExists 시작!");

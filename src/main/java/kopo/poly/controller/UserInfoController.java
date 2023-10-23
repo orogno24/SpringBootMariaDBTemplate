@@ -223,6 +223,30 @@ public class UserInfoController {
     }
 
     @ResponseBody
+    @PostMapping(value = "getUserNameExists")
+    public UserInfoDTO getUserNameExists(HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + ".getUserNameExists 시작!");
+
+        String userName = CmmUtil.nvl(request.getParameter("userName"));
+
+        log.info("userName : " + userName);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserName(userName);
+
+        log.info(pDTO.getUserName());
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getUserNameExists(pDTO)).orElseGet(UserInfoDTO::new);
+
+        log.info(rDTO.getExistsYn());
+
+        log.info(this.getClass().getName() + ".getUserNameExists 끝!");
+
+        return rDTO;
+    }
+
+    @ResponseBody
     @PostMapping(value = "getEmailExists")
     public UserInfoDTO getEmailExists(HttpServletRequest request) throws Exception {
 
