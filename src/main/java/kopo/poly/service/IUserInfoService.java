@@ -24,6 +24,8 @@ public interface IUserInfoService {
 
     UserInfoDTO searchUserIdOrPasswordProc(UserInfoDTO pDTO) throws Exception;
 
+    // 닉네임 변경하기
+    UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception;
     // 아이디, 비밀번호 찾기에 활용
     UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
 
@@ -32,6 +34,5 @@ public interface IUserInfoService {
     int newUserPwdProc(UserInfoDTO pDTO) throws Exception;
 
     UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
-
 
 }

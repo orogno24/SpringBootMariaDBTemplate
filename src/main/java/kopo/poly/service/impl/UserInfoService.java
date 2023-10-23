@@ -207,6 +207,11 @@ public class UserInfoService implements IUserInfoService {
 
         return rDTO;
     }
+    @Override
+    public UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception {
+
+        return null;
+    }
 
     @Override
     public UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception {
@@ -222,5 +227,6 @@ public class UserInfoService implements IUserInfoService {
     public UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception {
         return null;
     }
+
 
 }

@@ -18,7 +18,7 @@ public interface IUserInfoMapper {
     // 회원 가입 전 이메일 중복체크하기(DB조회하기)
     UserInfoDTO getEmailExists(UserInfoDTO pDTO) throws Exception;
 
-    // 회원 가입 전 닉네임 중복체크하기(DB조회하기)
+    // 닉네임 중복체크하기(DB조회하기)
     UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
 
     /*
@@ -34,5 +34,7 @@ public interface IUserInfoMapper {
     // 비밀번호 찾기에서 아이디와 이메일 일치하는지
     UserInfoDTO checkUserIdAndEmail(UserInfoDTO pDTO) throws Exception;
 
+    // 닉네임 바꾸기
+    UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception;
 }
 
