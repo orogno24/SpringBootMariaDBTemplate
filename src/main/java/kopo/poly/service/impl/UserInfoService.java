@@ -207,11 +207,7 @@ public class UserInfoService implements IUserInfoService {
 
         return rDTO;
     }
-    @Override
-    public UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception {
 
-        return null;
-    }
 
     @Override
     public UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception {
@@ -219,13 +215,18 @@ public class UserInfoService implements IUserInfoService {
     }
 
     @Override
-    public int newUserPwdProc(UserInfoDTO pDTO) throws Exception {
-        return 0;
-    }
-
-    @Override
     public UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception {
         return null;
+    }
+    @Override
+    public int newPasswordProc(UserInfoDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + "newpasswordproc start!");
+
+        int success = userInfoMapper.updatePassword(pDTO);
+
+        log.info(this.getClass().getName() + "newpasswordproc end!");
+
+        return success;
     }
 
 

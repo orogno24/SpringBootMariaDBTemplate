@@ -11,9 +11,6 @@ public interface IUserInfoService {
     // 이메일 주소 중복 체크 및 인증 값
     UserInfoDTO getEmailExists(UserInfoDTO pDTO) throws Exception;
 
-    // 닉네임 중복 체크
-    UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
-
     UserInfoDTO getEmailSend(UserInfoDTO pDTO) throws Exception;
 
     // 회원 가입하기(회원정보 등록하기)
@@ -24,15 +21,16 @@ public interface IUserInfoService {
 
     UserInfoDTO searchUserIdOrPasswordProc(UserInfoDTO pDTO) throws Exception;
 
-    // 닉네임 변경하기
-    UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception;
     // 아이디, 비밀번호 찾기에 활용
     UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
 
 
     // 비밀번호 재설정
-    int newUserPwdProc(UserInfoDTO pDTO) throws Exception;
+    int newPasswordProc(UserInfoDTO pDTO) throws Exception;
 
     UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
+
+    UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
+
 
 }

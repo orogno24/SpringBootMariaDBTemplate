@@ -92,7 +92,6 @@ public class UserInfoController {
 
             log.info(this.getClass().getName() + ".loginProc End!");
         }
-
         return dto;
     }
 
@@ -200,6 +199,67 @@ public class UserInfoController {
         log.info(this.getClass().getName() + ".user/searchPassword End!");
 
         return "/user/searchPassword";
+    }
+    @PostMapping(value = "searchPasswordProc")
+    public String searchPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+        log.info(this.getClass().getName() + ".user/searchPasswordProc start!");
+
+        String userId = CmmUtil.nvl(request.getParameter("userId"));
+        String userName = CmmUtil.nvl(request.getParameter("userName"));
+        String email = CmmUtil.nvl(request.getParameter("email"));
+
+        log.info("userId : " + userId);
+        log.info("userName : " + userName);
+        log.info("email : " + email);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserId(userId);
+        pDTO.setUserName(userName);
+        pDTO.setEmail(EncryptUtil.encAES128CBC(email));
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO)).orElseGet(UserInfoDTO::new);
+
+        model.addAttribute("rDTO",
+                rDTO);
+
+        session.setAttribute("NEW_PASSWORD", userId);
+
+        log.info(this.getClass().getName() + ".user/saerchPasswordProc end!");
+
+                return "user/newPassword";
+    }
+
+    @PostMapping(value = "newPasswordProc")
+    public String newPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+        log.info(this.getClass().getName() + "newpasswordproc Start!");
+
+        String msg = "";
+
+        String newPassword = CmmUtil.nvl((String) session.getAttribute("NEW_PASSWORD"));
+
+        if (newPassword.length() > 0) {
+            String password = CmmUtil.nvl(request.getParameter("password"));
+
+            log.info("password : " + password);
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+            pDTO.setUserId(newPassword);
+            pDTO.setPassword(EncryptUtil.encHashSHA256(password));
+
+            userInfoService.newPasswordProc(pDTO);
+
+            session.setAttribute("NEW_PASSWORD", " ");
+            session.removeAttribute("NEW_PASSWORD");
+
+            msg = "비밀번호가 재설정되었습니다.";
+        } else {
+            msg ="비정상 접근입니다.";
+        }
+        model.addAttribute("msg", msg);
+
+        log.info(this.getClass().getName() +".user/newpasswordproc end! ");
+
+        return "user/newPasswordResult";
     }
 
     @ResponseBody
