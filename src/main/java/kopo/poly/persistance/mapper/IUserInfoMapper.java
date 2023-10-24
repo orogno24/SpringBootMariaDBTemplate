@@ -27,7 +27,6 @@ public interface IUserInfoMapper {
      2. 아이디, 이름과 이메일이 맞다면, 비밀번호 재설정하기
     */
     UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
-
     // 비밀번호 재설정
     int updatePassword(UserInfoDTO pDTO) throws Exception;
 
@@ -36,5 +35,8 @@ public interface IUserInfoMapper {
 
     // 닉네임 바꾸기
     UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception;
+
+    // 거북목 등급 조회
+    UserInfoDTO getGrade(UserInfoDTO pDTO) throws Exception;
 }
 

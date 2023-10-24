@@ -24,13 +24,12 @@ public interface IUserInfoService {
     // 아이디, 비밀번호 찾기에 활용
     UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
 
-
     // 비밀번호 재설정
-    int newPasswordProc(UserInfoDTO pDTO) throws Exception;
+    void newPasswordProc(UserInfoDTO pDTO) throws Exception;
 
     UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
 
     UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
 
-
+    UserInfoDTO getGrade(UserInfoDTO pDTO) throws Exception;
 }

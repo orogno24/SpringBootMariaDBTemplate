@@ -218,16 +218,22 @@ public class UserInfoService implements IUserInfoService {
     public UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception {
         return null;
     }
+    @Transactional
     @Override
-    public int newPasswordProc(UserInfoDTO pDTO) throws Exception {
+    public void newPasswordProc(UserInfoDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + "newpasswordproc start!");
 
         int success = userInfoMapper.updatePassword(pDTO);
-
-        log.info(this.getClass().getName() + "newpasswordproc end!");
-
-        return success;
     }
 
+
+    @Transactional
+    @Override
+    public UserInfoDTO getGrade(UserInfoDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getGrade start!");
+
+        return userInfoMapper.getGrade(pDTO);
+    }
 
 }
