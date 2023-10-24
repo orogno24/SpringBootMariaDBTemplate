@@ -30,8 +30,5 @@ public interface IUserInfoService {
 
     UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
 
-    // 비밀번호 재설정
-    int newPasswordProc(UserInfoDTO pDTO) throws Exception;
-
 
 }

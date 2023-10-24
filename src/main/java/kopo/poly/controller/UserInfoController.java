@@ -29,14 +29,14 @@ public class UserInfoController {
     /**
      * 회원가입 화면으로 이동!
      */
-    @GetMapping(value = "userRegForm")
+    @GetMapping(value = "userRegForm")      // 회원가입
     public String userRegForm() {
         log.info(this.getClass().getName() + ".userRegForm");
 
         return "user/userRegForm";
     }
 
-    @GetMapping(value = "login")
+    @GetMapping(value = "login")            // 로그인
     public String login() {
         log.info(this.getClass().getName() + ".user/login Start!");
 
@@ -44,7 +44,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "loginProc")
+    @PostMapping(value = "loginProc")       // 로그인함수
     public MsgDTO loginProc(HttpServletRequest request, HttpSession session) {
         log.info(this.getClass().getName() + ".loginProc Start!");
 
@@ -96,7 +96,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "insertUserInfo")
+    @PostMapping(value = "insertUserInfo")      // 회원가입 정보 등록
     public MsgDTO insertUserInfo(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName() + ".insertUserInfo 시작!");
@@ -152,7 +152,7 @@ public class UserInfoController {
         return dto;
     }
 
-    @GetMapping(value = "searchUserId")
+    @GetMapping(value = "searchUserId")         // 아이디 찾기
     public String searchUserId() {
         log.info(this.getClass().getName() + ".user/searchUserId Start!");
 
@@ -161,7 +161,7 @@ public class UserInfoController {
         return "/user/searchUserId";
     }
 
-    @PostMapping(value = "searchUserIdProc")
+    @PostMapping(value = "searchUserIdProc")        // 아이디 찾기 함수
     public String searchUserIdProc(HttpServletRequest request, ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".user/searchUserIdProc Start!");
@@ -189,7 +189,7 @@ public class UserInfoController {
         return "/user/searchUserIdResult";
     }
 
-    @GetMapping(value = "searchPassword")
+    @GetMapping(value = "searchPassword")           // 비밀번호 찾기
     public String searchPassword(HttpSession session) {
         log.info(this.getClass().getName() + ".user/searchPassword Start!");
 
@@ -263,7 +263,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "getUserIdExists")
+    @PostMapping(value = "getUserIdExists")         // 아이디 중복찾기
     public UserInfoDTO getUserExists(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName() + ".getUserIdExists 시작!");
@@ -283,7 +283,31 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "getEmailExists")
+    @PostMapping(value = "getUserNameExists")       // 닉네임 중복찾기
+    public UserInfoDTO getUserNameExists(HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + ".getUserNameExists 시작!");
+
+        String userName = CmmUtil.nvl(request.getParameter("userName"));
+
+        log.info("userName : " + userName);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserName(userName);
+
+        log.info(pDTO.getUserName());
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getUserNameExists(pDTO)).orElseGet(UserInfoDTO::new);
+
+        log.info(rDTO.getExistsYn());
+
+        log.info(this.getClass().getName() + ".getUserNameExists 끝!");
+
+        return rDTO;
+    }
+
+    @ResponseBody
+    @PostMapping(value = "getEmailExists")          // 이메일 중복찾기
     public UserInfoDTO getEmailExists(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName() + ".getEmailExists 시작!");
@@ -303,7 +327,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "getEmailSend")
+    @PostMapping(value = "getEmailSend")            // 메일 보내기
     public UserInfoDTO getEmailSend(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName() + ".getEmailSend 시작!");

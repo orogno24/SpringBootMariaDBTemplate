@@ -27,6 +27,14 @@ public class MainController {
         return "chart";
     }
 
+    @GetMapping("/pose")
+    public String pose(HttpSession session, ModelMap model) throws Exception {
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        log.info(this.getClass().getName() + ".pose 함수 실행");
+        return "pose";
+    }
+
     @GetMapping("/redirect")
     public String redirectPage(HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".redirect 페이지 보여주는 함수 실행");
@@ -61,6 +69,12 @@ public class MainController {
     public String intro() throws Exception {
         log.info(this.getClass().getName() + ".gazami 함수 실행");
         return "/gazami";
+    }
+
+    @GetMapping("/gazami2")
+    public String intro2() throws Exception {
+        log.info(this.getClass().getName() + ".gazami2 함수 실행");
+        return "/gazami2";
     }
 
 }

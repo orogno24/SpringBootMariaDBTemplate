@@ -20,7 +20,7 @@
   * { box-sizing:border-box; }
 
   body {
-    background: #eee;
+    background: #B9B2AA;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -172,7 +172,7 @@
   /* Button modifiers */
 
   .buttonBlue {
-    background: #58A581;
+    background: #656579;
     /*text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);*/
   }
 
@@ -275,17 +275,19 @@
 <body>
 
 <hgroup>
-  <h1 style="color: #58A581">아이디 찾기 결과</h1>
+  <h1 style="color: #656579">아이디 찾기 결과</h1>
 </hgroup>
 
 <form class="login-form" method="post"
       action="/user/searchUserIdProc" id=" ">
 
-  <h1>User ID: <span th:text="${rDTO.userId}"></span></h1>
+  <h2>User Name: <span th:text="${rDTO.userName}"></span> </h2>
 
-  <h2>User Name: <span th:text="${rDTO.userName}"></span></h2>
+  <h2>User ID: <span th:text="${rDTO.userId}"></span></h2>
 
-  <a href = "/user/login" style="color: #58A581"><strong>로그인하기</strong></a></h5>
+  <br>
+
+  <a href = "/user/login" style="color: #656579"><strong>로그인하기</strong></a></h5>
 </form>
 <script th:inline="javascript">
 

@@ -39,14 +39,14 @@
         }
     </style>
 </head>
-<body style="background-color: #FFFBF5;">
+<body style="background-color: #3a3b48;">
 <div class="container">
     <div class="row">
         <div class="col">
         </div>
         <div class="col" style="padding-top: 27%">
-            <p style="color: #7D7FB0; font-size: 32px; text-align: center;">거북목 자세교정 및 예방 시스템</p>
-            <div class="img" style="padding-left: 20%;"><img src="/assets/img/logo.png" style="width: 75%;"></div>
+            <p style="color: #34b5cc; font-size: 30px; text-align: center;">거북목 진단 페이지로 이동합니다!</p>
+            <div class="img" style="padding-left: 20%;"><img src="/assets/img/turtleg.gif" style="width: 75%;"></div>
         </div>
         <div class="col">
         </div>
@@ -55,10 +55,10 @@
 <script th:inline="javascript">
     window.onload = function () {
         // 지연 시간 (밀리초)
-        let delayTime = 3000; // 3초 지연 예시, 필요에 따라 조정 가능함
+        let delayTime = 2000; // 2초 지연 예시, 필요에 따라 조정 가능함
 
         setTimeout(function () {
-            let url = "/user/login";
+            let url = "/pose";
             location.href = url;
         }, delayTime);
     }
