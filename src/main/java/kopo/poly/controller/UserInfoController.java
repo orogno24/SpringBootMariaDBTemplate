@@ -224,7 +224,7 @@ public class UserInfoController {
 
         session.setAttribute("NEW_PASSWORD", userId);
 
-        log.info(this.getClass().getName() + ".user/searchpassword end!");
+        log.info(this.getClass().getName() + ".user/saerchPasswordProc end!");
 
                 return "user/newPassword";
     }
