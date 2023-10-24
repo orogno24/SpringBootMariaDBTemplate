@@ -15,7 +15,55 @@ function zColor(data) {
     return `rgba(0, ${255 * z}, ${255 * (1 - z)}, 1)`;
 }
 
+let poseTimer = null;
+
 function onResultsPose(results) {
+    const leftShoulderOutputElement = document.getElementById('leftShoulderCoordinates');
+    const rightShoulderOutputElement = document.getElementById('rightShoulderCoordinates');
+    const leftHandOutputElement = document.getElementById('leftHandCoordinates');
+    const rightHandOutputElement = document.getElementById('rightHandCoordinates');
+
+    if (!results.poseLandmarks) {
+        leftShoulderOutputElement.innerText = ' 왼쪽 어깨 좌표: 인식되지 않음';
+        rightShoulderOutputElement.innerText = '오른쪽 어깨 좌표: 인식되지 않음';
+        leftHandOutputElement.innerText = '왼쪽 손 좌표: 인식되지 않음';
+        rightHandOutputElement.innerText = '오른쪽 손 좌표: 인식되지 않음';
+        return;
+    }
+
+    //  왼쪽 어깨 랜드마크의 정보 출력
+    const leftShoulderLandmark = results.poseLandmarks[12];
+    leftShoulderOutputElement.innerText = ` 왼쪽 어깨 좌표: x=${leftShoulderLandmark.x.toFixed(2)}, y=${leftShoulderLandmark.y.toFixed(2)}, z=${leftShoulderLandmark.z.toFixed(2)}`;
+
+    // 오른쪽 어깨 랜드마크의 정보 출력
+    const rightShoulderLandmark = results.poseLandmarks[11];
+    rightShoulderOutputElement.innerText = `오른쪽 어깨 좌표: x=${rightShoulderLandmark.x.toFixed(2)}, y=${rightShoulderLandmark.y.toFixed(2)}, z=${rightShoulderLandmark.z.toFixed(2)}`;
+
+    // 왼쪽 손 랜드마크의 정보 출력
+    const leftHandLandmark = results.poseLandmarks[20];
+    leftHandOutputElement.innerText = `왼쪽 손 좌표: x=${leftHandLandmark.x.toFixed(2)}, y=${leftHandLandmark.y.toFixed(2)}, z=${leftHandLandmark.z.toFixed(2)}`;
+
+    // 오른쪽 손 랜드마크의 정보 출력
+    const rightHandLandmark = results.poseLandmarks[19];
+    rightHandOutputElement.innerText = `오른쪽 손 좌표: x=${rightHandLandmark.x.toFixed(2)}, y=${rightHandLandmark.y.toFixed(2)}, z=${rightHandLandmark.z.toFixed(2)}`;
+
+    if (leftHandLandmark.y < 0.5) {
+        if (!poseTimer) {
+            poseTimer = setTimeout(() => {
+                // 애니메이션 효과 적용
+                document.body.classList.add('flash-effect');
+                setTimeout(() => document.body.classList.remove('flash-effect'), 3000);
+                alert("왼쪽 팔을 3초동안 올린 상태입니다!");
+                poseTimer = null;
+            }, 3000);
+        }
+    } else {
+        if (poseTimer) {
+            clearTimeout(poseTimer);
+            poseTimer = null;
+        }
+    }
+
     document.body.classList.add('loaded');
     fpsControl.tick();
 
@@ -78,8 +126,8 @@ new ControlPanel(controlsElement5, {
     selfieMode: true,
     upperBodyOnly: false,
     smoothLandmarks: true,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
+    minDetectionConfidence: 0.3,
+    minTrackingConfidence: 0.6
 })
     .add([
         new StaticText({title: 'MediaPipe Pose'}),
