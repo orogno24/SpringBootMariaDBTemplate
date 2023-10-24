@@ -45,7 +45,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "loginProc")       // 로그인함수
+    @PostMapping(value = "loginProc")       // 로그인함수.
     public MsgDTO loginProc(HttpServletRequest request, HttpSession session) {
         log.info(this.getClass().getName() + ".loginProc Start!");
 
