@@ -7,6 +7,7 @@ import kopo.poly.util.CmmUtil;
 import kopo.poly.util.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +65,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "loginProc")       // 로그인함수
+    @PostMapping(value = "loginProc")       // 로그인함수.
     public MsgDTO loginProc(HttpServletRequest request, HttpSession session) {
         log.info(this.getClass().getName() + ".loginProc Start!");
 
@@ -373,5 +374,47 @@ public class UserInfoController {
         return rDTO;
     }
 
+    @ResponseBody
+    @PostMapping(value = "newUserNameProc")         // 닉네임 변경하기
+    public MsgDTO newUserNameProc(HttpServletRequest request, HttpSession session) throws Exception {
 
+        log.info(this.getClass().getName() + ".newUserNameProc Start!");
+
+        MsgDTO dto = null;
+        String msg = "";
+
+        try {
+            String userId = (String)session.getAttribute("SS_USER_ID");
+            String userName = request.getParameter("userName");
+            log.info("userId : " + userId);
+            log.info("userName : " + userName);
+            UserInfoDTO pDTO = new UserInfoDTO();
+
+            pDTO.setUserId(userId);
+            pDTO.setUserName(userName);
+
+            userInfoService.newUserNameProc(pDTO);
+
+            msg = "닉네임이 재설정되었습니다.";
+
+        } catch (Exception e) {
+            msg = "시스템 문제로 닉네임 변경이 실패하였습니다." + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+        }
+
+        log.info(this.getClass().getName() + ".newUserNameProc End!");
+
+        return dto;
+    }
+
+    @GetMapping(value = "changeUserName")
+    public String changeUserName() throws Exception{
+        log.info(this.getClass().getName() + ".changeUserName Start!");
+
+        return "/user/changeUserName";
+    }
 }
