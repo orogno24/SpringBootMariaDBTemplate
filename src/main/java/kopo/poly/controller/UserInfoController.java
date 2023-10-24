@@ -37,6 +37,26 @@ public class UserInfoController {
         return "user/userRegForm";
     }
 
+    @GetMapping("/profile")                    // 개인정보 수정 페이지
+    public String profile(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".profile 함수 실행");
+        String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        log.info("프로필 userId : " + userId);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserId(userId);
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getGrade(pDTO))
+                .orElseGet(UserInfoDTO::new);
+
+        log.info("grade : " + rDTO.getGrade());
+
+        model.addAttribute("rDTO", rDTO);
+
+        return "user/profile";
+    }
+
     @GetMapping(value = "login")            // 로그인
     public String login() {
         log.info(this.getClass().getName() + ".user/login Start!");
@@ -74,7 +94,7 @@ public class UserInfoController {
 
                 res = 1;
 
-               // msg = "로그인이 성공했습니다.";
+                // msg = "로그인이 성공했습니다.";
 
                 session.setAttribute("SS_USER_ID", userId);
                 session.setAttribute("SS_USER_NAME", CmmUtil.nvl(rDTO.getUserName()));
@@ -201,6 +221,7 @@ public class UserInfoController {
 
         return "/user/searchPassword";
     }
+
     @PostMapping(value = "searchPasswordProc")
     public String searchPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".user/searchPasswordProc start!");
@@ -220,25 +241,25 @@ public class UserInfoController {
 
         UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO)).orElseGet(UserInfoDTO::new);
 
-        model.addAttribute("rDTO",
-                rDTO);
+        model.addAttribute("rDTO", rDTO);
 
         session.setAttribute("NEW_PASSWORD", userId);
 
-        log.info(this.getClass().getName() + ".user/saerchPasswordProc end!");
+        log.info(this.getClass().getName() + ".user/searchPasswordProc end!");
 
-                return "user/newPassword";
+        return "/user/newPassword";
     }
-
+    @ResponseBody
     @PostMapping(value = "newPasswordProc")
-    public String newPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
-        log.info(this.getClass().getName() + "newpasswordproc Start!");
-
+    public MsgDTO newPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+        log.info(this.getClass().getName() + ".user/newPasswordProc Start!");
         String msg = "";
+        MsgDTO dto = null;
 
         String newPassword = CmmUtil.nvl((String) session.getAttribute("NEW_PASSWORD"));
 
         if (newPassword.length() > 0) {
+        try {
             String password = CmmUtil.nvl(request.getParameter("password"));
 
             log.info("password : " + password);
@@ -249,18 +270,24 @@ public class UserInfoController {
 
             userInfoService.newPasswordProc(pDTO);
 
-            session.setAttribute("NEW_PASSWORD", " ");
+            session.setAttribute("NEW_PASSWORD", "");
             session.removeAttribute("NEW_PASSWORD");
 
             msg = "비밀번호가 재설정되었습니다.";
-        } else {
-            msg ="비정상 접근입니다.";
-        }
-        model.addAttribute("msg", msg);
+        } catch (Exception e) {
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
 
-        log.info(this.getClass().getName() +".user/newpasswordproc end! ");
+        } finally {
+            // 결과 메시지 전달하기
+            dto = new MsgDTO();
+            dto.setMsg(msg);
 
-        return "user/newPasswordResult";
+            log.info(this.getClass().getName() + ".noticeUpdate End!");
+        }}
+
+        return dto;
     }
 
     @ResponseBody
