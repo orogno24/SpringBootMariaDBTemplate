@@ -35,6 +35,6 @@ public interface IUserInfoMapper {
     UserInfoDTO checkUserIdAndEmail(UserInfoDTO pDTO) throws Exception;
 
     // 닉네임 바꾸기
-    UserInfoDTO changeUserName(UserInfoDTO pDTO) throws Exception;
+    void changeUserName(UserInfoDTO pDTO) throws Exception;
 }
 

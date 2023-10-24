@@ -30,7 +30,9 @@ public interface IUserInfoService {
 
     UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
 
+    // 닉네임 중복체크
     UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
 
-
+    // 닉네임 변경하기
+    void newUserNameProc(UserInfoDTO pDTO) throws Exception;
 }

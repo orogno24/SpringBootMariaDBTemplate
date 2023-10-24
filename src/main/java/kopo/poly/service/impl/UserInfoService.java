@@ -64,6 +64,7 @@ public class UserInfoService implements IUserInfoService {
         return rDTO;
     }
 
+
     @Override
     public UserInfoDTO getEmailExists(UserInfoDTO pDTO) throws Exception {
 
@@ -229,5 +230,15 @@ public class UserInfoService implements IUserInfoService {
         return success;
     }
 
+    @Transactional
+    @Override   // 닉네임 변경 함수
+    public void newUserNameProc(UserInfoDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + "changeUserName start!");
+        log.info("userId : " + pDTO.getUserId());
+        userInfoMapper.changeUserName(pDTO);
+        log.info("userName : " + pDTO.getUserName());
+
+        log.info(this.getClass().getName() + "changeUserName end!");
+    }
 
 }
