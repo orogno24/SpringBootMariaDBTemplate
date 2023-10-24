@@ -26,7 +26,7 @@ public interface IUserInfoMapper {
     UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
 
     // 비밀번호 재설정
-    int updateUserPwd(UserInfoDTO pDTO) throws Exception;
+    int updatePassword(UserInfoDTO pDTO) throws Exception;
 
     // 비밀번호 찾기에서 아이디와 이메일 일치하는지
     UserInfoDTO checkUserIdAndEmail(UserInfoDTO pDTO) throws Exception;
