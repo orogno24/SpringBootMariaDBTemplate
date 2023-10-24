@@ -210,6 +210,7 @@ public class UserInfoService implements IUserInfoService {
     }
 
 
+
     @Override
     public UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception {
         return null;
@@ -224,7 +225,8 @@ public class UserInfoService implements IUserInfoService {
     public void newPasswordProc(UserInfoDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + "newpasswordproc start!");
 
-        int success = userInfoMapper.updatePassword(pDTO);
+        userInfoMapper.updatePassword(pDTO);
+        log.info(this.getClass().getName() + "newpasswordproc End!");
     }
 
     @Transactional

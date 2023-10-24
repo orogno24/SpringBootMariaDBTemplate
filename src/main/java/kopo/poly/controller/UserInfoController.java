@@ -251,7 +251,7 @@ public class UserInfoController {
     }
     @ResponseBody
     @PostMapping(value = "newPasswordProc")
-    public MsgDTO newPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+    public MsgDTO newPasswordProc(HttpServletRequest request, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".user/newPasswordProc Start!");
         String msg = "";
         MsgDTO dto = null;
@@ -284,7 +284,7 @@ public class UserInfoController {
             dto = new MsgDTO();
             dto.setMsg(msg);
 
-            log.info(this.getClass().getName() + ".noticeUpdate End!");
+            log.info(this.getClass().getName() + ".newPasswordProc End!");
         }}
 
         return dto;

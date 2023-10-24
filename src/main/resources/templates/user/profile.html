@@ -12,18 +12,40 @@
             // gradeImage 요소를 선택합니다.
             var gradeImage = document.getElementById("gradeImage");
             var gradeText = document.getElementById("gradeText");
+            var gradeSpan = document.getElementById("gradeSpan");
 
             // gradeValue에 따라 적절한 이미지 URL을 설정합니다.
             if (gradeValue === 1) {
                 gradeImage.src = "/assets/img/turtle.png"; // 1등급에 해당하는 이미지 URL
                 gradeText.innerHTML = "<p>목과 얼굴의 위치가 표준에 가까워<br>거북목 증상이 전혀 관찰되지 않았습니다!<br>꾸준한 자세 유지와 스트레칭을 통해<br>이상적인 상태를 유지하세요!</p>";
+                gradeSpan.innerHTML = "양호";
+                gradeSpan.style.background = "#5bf35b"
+                gradeSpan.style.color = "#151515"
             } else if (gradeValue === 2) {
                 gradeImage.src = "/assets/img/turtle2.png"; // 2등급에 해당하는 이미지 URL
                 gradeText.innerHTML = "<p>목의 위치가 더욱 앞으로 기울어져<br>거북목의 특징이 보이기 시작합니다.<br>주기적인 스트레칭과 자세 교정을 통해<br>증상을 완화시킬 수 있습니다.</p>";
+                gradeSpan.innerHTML = "보통";
+                gradeSpan.style.background = "#cce865"
+                gradeSpan.style.color = "#151515"
             } else if (gradeValue === 3) {
                 gradeImage.src = "/assets/img/turtle3.png"; // 2등급에 해당하는 이미지 URL
-                gradeText.innerHTML = "<p>거북목 증상이 뚜렷하게 나타나고 있습니다.<br>지속적인 잘못된 자세는<br>목과 어깨의 통증을 유발할 수 있습니다.<br>매일 꾸준한 운동과 자세 교정이 필요합니다.\n</p>";
-            } else {
+                gradeText.innerHTML = "<p>거북목 증상이 뚜렷하게 나타나고 있습니다.<br>지속적인 잘못된 자세는<br>목과 어깨의 통증을 유발할 수 있습니다.<br>매일 꾸준한 운동과 자세 교정이 필요합니다.</p>";
+                gradeSpan.innerHTML = "개선 필요";
+                gradeSpan.style.background = "#eee045"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 4) {
+                gradeImage.src = "/assets/img/turtle4.png"; // 2등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>목의 위치가 매우 앞으로 기울어져 있으며,<br>목 뿐만 아니라 상체 전체에도 영향을 미치고 있습니다.<br>교정 운동을 진행하는 것이 좋습니다.</p>";
+                gradeSpan.innerHTML = "주의";
+                gradeSpan.style.background = "#ea8738"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 5) {
+                gradeImage.src = "/assets/img/turtle5.png"; // 2등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>거북목이 매우 심각한 단계입니다.<br>지속적인 통증과 함께 다른 건강 문제도 유발할 수 있습니다.<br>꾸준한 교정 운동을 지금부터 시작해야 합니다.\n</p>";
+                gradeSpan.innerHTML = "위험";
+                gradeSpan.style.background = "#d92622"
+                gradeSpan.style.color = "#151515"
+            }else {
                 // 다른 등급에 해당하는 경우에 대한 처리를 추가할 수 있습니다.
                 // 예를 들어, 기본 이미지를 표시하거나 에러 메시지를 표시할 수 있습니다.
             }
@@ -39,18 +61,17 @@
     }
 
     body {
-        background: linear-gradient(45deg, #09486e, #1488CC);
+        background-image: url("/assets/img/bg.jpg");
+        /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+        background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+        background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+        background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-
         min-height: 100vh;
         margin: 0;
-    }
-
-    h3 {
-        margin: 10px 0;
     }
 
     h6 {
@@ -64,7 +85,7 @@
     }
 
     .card-container {
-        background-color: #231E39;
+        background: linear-gradient(135deg, #1c1a1e, #574c67);
         border-radius: 5px;
         box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
         color: #B3B8CD;
@@ -73,12 +94,17 @@
         width: 350px;
         max-width: 100%;
         text-align: center;
-        margin-top: 20px; /* card-container 위쪽 여백을 추가합니다 */
+        margin-top: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card-container:hover {
+        transform: translateY(-10px);
+        box-shadow: 0px 15px 30px -10px rgba(0, 0, 0, 0.9);
     }
 
     .card-container .pro {
-        color: #231E39;
-        background-color: #FEBB0B;
         border-radius: 3px;
         font-size: 14px;
         font-weight: bold;
@@ -103,10 +129,11 @@
     }
 
     .skills {
-        background-color: #1F1A36;
+        background-color: #2d2931;
         text-align: left;
         padding: 15px;
         margin-top: 30px;
+        align-items: center; /* 수직 가운데 정렬 */
     }
 
     .skills ul {
@@ -124,27 +151,6 @@
         padding: 7px;
     }
 
-    footer {
-        background-color: #222;
-        color: #fff;
-        font-size: 14px;
-        bottom: 0;
-        position: fixed;
-        left: 0;
-        right: 0;
-        text-align: center;
-        z-index: 999;
-        height: 15%;
-    }
-
-    footer p {
-        margin: 10px 0;
-    }
-
-    footer i {
-        color: red;
-    }
-
     footer a {
         color: #3c97bf;
         text-decoration: none;
@@ -155,19 +161,15 @@
         height: 500px; /* 높이 지정, 필요에 따라 조정 */
     }
 
-    .username-color {
-        color: #15c6e5;
-    }
-
     .skills .main-button {
         background-color: #03BFCB;
         border: 1px solid #03BFCB;
         border-radius: 3px;
         color: #231E39;
-        font-weight: 500;
         padding: 10px 25px;
         display: block; /* 블록 요소로 표시 */
         text-align: center;
+        font-weight: bold;
         margin-top: 20px; /* 원하는 여백 추가 */
         text-decoration: none;
     }
@@ -183,7 +185,7 @@
         padding: 20px;
         border-bottom: 3px solid #2D8DB6;
         width: 100%;
-        margin-bottom: 80px; /* header 아래 여백을 추가합니다 */
+        margin-bottom: 60px; /* header 아래 여백을 추가합니다 */
     }
 
     @font-face {
@@ -200,20 +202,13 @@
 </style>
 <body>
 
-<header class="p-3">
-    <div class="container d-flex justify-content-between align-items-center">
-        <img src="/assets/img/logo3.png" width="155" height="40" alt="Logo">
-    </div>
-</header>
-
-<div class="card-container">
+<div class="card-container" style="scale: 140%">
     <br><br>
-    <span class="pro">[[${rDTO.grade}]]등급</span>
-    <img id="gradeImage" class="round" src="" alt="user" width="30%" height="30%"/>
+    <span id="gradeSpan" class="pro"></span>
+    <img id="gradeImage" class="round" src="" alt="user" width="45%" height="45%"/>
     <br><br>
-    <h3>[[${rDTO.userName}]]</h3>
-    <h6>현재 거북목 등급 : [[${rDTO.grade}]]등급</h6>
-    <br>
+    <h4><span style="color: #bfc4d9">[[${rDTO.userName}]]</span>님의 현재 거북목 등급 : </h4>
+    <h3><<span style="color: #fbb450">[[${rDTO.grade}]]</span>등급></h3>
     <span id="gradeText"></span>
     <br>
     <div class="buttons">
@@ -226,8 +221,5 @@
     </div>
 </div>
 
-<footer>
-</footer>
-<div class="black-section"></div>
 </body>
 </html>
