@@ -197,11 +197,14 @@ public class UserInfoController {
         pDTO.setUserName(userName);
         pDTO.setEmail(EncryptUtil.encAES128CBC(email));
 
+        log.info("pDTO userName: " + userName);
+        log.info("pDTO email : " + email);
+
         UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO))
                 .orElseGet(UserInfoDTO::new);
 
-        log.info("userId : " + rDTO.getUserId());
-        log.info("email : " + rDTO.getEmail());
+        log.info("rDTO userId : " + rDTO.getUserId());
+        log.info("rDTO email : " + rDTO.getEmail());
 
         model.addAttribute("rDTO", rDTO);
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>프로필 카드</title>
     <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
@@ -41,13 +41,17 @@
                 gradeSpan.style.color = "#151515"
             } else if (gradeValue === 5) {
                 gradeImage.src = "/assets/img/turtle5.png"; // 2등급에 해당하는 이미지 URL
-                gradeText.innerHTML = "<p>거북목이 매우 심각한 단계입니다.<br>지속적인 통증과 함께 다른 건강 문제도 유발할 수 있습니다.<br>꾸준한 교정 운동을 지금부터 시작해야 합니다.\n</p>";
+                gradeText.innerHTML = "<p>거북목이 매우 심각한 단계입니다.<br>지속적인 통증과 함께 다른 건강 문제도 유발할 수 있습니다.<br>꾸준한 교정 운동을 지금부터 시작해야 합니다.</p>";
                 gradeSpan.innerHTML = "위험";
                 gradeSpan.style.background = "#d92622"
                 gradeSpan.style.color = "#151515"
             }else {
                 // 다른 등급에 해당하는 경우에 대한 처리를 추가할 수 있습니다.
                 // 예를 들어, 기본 이미지를 표시하거나 에러 메시지를 표시할 수 있습니다.
+                gradeImage.src = "/assets/img/logo.png"; // 2등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>거북목 정보를 확인하려면<br>먼저 거북목 진단을 완료하셔야 합니다.</p>";
+                gradeSpan.innerHTML = "";
+                gradeSpan.style.color = "#151515"
             }
         });
     </script>
@@ -199,6 +203,12 @@
         font-family: 'NIXGONM-Vb';
     }
 
+    #changeNicknameButton:hover {
+        background-color: #02899C; /* Change the background color on hover */
+        color: #fff; /* Change the text color on hover */
+        border: 1px solid #02899C; /* Change the border color on hover */
+    }
+
 </style>
 <body>
 
@@ -212,7 +222,7 @@
     <span id="gradeText"></span>
     <br>
     <div class="buttons">
-        <button class="primary ghost">
+        <button id="changeNicknameButton" style="cursor: pointer" class="primary ghost">
             닉네임 변경하기
         </button>
     </div>
@@ -220,6 +230,18 @@
         <a href="/main" class="main-button">메인 페이지로 이동</a>
     </div>
 </div>
+
+<script type="text/javascript">
+    // 닉네임 변경하기 버튼을 클릭했을 때 이동할 페이지 URL을 설정합니다.
+    var changeNicknameButton = document.getElementById("changeNicknameButton");
+    changeNicknameButton.addEventListener("click", function () {
+        // 원하는 페이지 URL을 설정합니다.
+        var newPageURL = "/user/changeUserName"; // 변경할 페이지 URL을 여기에 입력하세요.
+
+        // 페이지 이동
+        window.location.href = newPageURL;
+    });
+</script>
 
 </body>
 </html>

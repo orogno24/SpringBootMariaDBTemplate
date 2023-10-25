@@ -65,16 +65,41 @@ public class MainController {
         return "/scan";
     }
 
+
+    // 로딩 페이지
     @GetMapping("/gazami")
     public String intro() throws Exception {
         log.info(this.getClass().getName() + ".gazami 함수 실행");
         return "/gazami";
     }
 
+    // 로딩 페이지
     @GetMapping("/gazami2")
     public String intro2() throws Exception {
         log.info(this.getClass().getName() + ".gazami2 함수 실행");
         return "/gazami2";
     }
+
+    // 로딩 페이지
+    @GetMapping("/gazami3")
+    public String intro3() throws Exception {
+        log.info(this.getClass().getName() + ".gazami3 함수 실행");
+        return "/gazami3";
+    }
+
+    // 로딩 페이지
+    @GetMapping("/gazami4")
+    public String intro4() throws Exception {
+        log.info(this.getClass().getName() + ".gazami4 함수 실행");
+        return "/gazami4";
+    }
+
+    // 로딩 페이지
+    @GetMapping("/gazami5")
+    public String intro5() throws Exception {
+        log.info(this.getClass().getName() + ".gazami5 함수 실행");
+        return "/gazami5";
+    }
+
 
 }
