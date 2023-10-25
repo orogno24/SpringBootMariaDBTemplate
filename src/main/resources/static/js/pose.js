@@ -10,6 +10,22 @@ spinner.ontransitionend = () => {
     spinner.style.display = 'none';
 };
 
+const notificationSound = document.getElementById("notificationSound");
+const notificationSound2 = document.getElementById("notificationSound2");
+const notificationSound3 = document.getElementById("notificationSound3");
+
+function playNotificationSound() {
+    notificationSound.play();
+}
+
+function playNotificationSound2() {
+    notificationSound2.play();
+}
+
+function playNotificationSound3() {
+    notificationSound3.play();
+}
+
 function zColor(data) {
     const z = clamp(data.from.z + 0.5, 0, 1);
     return `rgba(0, ${255 * z}, ${255 * (1 - z)}, 1)`;
@@ -18,18 +34,30 @@ function zColor(data) {
 let poseTimer = null;
 
 function onResultsPose(results) {
+    const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');
+    const rightEyeOutputElement = document.getElementById('rightEyeCoordinates');
     const leftShoulderOutputElement = document.getElementById('leftShoulderCoordinates');
     const rightShoulderOutputElement = document.getElementById('rightShoulderCoordinates');
-    const leftHandOutputElement = document.getElementById('leftHandCoordinates');
-    const rightHandOutputElement = document.getElementById('rightHandCoordinates');
+    const leftEarOutputElement = document.getElementById('leftEarCoordinates');
+    const rightEarOutputElement = document.getElementById('rightEarCoordinates');
 
     if (!results.poseLandmarks) {
+        leftEyeOutputElement.innerText = ' 왼쪽 눈 좌표: 인식되지 않음';
+        rightEyeOutputElement.innerText = '오른쪽 눈 좌표: 인식되지 않음';
         leftShoulderOutputElement.innerText = ' 왼쪽 어깨 좌표: 인식되지 않음';
         rightShoulderOutputElement.innerText = '오른쪽 어깨 좌표: 인식되지 않음';
-        leftHandOutputElement.innerText = '왼쪽 손 좌표: 인식되지 않음';
-        rightHandOutputElement.innerText = '오른쪽 손 좌표: 인식되지 않음';
+        leftEarOutputElement.innerText = ' 왼쪽 귀 좌표: 인식되지 않음';
+        rightEarOutputElement.innerText = '오른쪽 귀 좌표: 인식되지 않음';
         return;
     }
+
+    //  왼쪽 눈 랜드마크의 정보 출력
+    const leftEyeLandmark = results.poseLandmarks[2];
+    leftEyeOutputElement.innerText = ` 왼쪽 눈 좌표: x=${leftEyeLandmark.x.toFixed(2)}, y=${leftEyeLandmark.y.toFixed(2)}, z=${leftEyeLandmark.z.toFixed(2)}`;
+
+    // 오른쪽 눈 랜드마크의 정보 출력
+    const rightEyeLandmark = results.poseLandmarks[5];
+    rightEyeOutputElement.innerText = `오른쪽 눈 좌표: x=${rightEyeLandmark.x.toFixed(2)}, y=${rightEyeLandmark.y.toFixed(2)}, z=${rightEyeLandmark.z.toFixed(2)}`;
 
     //  왼쪽 어깨 랜드마크의 정보 출력
     const leftShoulderLandmark = results.poseLandmarks[12];
@@ -39,33 +67,55 @@ function onResultsPose(results) {
     const rightShoulderLandmark = results.poseLandmarks[11];
     rightShoulderOutputElement.innerText = `오른쪽 어깨 좌표: x=${rightShoulderLandmark.x.toFixed(2)}, y=${rightShoulderLandmark.y.toFixed(2)}, z=${rightShoulderLandmark.z.toFixed(2)}`;
 
-    // 왼쪽 손 랜드마크의 정보 출력
-    const leftHandLandmark = results.poseLandmarks[20];
-    leftHandOutputElement.innerText = `왼쪽 손 좌표: x=${leftHandLandmark.x.toFixed(2)}, y=${leftHandLandmark.y.toFixed(2)}, z=${leftHandLandmark.z.toFixed(2)}`;
+    // 왼쪽 귀 랜드마크의 정보 출력
+    const leftEarLandmark = results.poseLandmarks[8];
+    leftEarOutputElement.innerText = ` 왼쪽 귀 좌표: x=${leftEarLandmark.x.toFixed(2)}, y=${leftEarLandmark.y.toFixed(2)}, z=${leftEarLandmark.z.toFixed(2)}`;
 
-    // 오른쪽 손 랜드마크의 정보 출력
-    const rightHandLandmark = results.poseLandmarks[19];
-    rightHandOutputElement.innerText = `오른쪽 손 좌표: x=${rightHandLandmark.x.toFixed(2)}, y=${rightHandLandmark.y.toFixed(2)}, z=${rightHandLandmark.z.toFixed(2)}`;
+    // 오른쪽 귀 랜드마크의 정보 출력
+    const rightEarLandmark = results.poseLandmarks[7];
+    rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
 
-    if (leftHandLandmark.y < 0.5) {
+
+
+    document.body.classList.add('loaded');
+    fpsControl.tick();
+
+    if (leftShoulderLandmark.x < 0.5) {
         if (!poseTimer) {
             poseTimer = setTimeout(() => {
-                // 애니메이션 효과 적용
-                document.body.classList.add('flash-effect');
-                setTimeout(() => document.body.classList.remove('flash-effect'), 3000);
-                alert("왼쪽 팔을 3초동안 올린 상태입니다!");
-                poseTimer = null;
-            }, 3000);
+                playNotificationSound();
+                poseTimer = setTimeout(() => {
+
+                    alert("거북목 측정이 완료되었습니다!");
+                    // 사용자가 확인을 클릭한 후에 바로 다른 페이지로 이동
+                    window.location.href = "/gazami4";
+                    poseTimer = null;
+                }, 5000);
+            }, 1000);
         }
     } else {
         if (poseTimer) {
+            playNotificationSound2();
             clearTimeout(poseTimer);
             poseTimer = null;
         }
     }
 
-    document.body.classList.add('loaded');
-    fpsControl.tick();
+    if (results.poseLandmarks) {
+        const leftEyeLandmark = results.poseLandmarks[2]; //왼쪽눈
+        const rightEyeLandmark = results.poseLandmarks[5]; //오른쪽눈
+        const leftEarLandmark = results.poseLandmarks[8]; //왼쪽귀
+        const rightEarLandmark = results.poseLandmarks[7]; //오른쪽귀
+
+        const pivot = 7; // 사용자가 입력한 실제 눈 사이 거리(cm)
+        const distanceX1 = Math.abs(leftEyeLandmark.x - rightEyeLandmark.x); // 측정한 눈 사이 좌표값의 거리
+        const cmPerDistance = pivot / distanceX1; // 좌표값의 거리와 실제 거리 사이의 비율
+        const distanceX2 = Math.abs(leftEarLandmark.x - rightEarLandmark.x); // 측정한 부위 사이 좌표값의 거리
+        const cmPerdistanceX2 = distanceX2 * cmPerDistance; // 측정한 좌표값의 거리를 cm로 변환
+
+        const cmPerdistanceX2Element = document.getElementById('cmPerdistanceX2');
+        cmPerdistanceX2Element.innerText = `측정값을 cm로 변환: ${cmPerdistanceX2.toFixed(2)} cm`;
+    }
 
     canvasCtx5.save();
     canvasCtx5.clearRect(0, 0, out5.width, out5.height);
