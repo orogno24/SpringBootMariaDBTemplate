@@ -7,6 +7,7 @@ import kopo.poly.util.CmmUtil;
 import kopo.poly.util.EncryptUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,26 @@ public class UserInfoController {
         return "user/userRegForm";
     }
 
+    @GetMapping("/profile")                    // 개인정보 수정 페이지
+    public String profile(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".profile 함수 실행");
+        String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        log.info("프로필 userId : " + userId);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserId(userId);
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getGrade(pDTO))
+                .orElseGet(UserInfoDTO::new);
+
+        log.info("grade : " + rDTO.getGrade());
+
+        model.addAttribute("rDTO", rDTO);
+
+        return "user/profile";
+    }
+
     @GetMapping(value = "login")            // 로그인
     public String login() {
         log.info(this.getClass().getName() + ".user/login Start!");
@@ -44,7 +65,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "loginProc")       // 로그인함수
+    @PostMapping(value = "loginProc")       // 로그인함수.
     public MsgDTO loginProc(HttpServletRequest request, HttpSession session) {
         log.info(this.getClass().getName() + ".loginProc Start!");
 
@@ -73,7 +94,7 @@ public class UserInfoController {
 
                 res = 1;
 
-               // msg = "로그인이 성공했습니다.";
+                // msg = "로그인이 성공했습니다.";
 
                 session.setAttribute("SS_USER_ID", userId);
                 session.setAttribute("SS_USER_NAME", CmmUtil.nvl(rDTO.getUserName()));
@@ -176,11 +197,14 @@ public class UserInfoController {
         pDTO.setUserName(userName);
         pDTO.setEmail(EncryptUtil.encAES128CBC(email));
 
+        log.info("pDTO userName: " + userName);
+        log.info("pDTO email : " + email);
+
         UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO))
                 .orElseGet(UserInfoDTO::new);
 
-        log.info("userId : " + rDTO.getUserId());
-        log.info("email : " + rDTO.getEmail());
+        log.info("rDTO userId : " + rDTO.getUserId());
+        log.info("rDTO email : " + rDTO.getEmail());
 
         model.addAttribute("rDTO", rDTO);
 
@@ -200,6 +224,7 @@ public class UserInfoController {
 
         return "/user/searchPassword";
     }
+
     @PostMapping(value = "searchPasswordProc")
     public String searchPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".user/searchPasswordProc start!");
@@ -219,25 +244,25 @@ public class UserInfoController {
 
         UserInfoDTO rDTO = Optional.ofNullable(userInfoService.searchUserIdOrPasswordProc(pDTO)).orElseGet(UserInfoDTO::new);
 
-        model.addAttribute("rDTO",
-                rDTO);
+        model.addAttribute("rDTO", rDTO);
 
         session.setAttribute("NEW_PASSWORD", userId);
 
-        log.info(this.getClass().getName() + ".user/saerchPasswordProc end!");
+        log.info(this.getClass().getName() + ".user/searchPasswordProc end!");
 
-                return "user/newPassword";
+        return "/user/newPassword";
     }
-
+    @ResponseBody
     @PostMapping(value = "newPasswordProc")
-    public String newPasswordProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
-        log.info(this.getClass().getName() + "newpasswordproc Start!");
-
+    public MsgDTO newPasswordProc(HttpServletRequest request, HttpSession session) throws Exception {
+        log.info(this.getClass().getName() + ".user/newPasswordProc Start!");
         String msg = "";
+        MsgDTO dto = null;
 
         String newPassword = CmmUtil.nvl((String) session.getAttribute("NEW_PASSWORD"));
 
         if (newPassword.length() > 0) {
+        try {
             String password = CmmUtil.nvl(request.getParameter("password"));
 
             log.info("password : " + password);
@@ -248,18 +273,24 @@ public class UserInfoController {
 
             userInfoService.newPasswordProc(pDTO);
 
-            session.setAttribute("NEW_PASSWORD", " ");
+            session.setAttribute("NEW_PASSWORD", "");
             session.removeAttribute("NEW_PASSWORD");
 
             msg = "비밀번호가 재설정되었습니다.";
-        } else {
-            msg ="비정상 접근입니다.";
-        }
-        model.addAttribute("msg", msg);
+        } catch (Exception e) {
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
 
-        log.info(this.getClass().getName() +".user/newpasswordproc end! ");
+        } finally {
+            // 결과 메시지 전달하기
+            dto = new MsgDTO();
+            dto.setMsg(msg);
 
-        return "user/newPasswordResult";
+            log.info(this.getClass().getName() + ".newPasswordProc End!");
+        }}
+
+        return dto;
     }
 
     @ResponseBody
@@ -346,5 +377,47 @@ public class UserInfoController {
         return rDTO;
     }
 
+    @ResponseBody
+    @PostMapping(value = "newUserNameProc")         // 닉네임 변경하기
+    public MsgDTO newUserNameProc(HttpServletRequest request, HttpSession session) throws Exception {
 
+        log.info(this.getClass().getName() + ".newUserNameProc Start!");
+
+        MsgDTO dto = null;
+        String msg = "";
+
+        try {
+            String userId = (String)session.getAttribute("SS_USER_ID");
+            String userName = request.getParameter("userName");
+            log.info("userId : " + userId);
+            log.info("userName : " + userName);
+            UserInfoDTO pDTO = new UserInfoDTO();
+
+            pDTO.setUserId(userId);
+            pDTO.setUserName(userName);
+
+            userInfoService.newUserNameProc(pDTO);
+
+            msg = "닉네임이 재설정되었습니다.";
+
+        } catch (Exception e) {
+            msg = "시스템 문제로 닉네임 변경이 실패하였습니다." + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+        }
+
+        log.info(this.getClass().getName() + ".newUserNameProc End!");
+
+        return dto;
+    }
+
+    @GetMapping(value = "changeUserName")
+    public String changeUserName() throws Exception{
+        log.info(this.getClass().getName() + ".changeUserName Start!");
+
+        return "/user/changeUserName";
+    }
 }

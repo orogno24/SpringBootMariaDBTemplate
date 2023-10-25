@@ -131,13 +131,13 @@
                     <th>작성자</th>
                     <td th:text="${rDTO.userName}"></td>
                 </tr>
-                <tr>
-                    <th>공지글 여부</th>
-                    <td>
-                        예<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'Y'}"/>
-                        아니오<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'N'}"/>
-                    </td>
-                </tr>
+<!--                <tr>-->
+<!--                    <th>공지글 여부</th>-->
+<!--                    <td>-->
+<!--                        예<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'Y'}"/>-->
+<!--                        아니오<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'N'}"/>-->
+<!--                    </td>-->
+<!--                </tr>-->
                 <tr>
                     <th>작성일</th>
                     <td th:text="${rDTO.regDt}"></td>

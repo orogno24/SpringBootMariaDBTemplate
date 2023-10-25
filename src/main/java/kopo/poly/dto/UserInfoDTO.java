@@ -17,6 +17,7 @@ public class UserInfoDTO {
     private String regDt;
     private String chgId;
     private String chgDt;
+    private String grade;
 
     // 회원가입시, 중복가입을 방지하기 위해 사용할 변수
     // DB를 조회해서 회원이 존재하면 Y값을 반환함

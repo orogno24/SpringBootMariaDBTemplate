@@ -90,18 +90,20 @@
                 f.title.focus();
                 return;
             }
-            let noticeCheck = false; //체크 여부 확인 변수
-            for (let i = 0; i < f.noticeYn.length; i++) {
-                if (f.noticeYn[i].checked) {
-                    noticeCheck = true;
-                    break;
-                }
-            }
-            if (noticeCheck === false) {
-                alert("공지글 여부를 선택하시기 바랍니다.");
-                f.noticeYn[0].focus();
-                return;
-            }
+
+            // let noticeCheck = false; //체크 여부 확인 변수
+            // for (let i = 0; i < f.noticeYn.length; i++) {
+            //     if (f.noticeYn[i].checked) {
+            //         noticeCheck = true;
+            //         break;
+            //     }
+            // }
+            // if (noticeCheck === false) {
+            //     alert("공지글 여부를 선택하시기 바랍니다.");
+            //     f.noticeYn[0].focus();
+            //     return;
+            // }
+
             if (f.contents.value === "") {
                 alert("내용을 입력하시기 바랍니다.");
                 f.contents.focus();
@@ -141,11 +143,13 @@
                     <label for="title">제목</label>
                     <input type="text" name="title" id="title" class="form-control" maxlength="100" required>
                 </div>
-                <div class="form-group">
-                    <label for="noticeYn">공지글 여부</label><br>
-                    예 <input type="radio" name="noticeYn" value="Y" required>
-                    아니오 <input type="radio" name="noticeYn" value="N" required>
-                </div>
+
+<!--                <div class="form-group">-->
+<!--                    <label for="noticeYn">공지글 여부</label><br>-->
+<!--                    예 <input type="radio" name="noticeYn" value="Y" required>-->
+<!--                    아니오 <input type="radio" name="noticeYn" value="N" required>-->
+<!--                </div>-->
+
                 <div class="form-group">
                     <label for="contents">내용</label>
                     <textarea name="contents" id="contents" class="form-control" style="height: 400px" required></textarea>
