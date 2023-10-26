@@ -31,6 +31,28 @@ function zColor(data) {
     return `rgba(0, ${255 * z}, ${255 * (1 - z)}, 1)`;
 }
 
+const myOcrText = "올바른 자세입니다. 측정을 위해 5초간 대기해주세요.";
+const myOcrText2 = "자세를 유지하지 못했습니다. 어깨를 다시 수평으로 조정하고 5초간 대기하세요.";
+
+function speak(text) {
+    if (typeof SpeechSynthesisUtterance === "undefined" ||
+        typeof window.speechSynthesis === "undefined") {
+        alert("이 브라우저는 문자읽기 기능을 지원하지 않습니다.");
+        return;
+    }
+
+    window.speechSynthesis.cancel()
+
+    const speechMsg = new SpeechSynthesisUtterance()
+    speechMsg.rate = 1;
+    speechMsg.pitch = 1;
+    speechMsg.lang = "ko-KR";
+    speechMsg.text = text;
+
+    // 문자 읽기
+    window.speechSynthesis.speak(speechMsg);
+}
+
 let poseTimer = null;
 
 function onResultsPose(results) {
@@ -81,9 +103,10 @@ function onResultsPose(results) {
     fpsControl.tick();
 
     if (leftShoulderLandmark.x < 0.5) {
+        document.body.style.backgroundColor = '#b8f59e';
         if (!poseTimer) {
             poseTimer = setTimeout(() => {
-                playNotificationSound();
+                speak(myOcrText);
                 poseTimer = setTimeout(() => {
 
                     alert("거북목 측정이 완료되었습니다!");
@@ -94,8 +117,9 @@ function onResultsPose(results) {
             }, 1000);
         }
     } else {
+        document.body.style.backgroundColor = '#FFFBF5';
         if (poseTimer) {
-            playNotificationSound2();
+            speak(myOcrText2);
             clearTimeout(poseTimer);
             poseTimer = null;
         }
