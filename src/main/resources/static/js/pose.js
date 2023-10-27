@@ -97,8 +97,8 @@ function onResultsPose(results) {
                     // 사용자가 확인을 클릭한 후에 바로 다른 페이지로 이동
                     window.location.href = "/gazami4";
                     poseTimer = null;
-                }, 500000);
-            }, 100000);
+                }, 5000);
+            }, 1000);
         }
     } else {
         document.body.style.backgroundColor = '#FFFBF5';
