@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유의사항</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'NIXGONM-Vb';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      font-family: 'NIXGONM-Vb';
+    }
+
+    body {
+      font-size : 19px;
+      background-image: url("/assets/img/bg2.jpg");
+      /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+      background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+      background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+      background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      overflow: hidden;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: #33343f;
+      color: white;
+      padding: 20px;
+      border-bottom: 3px solid #2D8DB6;
+    }
+
+    .header {
+      background: #7b1fa2;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .content {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .video-container iframe {
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    h1, h2 {
+      font-weight: 700;
+    }
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+    .footer {
+      background: #33343f;
+      color: #fff;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 20px;
+    }
+    .button {
+      display: inline-block;
+      background: #24ade0;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .button:hover {
+      background: #24ade0;
+    }
+
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: cover; /* 비디오가 컨테이너를 가득 채우도록 조정 */
+    }
+
+  </style>
+</head>
+<audio id="myAudio" autoplay>
+  <source src="/assets/img/guide.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+<body>
+
+<header class="p-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a href="/main">
+    <img src="/assets/img/logo3.png" width="170px" height="41px" alt="Logo">
+    </a>
+  </div>
+</header>
+
+<br>
+
+<div class="container">
+  <div class="content">
+    <h2>거북목 진단 시 가이드</h2>
+    <p>이 서비스는 상반신 촬영을 통해 얻은 이미지를 기반으로 귀와 어깨 사이의 거리를 분석하여 거북목의 정도를 평가합니다.<br>아래의 안내사항을 참고해 주세요!<br><br></p>
+    <ul style="font-weight: bold">
+      <li>본 측정은 눈에서 귀까지의 평균적인 거리(약 10cm)를 기준으로 귀와 어깨 사이의 거리를 추정합니다.
+        <br>이는 대다수의 성인에게서 일정한 값을 보이는 경향이 있으나, 이는 근사치이며 개인차가 있을 수 있습니다.<br><br></li>
+      <li>해당 서비스는 간단한 측정 도구로써 사용될 수 있지만,
+        의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다.<br>
+        실제 거북목의 정도나 상태를 정확히 평가하려면 전문적인 검진이 필요할 수 있습니다.<br><br>
+      </li>
+      <li>제공된 결과는 거북목의 경미한 정도부터 심각한 정도까지를 나타내는 등급으로 표시됩니다.<br>
+        이를 통해 사용자가 자세를 교정하고 관련 운동을 꾸준히 수행함으로써 거북목이 개선될 경우,<br>
+        등급 변화에 따라 사용자가 자신의 진전을 확인할 수 있도록 도와줍니다.<br><br></li>
+    </ul>
+    <a href="#video" class="button">동영상 보기</a>
+  </div>
+  <div class="content" id="video">
+    <h2>안내 동영상</h2>
+    <div class="video-container">
+      <!-- 여기에 동영상 iframe 코드를 넣으세요. 예: YouTube 비디오 -->
+
+      <video src="/assets/img/vid1.mp4" autoplay loop muted>
+        이 브라우저는 비디오를 지원하지 않습니다.
+      </video>
+
+<!--      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>-->
+    </div>
+  </div>
+  <div class="content">
+    <h2>거북목 진단하러 가기</h2>
+    <p>준비가 되셨나요? 아래 버튼을 클릭하면 거북목 진단 페이지로 이동합니다!</p>
+    <a href="/gazami2" class="button">거북목 진단</a>
+  </div>
+</div>
+
+<div class="footer">
+
+</div>
+</body>
+</html>

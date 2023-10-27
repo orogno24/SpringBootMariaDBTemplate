@@ -101,5 +101,21 @@ public class MainController {
         return "/gazami5";
     }
 
+    // 로딩 페이지
+    @GetMapping("/gazami6")
+    public String intro6() throws Exception {
+        log.info(this.getClass().getName() + ".gazami5 함수 실행");
+        return "/gazami6";
+    }
+
+    // 가이드 페이지
+    @GetMapping("/guide1")
+    public String guide1(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".guide1 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/guide1";
+    }
+
 
 }

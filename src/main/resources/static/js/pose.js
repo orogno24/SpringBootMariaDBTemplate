@@ -12,7 +12,7 @@ spinner.ontransitionend = () => {
 
 const notificationSound = document.getElementById("notificationSound");
 const notificationSound2 = document.getElementById("notificationSound2");
-const notificationSound3 = document.getElementById("notificationSound3");
+const notificationSound4 = document.getElementById("notificationSound4");
 
 function playNotificationSound() {
     notificationSound.play();
@@ -22,8 +22,8 @@ function playNotificationSound2() {
     notificationSound2.play();
 }
 
-function playNotificationSound3() {
-    notificationSound3.play();
+function playNotificationSound4() {
+    notificationSound4.play();
 }
 
 function zColor(data) {
@@ -31,29 +31,13 @@ function zColor(data) {
     return `rgba(0, ${255 * z}, ${255 * (1 - z)}, 1)`;
 }
 
-const myOcrText = "올바른 자세입니다. 측정을 위해 5초간 대기해주세요.";
-const myOcrText2 = "자세를 유지하지 못했습니다. 어깨를 다시 수평으로 조정하고 5초간 대기하세요.";
-
-function speak(text) {
-    if (typeof SpeechSynthesisUtterance === "undefined" ||
-        typeof window.speechSynthesis === "undefined") {
-        alert("이 브라우저는 문자읽기 기능을 지원하지 않습니다.");
-        return;
-    }
-
-    window.speechSynthesis.cancel()
-
-    const speechMsg = new SpeechSynthesisUtterance()
-    speechMsg.rate = 1;
-    speechMsg.pitch = 1;
-    speechMsg.lang = "ko-KR";
-    speechMsg.text = text;
-
-    // 문자 읽기
-    window.speechSynthesis.speak(speechMsg);
-}
-
 let poseTimer = null;
+
+function calculateDistance(point1, point2) {
+    const dx = point1.x - point2.x;
+    const dy = point1.y - point2.y;
+    return Math.sqrt(dx * dx + dy * dy);
+}
 
 function onResultsPose(results) {
     const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');
@@ -106,20 +90,20 @@ function onResultsPose(results) {
         document.body.style.backgroundColor = '#b8f59e';
         if (!poseTimer) {
             poseTimer = setTimeout(() => {
-                speak(myOcrText);
+                playNotificationSound();
                 poseTimer = setTimeout(() => {
-
+                    playNotificationSound4();
                     alert("거북목 측정이 완료되었습니다!");
                     // 사용자가 확인을 클릭한 후에 바로 다른 페이지로 이동
                     window.location.href = "/gazami4";
                     poseTimer = null;
-                }, 5000);
-            }, 1000);
+                }, 500000);
+            }, 100000);
         }
     } else {
         document.body.style.backgroundColor = '#FFFBF5';
         if (poseTimer) {
-            speak(myOcrText2);
+            playNotificationSound2();
             clearTimeout(poseTimer);
             poseTimer = null;
         }
@@ -130,15 +114,19 @@ function onResultsPose(results) {
         const rightEyeLandmark = results.poseLandmarks[5]; //오른쪽눈
         const leftEarLandmark = results.poseLandmarks[8]; //왼쪽귀
         const rightEarLandmark = results.poseLandmarks[7]; //오른쪽귀
+        const leftShoulderLandmark = results.poseLandmarks[12]; //왼쪽어깨
+        const rightShoulderLandmark = results.poseLandmarks[11]; //오른쪽귀
 
-        const pivot = 7; // 사용자가 입력한 실제 눈 사이 거리(cm)
-        const distanceX1 = Math.abs(leftEyeLandmark.x - rightEyeLandmark.x); // 측정한 눈 사이 좌표값의 거리
-        const cmPerDistance = pivot / distanceX1; // 좌표값의 거리와 실제 거리 사이의 비율
-        const distanceX2 = Math.abs(leftEarLandmark.x - rightEarLandmark.x); // 측정한 부위 사이 좌표값의 거리
-        const cmPerdistanceX2 = distanceX2 * cmPerDistance; // 측정한 좌표값의 거리를 cm로 변환
+        const Difference = Math.abs(leftEyeLandmark.x - leftShoulderLandmark.x);
 
-        const cmPerdistanceX2Element = document.getElementById('cmPerdistanceX2');
-        cmPerdistanceX2Element.innerText = `측정값을 cm로 변환: ${cmPerdistanceX2.toFixed(2)} cm`;
+        const Distance = Math.abs(leftEarLandmark.x - leftShoulderLandmark.x);
+
+        const normalizedDistance = Distance / Difference;
+
+        const result = normalizedDistance;
+
+        const resultElement = document.getElementById('result');
+        resultElement.innerText = `측정값 : ${result.toFixed(2)}`;
     }
 
     canvasCtx5.save();
