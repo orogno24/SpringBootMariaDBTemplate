@@ -60,13 +60,13 @@ function onResultsPose(results) {
         return;
     }
 
-    // //  왼쪽 눈 랜드마크의 정보 출력
-    // const leftEyeLandmark = results.poseLandmarks[2];
-    // leftEyeOutputElement.innerText = ` 왼쪽 눈 좌표: x=${leftEyeLandmark.x.toFixed(2)}, y=${leftEyeLandmark.y.toFixed(2)}, z=${leftEyeLandmark.z.toFixed(2)}`;
-    //
-    // // 오른쪽 눈 랜드마크의 정보 출력
-    // const rightEyeLandmark = results.poseLandmarks[5];
-    // rightEyeOutputElement.innerText = `오른쪽 눈 좌표: x=${rightEyeLandmark.x.toFixed(2)}, y=${rightEyeLandmark.y.toFixed(2)}, z=${rightEyeLandmark.z.toFixed(2)}`;
+    //  왼쪽 눈 랜드마크의 정보 출력
+    const leftEyeLandmark = results.poseLandmarks[2];
+    leftEyeOutputElement.innerText = ` 왼쪽 눈 좌표: x=${leftEyeLandmark.x.toFixed(2)}, y=${leftEyeLandmark.y.toFixed(2)}, z=${leftEyeLandmark.z.toFixed(2)}`;
+
+    // 오른쪽 눈 랜드마크의 정보 출력
+    const rightEyeLandmark = results.poseLandmarks[5];
+    rightEyeOutputElement.innerText = `오른쪽 눈 좌표: x=${rightEyeLandmark.x.toFixed(2)}, y=${rightEyeLandmark.y.toFixed(2)}, z=${rightEyeLandmark.z.toFixed(2)}`;
 
     //  왼쪽 어깨 랜드마크의 정보 출력
     const leftShoulderLandmark = results.poseLandmarks[12];
@@ -76,13 +76,13 @@ function onResultsPose(results) {
     const rightShoulderLandmark = results.poseLandmarks[11];
     rightShoulderOutputElement.innerText = `오른쪽 어깨 위치: x=${rightShoulderLandmark.x.toFixed(1)}`;
 
-    // // 왼쪽 귀 랜드마크의 정보 출력
-    // const leftEarLandmark = results.poseLandmarks[8];
-    // leftEarOutputElement.innerText = ` 왼쪽 귀 좌표: x=${leftEarLandmark.x.toFixed(2)}, y=${leftEarLandmark.y.toFixed(2)}, z=${leftEarLandmark.z.toFixed(2)}`;
-    //
-    // // 오른쪽 귀 랜드마크의 정보 출력
-    // const rightEarLandmark = results.poseLandmarks[7];
-    // rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
+    // 왼쪽 귀 랜드마크의 정보 출력
+    const leftEarLandmark = results.poseLandmarks[8];
+    leftEarOutputElement.innerText = ` 왼쪽 귀 좌표: x=${leftEarLandmark.x.toFixed(2)}, y=${leftEarLandmark.y.toFixed(2)}, z=${leftEarLandmark.z.toFixed(2)}`;
+
+    // 오른쪽 귀 랜드마크의 정보 출력
+    const rightEarLandmark = results.poseLandmarks[7];
+    rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
 
     document.body.classList.add('loaded');
     fpsControl.tick();
@@ -90,26 +90,44 @@ function onResultsPose(results) {
     const articleElement = document.getElementById('myArticle');
     const articleElement2 = document.getElementById('myArticle2');
 
-    savedShoulderX = leftShoulderLandmark.x;
+    savedLeftShoulderX = leftShoulderLandmark.x;                // 타이머 시작 후의 왼쪽 어깨 x좌표 => savedLeftShoulderX
+    savedRightShoulderX = rightShoulderLandmark.x;
+    savedLeftEarX = leftEarLandmark.x;                          // 타이머 시작 후의 왼쪽 귀 x좌표 => savedLeftEarX
+    savedRightEarX = rightEarLandmark.x;
+    savedLeftEyeX = leftEyeLandmark.x;                          // 타이머 시작 후의 왼쪽 눈 x좌표 => savedLeftEyeX
+    savedRightEyeX = rightEyeLandmark.x;
 
-    if (leftShoulderLandmark.x < 0.5) {
+    shoulderCenter = (savedLeftShoulderX + savedRightShoulderX)/2;          // 양 어깨 중심점 x좌표
+    earCenter = (savedLeftEarX + savedRightEarX)/2;                         // 양 귀 중심점 x좌표
+    eyeCenter = (savedLeftEyeX + savedRightEyeX)/2;                         // 양 눈 중심점 x좌표
+
+    EyetoEarpx = Math.abs(earCenter - eyeCenter);                           // 눈과 귀의 거리 x좌표 차이
+    ShouldertoEarpx = Math.abs(shoulderCenter - earCenter);                        // 어깨 중심점과 귀 중심점의 좌표차이
+    Distance = (10 * ShouldertoEarpx) / EyetoEarpx;                            // 어깨 중심점과 귀 중심점의 좌표차이를 실제 거리 나타냄.
+
+    // 10 : EyetoEarpx = Distance : ShouldertoEarpx   (눈과 귀의 거리가 10cm)
+    //
+    // (10 * ShouldertoEarpx) / EyetoEarpx = Distance
+
+
+    if (Math.abs(leftShoulderLandmark.x - rightShoulderLandmark.x) < 0.2) {
         // 조건이 만족하는 경우
         articleElement.style.backgroundColor = '#b8f59e';
         articleElement2.style.backgroundColor = '#b8f59e';
         playNotificationSound();
         if (!conditionMet) {
             conditionMet = true;
-            conditionTimer = setTimeout(() => {
+            conditionTimer = setTimeout(() => {                 // 수치 조정 필요
 
-                if (savedShoulderX >= 0.4 && savedShoulderX < 0.5) {
+                if (Distance < 2.5) {
                     grade = 1;
-                } else if (savedShoulderX >= 0.3 && savedShoulderX < 0.4) {
+                } else if (Distance >= 2.5 && Distance < 5.0) {
                     grade = 2;
-                } else if (savedShoulderX >= 0.2 && savedShoulderX < 0.3) {
+                } else if (Distance >= 5.0 && Distance < 6.5) {
                     grade = 3;
-                } else if (savedShoulderX >= 0.1 && savedShoulderX < 0.2) {
+                } else if (Distance >= 6.5 && Distance < 8.0) {
                     grade = 4;
-                } else if (savedShoulderX >= 0 && savedShoulderX < 0.1) {
+                } else if (Distance >= 8.0) {
                     grade = 5;
                 }
 
