@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -419,5 +416,42 @@ public class UserInfoController {
         log.info(this.getClass().getName() + ".changeUserName Start!");
 
         return "/user/changeUserName";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "gradeProc")         // 등급 수정하기
+    public MsgDTO gradeProc(@RequestBody UserInfoDTO userInfoDTO, HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + ".gradeProc Start!");
+
+        MsgDTO dto = null;
+        String msg = "";
+
+        try {
+            String userId = (String)session.getAttribute("SS_USER_ID");
+            String grade = userInfoDTO.getGrade();
+            log.info("userId : " + userId);
+            log.info("grade : " + grade);
+            UserInfoDTO pDTO = new UserInfoDTO();
+
+            pDTO.setUserId(userId);
+            pDTO.setGrade(grade);
+
+            userInfoService.updateGrade(pDTO);
+
+            msg = "거북목 측정이 완료되었습니다!";
+
+        } catch (Exception e) {
+            msg = "시스템 문제로 거북목 측정이 실패하였습니다." + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+        }
+
+        log.info(this.getClass().getName() + ".gradeProc End!");
+
+        return dto;
     }
 }

@@ -56,7 +56,18 @@
     }
 
     body {
-      background-color: #FFFBF5; /* 원하는 기본 바탕색으로 설정 */
+      overflow: hidden;
+      background-image: url("/assets/img/bg3.png");
+      /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+      background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+      background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+      background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+      margin: 0;
+      padding: 0;
+    }
+
+    article {
+      background-color: #FFFBF5;
     }
 
   </style>
@@ -79,6 +90,9 @@
 <audio id="notificationSound" src="/assets/img/tts1.mp3"></audio>
 <audio id="notificationSound2" src="/assets/img/tts2.mp3"></audio>
 <audio id="notificationSound4" src="/assets/img/tts4.mp3"></audio>
+
+<br>
+
 <!-- CONTENTS -->
 <div class="container" style="margin-top: 20px;">
 
@@ -86,7 +100,7 @@
 
     <!-- WEBCAM INPUT -->
     <div class="column">
-      <article class="panel is-info">
+      <article id="myArticle" class="panel is-info" style="background-color: #FFFBF5">
         <p class="panel-heading" style="background: #4e4f60; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
           웹캠 화면
         </p>
@@ -96,10 +110,9 @@
       </article>
     </div>
 
-
     <!-- MEDIAPIPE OUTPUT -->
     <div class="column">
-      <article class="panel is-info">
+      <article id="myArticle2" class="panel is-info" style="background-color: #FFFBF5">
         <p class="panel-heading" style="background: #4e4f60; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
           Mediapipe Pose Detection 적용
         </p>
@@ -109,15 +122,17 @@
       </article>
     </div>
   </div>
-  <div id="result" class="coordinates">측정값을 cm로 변환: 기다리는 중...</div>
-  <div id="leftShoulderCoordinates" class="coordinates">왼쪽 어깨 좌표: 기다리는 중...</div>
-  <div id="rightShoulderCoordinates" class="coordinates">오른쪽 어깨 좌표: 기다리는 중...</div>
-  <br>
-  <div id="leftEyeCoordinates" class="coordinates">왼쪽 눈 좌표: 기다리는 중...</div>
-  <div id="rightEyeCoordinates" class="coordinates">오른쪽 눈 좌표: 기다리는 중...</div>
-  <br>
-  <div id="leftEarCoordinates" class="coordinates">왼쪽 귀 좌표: 기다리는 중...</div>
-  <div id="rightEarCoordinates" class="coordinates">오른쪽 귀 좌표: 기다리는 중...</div>
+
+  <div style="text-align: center">
+  <div id="result" class="coordinates">측정값: 기다리는 중...</div>
+  <div id="leftShoulderCoordinates" class="coordinates">왼쪽 어깨 위치: 기다리는 중...</div>
+  <div id="rightShoulderCoordinates" class="coordinates">오른쪽 어깨 위치: 기다리는 중...</div>
+  </div>
+
+<!--  <div id="leftEyeCoordinates" class="coordinates">왼쪽 눈 좌표: 기다리는 중...</div>-->
+<!-- <div id="rightEyeCoordinates" class="coordinates">오른쪽 눈 좌표: 기다리는 중...</div>-->
+<!--  <div id="leftEarCoordinates" class="coordinates">왼쪽 귀 좌표: 기다리는 중...</div>-->
+<!--  <div id="rightEarCoordinates" class="coordinates">오른쪽 귀 좌표: 기다리는 중...</div>-->
 
   <div class="loading">
     <div class="spinner"></div>

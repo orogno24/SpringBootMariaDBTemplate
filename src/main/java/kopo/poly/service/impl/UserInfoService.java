@@ -249,4 +249,13 @@ public class UserInfoService implements IUserInfoService {
         return userInfoMapper.getGrade(pDTO);
     }
 
+    @Override
+    public void updateGrade(UserInfoDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + "updateGrade start!");
+        log.info("userId : " + pDTO.getUserId());
+        userInfoMapper.updateGrade(pDTO);
+        log.info("Grade : " + pDTO.getGrade());
+
+        log.info(this.getClass().getName() + "updateGrade end!");
+    }
 }

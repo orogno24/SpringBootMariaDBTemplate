@@ -32,6 +32,9 @@ function zColor(data) {
 }
 
 let poseTimer = null;
+let conditionTimer = null; // 조건을 만족하는 시간을 계산하기 위한 타이머
+let conditionMet = false; // 조건이 만족하는지 여부를 추적
+let savedShoulderX = null;
 
 function calculateDistance(point1, point2) {
     const dx = point1.x - point2.x;
@@ -40,72 +43,90 @@ function calculateDistance(point1, point2) {
 }
 
 function onResultsPose(results) {
-    const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');
-    const rightEyeOutputElement = document.getElementById('rightEyeCoordinates');
+    //const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');//
+   // const rightEyeOutputElement = document.getElementById('rightEyeCoordinates');//
     const leftShoulderOutputElement = document.getElementById('leftShoulderCoordinates');
     const rightShoulderOutputElement = document.getElementById('rightShoulderCoordinates');
-    const leftEarOutputElement = document.getElementById('leftEarCoordinates');
-    const rightEarOutputElement = document.getElementById('rightEarCoordinates');
+    // const leftEarOutputElement = document.getElementById('leftEarCoordinates');
+    // const rightEarOutputElement = document.getElementById('rightEarCoordinates');
 
     if (!results.poseLandmarks) {
-        leftEyeOutputElement.innerText = ' 왼쪽 눈 좌표: 인식되지 않음';
-        rightEyeOutputElement.innerText = '오른쪽 눈 좌표: 인식되지 않음';
-        leftShoulderOutputElement.innerText = ' 왼쪽 어깨 좌표: 인식되지 않음';
-        rightShoulderOutputElement.innerText = '오른쪽 어깨 좌표: 인식되지 않음';
-        leftEarOutputElement.innerText = ' 왼쪽 귀 좌표: 인식되지 않음';
-        rightEarOutputElement.innerText = '오른쪽 귀 좌표: 인식되지 않음';
+        // leftEyeOutputElement.innerText = ' 왼쪽 눈 좌표: 인식되지 않음';
+        // rightEyeOutputElement.innerText = '오른쪽 눈 좌표: 인식되지 않음';
+        leftShoulderOutputElement.innerText = ' 왼쪽 어깨 위치: 인식되지 않음';
+        rightShoulderOutputElement.innerText = '오른쪽 어깨 위치: 인식되지 않음';
+        // leftEarOutputElement.innerText = ' 왼쪽 귀 좌표: 인식되지 않음';
+        // rightEarOutputElement.innerText = '오른쪽 귀 좌표: 인식되지 않음';
         return;
     }
 
-    //  왼쪽 눈 랜드마크의 정보 출력
-    const leftEyeLandmark = results.poseLandmarks[2];
-    leftEyeOutputElement.innerText = ` 왼쪽 눈 좌표: x=${leftEyeLandmark.x.toFixed(2)}, y=${leftEyeLandmark.y.toFixed(2)}, z=${leftEyeLandmark.z.toFixed(2)}`;
-
-    // 오른쪽 눈 랜드마크의 정보 출력
-    const rightEyeLandmark = results.poseLandmarks[5];
-    rightEyeOutputElement.innerText = `오른쪽 눈 좌표: x=${rightEyeLandmark.x.toFixed(2)}, y=${rightEyeLandmark.y.toFixed(2)}, z=${rightEyeLandmark.z.toFixed(2)}`;
+    // //  왼쪽 눈 랜드마크의 정보 출력
+    // const leftEyeLandmark = results.poseLandmarks[2];
+    // leftEyeOutputElement.innerText = ` 왼쪽 눈 좌표: x=${leftEyeLandmark.x.toFixed(2)}, y=${leftEyeLandmark.y.toFixed(2)}, z=${leftEyeLandmark.z.toFixed(2)}`;
+    //
+    // // 오른쪽 눈 랜드마크의 정보 출력
+    // const rightEyeLandmark = results.poseLandmarks[5];
+    // rightEyeOutputElement.innerText = `오른쪽 눈 좌표: x=${rightEyeLandmark.x.toFixed(2)}, y=${rightEyeLandmark.y.toFixed(2)}, z=${rightEyeLandmark.z.toFixed(2)}`;
 
     //  왼쪽 어깨 랜드마크의 정보 출력
     const leftShoulderLandmark = results.poseLandmarks[12];
-    leftShoulderOutputElement.innerText = ` 왼쪽 어깨 좌표: x=${leftShoulderLandmark.x.toFixed(2)}, y=${leftShoulderLandmark.y.toFixed(2)}, z=${leftShoulderLandmark.z.toFixed(2)}`;
+    leftShoulderOutputElement.innerText = ` 왼쪽 어깨 위치: x=${leftShoulderLandmark.x.toFixed(1)}`;
 
     // 오른쪽 어깨 랜드마크의 정보 출력
     const rightShoulderLandmark = results.poseLandmarks[11];
-    rightShoulderOutputElement.innerText = `오른쪽 어깨 좌표: x=${rightShoulderLandmark.x.toFixed(2)}, y=${rightShoulderLandmark.y.toFixed(2)}, z=${rightShoulderLandmark.z.toFixed(2)}`;
+    rightShoulderOutputElement.innerText = `오른쪽 어깨 위치: x=${rightShoulderLandmark.x.toFixed(1)}`;
 
-    // 왼쪽 귀 랜드마크의 정보 출력
-    const leftEarLandmark = results.poseLandmarks[8];
-    leftEarOutputElement.innerText = ` 왼쪽 귀 좌표: x=${leftEarLandmark.x.toFixed(2)}, y=${leftEarLandmark.y.toFixed(2)}, z=${leftEarLandmark.z.toFixed(2)}`;
-
-    // 오른쪽 귀 랜드마크의 정보 출력
-    const rightEarLandmark = results.poseLandmarks[7];
-    rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
-
-
+    // // 왼쪽 귀 랜드마크의 정보 출력
+    // const leftEarLandmark = results.poseLandmarks[8];
+    // leftEarOutputElement.innerText = ` 왼쪽 귀 좌표: x=${leftEarLandmark.x.toFixed(2)}, y=${leftEarLandmark.y.toFixed(2)}, z=${leftEarLandmark.z.toFixed(2)}`;
+    //
+    // // 오른쪽 귀 랜드마크의 정보 출력
+    // const rightEarLandmark = results.poseLandmarks[7];
+    // rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
 
     document.body.classList.add('loaded');
     fpsControl.tick();
+    let grade = 0;
+    const articleElement = document.getElementById('myArticle');
+    const articleElement2 = document.getElementById('myArticle2');
+
+    savedShoulderX = leftShoulderLandmark.x;
 
     if (leftShoulderLandmark.x < 0.5) {
-        document.body.style.backgroundColor = '#b8f59e';
-        if (!poseTimer) {
-            poseTimer = setTimeout(() => {
-                playNotificationSound();
-                poseTimer = setTimeout(() => {
-                    playNotificationSound4();
-                    alert("거북목 측정이 완료되었습니다!");
-                    // 사용자가 확인을 클릭한 후에 바로 다른 페이지로 이동
-                    window.location.href = "/gazami4";
-                    poseTimer = null;
-                }, 5000);
-            }, 1000);
+        // 조건이 만족하는 경우
+        articleElement.style.backgroundColor = '#b8f59e';
+        articleElement2.style.backgroundColor = '#b8f59e';
+        playNotificationSound();
+        if (!conditionMet) {
+            conditionMet = true;
+            conditionTimer = setTimeout(() => {
+
+                if (savedShoulderX >= 0.4 && savedShoulderX < 0.5) {
+                    grade = 1;
+                } else if (savedShoulderX >= 0.3 && savedShoulderX < 0.4) {
+                    grade = 2;
+                } else if (savedShoulderX >= 0.2 && savedShoulderX < 0.3) {
+                    grade = 3;
+                } else if (savedShoulderX >= 0.1 && savedShoulderX < 0.2) {
+                    grade = 4;
+                } else if (savedShoulderX >= 0 && savedShoulderX < 0.1) {
+                    grade = 5;
+                }
+
+                sendGrade(grade);
+                playNotificationSound4();
+                alert("거북목 측정이 완료되었습니다!");
+                window.location.href = "/gazami4";
+            }, 5000);
         }
     } else {
-        document.body.style.backgroundColor = '#FFFBF5';
-        if (poseTimer) {
+        // 조건이 더 이상 만족하지 않는 경우
+        articleElement.style.backgroundColor = '#FFFBF5';
+        articleElement2.style.backgroundColor = '#FFFBF5';
+        if (conditionMet) {
             playNotificationSound2();
-            clearTimeout(poseTimer);
-            poseTimer = null;
+            clearTimeout(conditionTimer); // 타이머 초기화
+            conditionMet = false;
         }
     }
 
@@ -123,7 +144,7 @@ function onResultsPose(results) {
 
         const normalizedDistance = Distance / Difference;
 
-        const result = normalizedDistance;
+        const result = leftShoulderLandmark.x;
 
         const resultElement = document.getElementById('result');
         resultElement.innerText = `측정값 : ${result.toFixed(2)}`;
@@ -170,6 +191,20 @@ function onResultsPose(results) {
     canvasCtx5.restore();
 }
 
+function sendGrade(grade) {
+    // fetch API를 사용하여 grade 값을 서버에 전송
+    fetch('/user/gradeProc', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ grade: grade }),
+    })
+        .then(response => response.json())
+        .then(data => console.log('Grade successfully sent:', data))
+        .catch((error) => console.error('Error:', error));
+}
+
 const pose = new Pose({locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/${file}`;
     }});
@@ -188,7 +223,7 @@ new ControlPanel(controlsElement5, {
     selfieMode: true,
     upperBodyOnly: false,
     smoothLandmarks: true,
-    minDetectionConfidence: 0.3,
+    minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.6
 })
     .add([

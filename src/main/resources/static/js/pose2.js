@@ -39,6 +39,25 @@ function calculateDistance(point1, point2) {
     return Math.sqrt(dx * dx + dy * dy);
 }
 
+function sendGradeToController(gradeValue) {
+
+    $.ajax({
+        url: "/user/gradeProc",
+        type: "post",
+        contentType: "application/json",
+        dataType: "JSON",
+        data: JSON.stringify({ grade: gradeValue }),
+        success: function (json) { // /user/newUserNameProc 호출이 성공했다면..
+            alert(json.msg); // 메시지 띄우기
+            location.href = "/gazami4"; //  로그인 페이지 이동
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending grade:', error);
+        }
+    });
+}
+
+
 function onResultsPose(results) {
     const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');
     const rightEyeOutputElement = document.getElementById('rightEyeCoordinates');
@@ -81,10 +100,10 @@ function onResultsPose(results) {
     const rightEarLandmark = results.poseLandmarks[7];
     rightEarOutputElement.innerText = `오른쪽 귀 좌표: x=${rightEarLandmark.x.toFixed(2)}, y=${rightEarLandmark.y.toFixed(2)}, z=${rightEarLandmark.z.toFixed(2)}`;
 
-
-
     document.body.classList.add('loaded');
     fpsControl.tick();
+
+    let grade = 1
 
     if (leftShoulderLandmark.x < 0.5) {
         document.body.style.backgroundColor = '#b8f59e';
@@ -94,11 +113,10 @@ function onResultsPose(results) {
                 poseTimer = setTimeout(() => {
                     playNotificationSound4();
                     alert("거북목 측정이 완료되었습니다!");
-                    // 사용자가 확인을 클릭한 후에 바로 다른 페이지로 이동
                     window.location.href = "/gazami4";
                     poseTimer = null;
-                }, 500000);
-            }, 100000);
+                }, 5000);
+            }, 1000);
         }
     } else {
         document.body.style.backgroundColor = '#FFFBF5';
@@ -117,17 +135,16 @@ function onResultsPose(results) {
         const leftShoulderLandmark = results.poseLandmarks[12]; //왼쪽어깨
         const rightShoulderLandmark = results.poseLandmarks[11]; //오른쪽귀
 
-        const DifferenceEars = Math.abs(leftEarLandmark.y - leftShoulderLandmark.y);
+        const Difference = Math.abs(leftEyeLandmark.x - leftShoulderLandmark.x);
 
-        const DistanceLeftEyeToShoulder = Math.abs(leftEyeLandmark.y - leftShoulderLandmark.y);
+        const Distance = Math.abs(leftEarLandmark.x - leftShoulderLandmark.x);
 
-        const normalizedYDistanceLeftEyeToShoulder = DistanceLeftEyeToShoulder / DifferenceEars;
+        const normalizedDistance = Distance / Difference;
 
-        const result = normalizedYDistanceLeftEyeToShoulder;
+        const result = normalizedDistance;
 
         const resultElement = document.getElementById('result');
         resultElement.innerText = `측정값 : ${result.toFixed(2)}`;
-
     }
 
     canvasCtx5.save();

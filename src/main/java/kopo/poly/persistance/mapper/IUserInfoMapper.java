@@ -38,5 +38,8 @@ public interface IUserInfoMapper {
 
     // 거북목 등급 조회
     UserInfoDTO getGrade(UserInfoDTO pDTO) throws Exception;
+
+    // 거북목 등급 삽입
+    void updateGrade(UserInfoDTO pDTO) throws Exception;
 }
 

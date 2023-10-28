@@ -82,10 +82,17 @@
         WHERE USER_ID = #{userId}
     </update>
 
-    <!-- 거북목 등급 조회 쿼리 -->
+    <!-- 거북목 등급 조회 -->
     <select id="getGrade" parameterType="UserInfoDTO" resultType="UserInfoDTO">
         SELECT GRADE, USER_NAME FROM USER_INFO
         WHERE USER_ID = #{userId}
     </select>
+
+    <!-- 거북목 등급 삽입-->
+    <update id="updateGrade" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET GRADE = #{grade}
+        WHERE USER_ID = #{userId}
+    </update>
 
 </mapper>
