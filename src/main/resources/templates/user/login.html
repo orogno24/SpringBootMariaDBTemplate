@@ -287,13 +287,19 @@
             )
 
         })
+
+        $("#password").keypress(function (event) {          // 비밀번호 입력란에서 엔터 입력시 로그인
+            if (event.which === 13) {
+                $("#btnLogin").click();
+            }
+        });
     })
 
     function showPassword() {
         const passwordInput = document.getElementById("password");
         const displayPassword = document.getElementById("displayPassword");
 
-        // Get the value of the password input field
+        // 비밀번호 입력란에 있는 값 가져오기
         const password = passwordInput.value;
 
         // Replace each character with a dot
