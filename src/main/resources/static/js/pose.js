@@ -135,15 +135,15 @@ function onResultsPose(results) {
             conditionMet = true;
             conditionTimer = setTimeout(() => {
 
-                if (Distance < 2.5) {
+                if (Distance < 5.5) {
                     grade = 1;
-                } else if (Distance >= 2.5 && Distance < 5.0) {
+                } else if (Distance >= 5.5 && Distance < 8.5) {
                     grade = 2;
-                } else if (Distance >= 5.0 && Distance < 6.5) {
+                } else if (Distance >= 8.5 && Distance < 11) {
                     grade = 3;
-                } else if (Distance >= 6.5 && Distance < 8.0) {
+                } else if (Distance >= 11 && Distance < 13) {
                     grade = 4;
-                } else if (Distance >= 8.0) {
+                } else if (Distance >= 13) {
                     grade = 5;
                 }
 
