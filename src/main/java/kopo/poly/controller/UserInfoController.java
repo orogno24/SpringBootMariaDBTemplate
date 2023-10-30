@@ -408,6 +408,8 @@ public class UserInfoController {
 
         log.info(this.getClass().getName() + ".newUserNameProc End!");
 
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+
         return dto;
     }
 
