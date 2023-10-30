@@ -74,20 +74,12 @@ window.onload = startRegularWarning;
 
 
 function onResultsPose(results) {
-    //const leftEyeOutputElement = document.getElementById('leftEyeCoordinates');//
-    // const rightEyeOutputElement = document.getElementById('rightEyeCoordinates');//
     const leftShoulderOutputElement = document.getElementById('leftShoulderCoordinates');
     const rightShoulderOutputElement = document.getElementById('rightShoulderCoordinates');
-    // const leftEarOutputElement = document.getElementById('leftEarCoordinates');
-    // const rightEarOutputElement = document.getElementById('rightEarCoordinates');
 
     if (!results.poseLandmarks) {
-        // leftEyeOutputElement.innerText = ' 왼쪽 눈 좌표: 인식되지 않음';
-        // rightEyeOutputElement.innerText = '오른쪽 눈 좌표: 인식되지 않음';
         leftShoulderOutputElement.innerText = ' 왼쪽 어깨 위치: 인식되지 않음';
         rightShoulderOutputElement.innerText = '오른쪽 어깨 위치: 인식되지 않음';
-        // leftEarOutputElement.innerText = ' 왼쪽 귀 좌표: 인식되지 않음';
-        // rightEarOutputElement.innerText = '오른쪽 귀 좌표: 인식되지 않음';
         return;
     }
 
@@ -123,16 +115,14 @@ function onResultsPose(results) {
     const eyeCenter = (leftEyeLandmark.x + rightEyeLandmark.x) / 2;                         // 양 눈 중심점 x좌표
     const EyetoEarpx = Math.abs(earCenter - eyeCenter);                                  // 눈과 귀의 거리 x좌표 차이
     const ShouldertoEarpx = Math.abs(shoulderCenter - earCenter);                        // 어깨 중심점과 귀 중심점의 좌표차이
-    const Distance = (7.5 * ShouldertoEarpx) / EyetoEarpx;                                   // 어깨 중심점과 귀 중심점의 좌표차이를 실제 거리로 나타냄.
+    const EyetoShoulderpx = Math.abs(shoulderCenter - eyeCenter);                        // 어깨 중심점과 눈 중심점의 좌표차이
+    const Distance = (EyetoShoulderpx * 10 / EyetoEarpx) - 10;                                   // 어깨 중심점과 귀 중심점의 좌표차이를 실제 거리로 나타냄.
 
-    // 10 : EyetoEarpx = Distance : ShouldertoEarpx   (눈과 귀의 거리가 10cm)
+
+    // 10 : (10 + distance) = EartoEyepx : ShouldertoEyepx                                  // 실제 거리 구하는 식
     //
-    // (10 * ShouldertoEarpx) / EyetoEarpx = Distance
+    // distance = (ShouldertoEyepx * 10 / EartoEyepx) - 10
 
-
-    // const resultElement = document.getElementById('result');
-    // resultElement.innerText = `측정값 : ${result.toFixed(2)}`;
-    const result = Distance -2.5;
 
     if (Math.abs(leftShoulderLandmark.x - rightShoulderLandmark.x) < 0.2 && leftShoulderLandmark.x > 0 && leftShoulderLandmark.y > 0) {
         // 조건이 만족하는 경우
@@ -145,15 +135,15 @@ function onResultsPose(results) {
             conditionMet = true;
             conditionTimer = setTimeout(() => {
 
-                if (result < 2.5) {
+                if (Distance < 2.5) {
                     grade = 1;
-                } else if (result >= 2.5 && result < 5.5) {
+                } else if (Distance >= 2.5 && Distance < 5.0) {
                     grade = 2;
-                } else if (result >= 5.5 && result < 8.5) {
+                } else if (Distance >= 5.0 && Distance < 6.5) {
                     grade = 3;
-                } else if (result >= 8.5 && result < 11.0) {
+                } else if (Distance >= 6.5 && Distance < 8.0) {
                     grade = 4;
-                } else if (result >= 11.0) {
+                } else if (Distance >= 8.0) {
                     grade = 5;
                 }
 

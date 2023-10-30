@@ -392,7 +392,6 @@ public class UserInfoController {
 
             pDTO.setUserId(userId);
             pDTO.setUserName(userName);
-
             userInfoService.newUserNameProc(pDTO);
 
             msg = "닉네임이 재설정되었습니다.";
