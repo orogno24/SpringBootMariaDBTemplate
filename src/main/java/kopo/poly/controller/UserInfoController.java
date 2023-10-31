@@ -394,6 +394,8 @@ public class UserInfoController {
             pDTO.setUserName(userName);
             userInfoService.newUserNameProc(pDTO);
 
+            session.setAttribute("SS_USER_NAME", userName);
+
             msg = "닉네임이 재설정되었습니다.";
 
         } catch (Exception e) {
