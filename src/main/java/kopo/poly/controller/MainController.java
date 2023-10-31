@@ -132,5 +132,12 @@ public class MainController {
         return "/guide2";
     }
 
+    @GetMapping("/teachable")
+    public String teachable(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".teachable 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/teachable";
+    }
 
 }
