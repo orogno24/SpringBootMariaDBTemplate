@@ -93,7 +93,7 @@ footer {
 
 body {
     overflow: hidden;
-    background-image: url("/assets/img/bg6.png");
+    background-image: url("/assets/img/bg7.png");
     /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
     background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
     background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
@@ -136,4 +136,12 @@ button:hover {
 
 #startButton:hover {
     background-color: #7a7a7a;
+}
+
+.active-border {
+    border: 1px solid #6D6E85;
+}
+
+span {
+    color: #15c6e5;
 }

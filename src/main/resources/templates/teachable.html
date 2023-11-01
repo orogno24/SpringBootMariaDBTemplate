@@ -22,44 +22,37 @@
     </header>
 
     <div class="container">
-        <h1 style="text-align: center; color: #6D6E85; padding-top: 5%;">자세 체크 중...</h1>
-        <h1 style="text-align: center; color: #5e5f73;"><strong>당신의 자세를 분석 중입니다.</strong></h1><br><br><br><br>
+
+        <h1 id="statusText" style="display:none; text-align: center; color: #d6d8ea; padding-top: 5%; font-size: 24px">자세 체크 중...</h1>
+        <h1 id="analysisText" style="display:none; text-align: center; color: #5e5f73;"><strong>당신의 자세를 모니터링 중입니다.</strong></h1><br><br><br><br>
 
 
-        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <canvas id="canvas" height="300px" style="border:1px solid #000000;"></canvas>
+        <div style="float: left; display: flex; justify-content: center; align-items: center; margin-left: 40px; margin-right: 75px;">
+            <canvas id="canvas" height="500px" width="500px"></canvas>
+            <img id="placeholderImage" src="/assets/img/logo4.png" height="500px" width="500px" style="display:none; border: 1px solid #6D6E85;">
         </div>
 
-        <div id="dictate-container" style="display: none; padding-left: 38%">
-            <button class="dictate"
-                    style="width: 38%; height: 75%; border-radius: 100%; border: none; background-color: #6D6E85;">
-                <i class="ic-mike"></i>
-                <svg width="9.25rem" height="23.25rem" viewBox="0 0 100 100">
-                    <g stroke="#fff" stroke-width="15">
-                        <path d="M50,50 50,130">
-                            <animate attributeName="d" values="M20,40 20,60;M20,20 20,80;M20,40 20,60" dur="1s"
-                                     repeatCount="indefinite"/>
-                        </path>
-                        <path d="M100,60 100,140">
-                            <animate attributeName="d" values="M50,10 50,90;M50,40 50,60;M50,10 50,90" dur="1s"
-                                     repeatCount="indefinite"/>
-                        </path>
-                        <path d="M50,50 50,130">
-                            <animate attributeName="d" values="M80,40 80,60;M80,20 80,80;M80,40 80,60" dur="1s"
-                                     repeatCount="indefinite"/>
-                        </path>
-                    </g>
-                </svg>
-            </button>
+        <div id="table-container" style="display: none; padding-left: 20px;">
+            <table border="1" style="height: 250px; width: 450px; color: #FFFFFF; font-size: 17px">
+                <tr><th>타임라인</th></tr>
+                <tr><td>AM10:41:48 <span>자세 경고</span></td></tr>
+                <tr><td>AM11:02:32 <span>거북목</span></td></tr>
+                <tr><td>AM11:31:25 <span>자세 경고</span></td></tr>
+                <tr><td>AM11:54:29 <span>화면 이탈</span></td></tr>
+                <tr><td>PM12:04:16 <span>자세 경고</span></td></tr>
+            </table>
         </div>
 
         <br><br><br><br>
 
         <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
 
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <button id="hideCameraButton" type="button" onclick="toggleWebcam()" style="display:none;">카메라 숨기기</button>
-        </div>
+    </div>
+
+    <div style="margin-right: 20px; display: flex;">
+        <button id="hideCameraButton" type="button" onclick="toggleWebcam()" style="display:none;">카메라 숨기기</button>
+        <button id="stopButton" type="button" onclick=" " style="margin-left: 10px; display:none;">종료</button>
+        <button id="editButton" type="button" onclick=" " style="margin-left: 10px; display:none;">설정</button>
     </div>
     <div id="label-container"></div>
 </main>
@@ -88,7 +81,7 @@
         model = await tmPose.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        const size = 300;
+        const size = 500;
         const flip = true;
         webcam = new tmPose.Webcam(size, size, flip);
         await webcam.setup();
@@ -96,6 +89,8 @@
         window.requestAnimationFrame(loop);
 
         const canvas = document.getElementById("canvas");
+        canvas.classList.add("active-border");
+        document.getElementById("table-container").style.display = "block";
         canvas.width = size;
         canvas.height = size;
         ctx = canvas.getContext("2d");
@@ -106,6 +101,10 @@
 
         document.getElementById("startButton").style.display = "none";
         document.getElementById("hideCameraButton").style.display = "block";
+        document.getElementById("stopButton").style.display = "block";
+        document.getElementById("editButton").style.display = "block";
+        document.getElementById("statusText").style.display = "block";
+        document.getElementById("analysisText").style.display = "block";
     }
 
     async function loop(timestamp) {
@@ -160,21 +159,21 @@
 
     function toggleWebcam() {
         const canvasElement = document.getElementById("canvas");
-        const dictateElement = document.getElementById("dictate-container");
+        const imageElement = document.getElementById("placeholderImage");
         const hideCameraButton = document.getElementById("hideCameraButton");
 
         if (canvasElement.style.display !== "none") {
             canvasElement.style.display = "none";
-            dictateElement.style.display = "block";
+            imageElement.style.display = "block";
             hideCameraButton.textContent = "카메라 표시하기";
         } else {
             canvasElement.style.display = "block";
-            dictateElement.style.display = "none";
+            imageElement.style.display = "none";
             hideCameraButton.textContent = "카메라 숨기기";
         }
     }
 
-
 </script>
+<script type="text/javascript" src="/js/teachable.js"></script>
 </body>
 </html>
