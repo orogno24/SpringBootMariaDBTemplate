@@ -91,7 +91,13 @@ footer {
     height: 100vh;
 }
 
-body, html {
+body {
+    overflow: hidden;
+    background-image: url("/assets/img/bg6.png");
+    /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+    background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+    background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+    background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
     margin: 0;
     padding: 0;
     height: 100%;

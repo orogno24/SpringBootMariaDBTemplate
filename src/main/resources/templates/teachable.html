@@ -16,7 +16,7 @@
     <header class="p-3">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="/main">
-            <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
+                <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
             </a>
         </div>
     </header>
@@ -25,10 +25,9 @@
         <h1 style="text-align: center; color: #6D6E85; padding-top: 5%;">자세 체크 중...</h1>
         <h1 style="text-align: center; color: #5e5f73;"><strong>당신의 자세를 분석 중입니다.</strong></h1><br><br><br><br>
 
-        <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
 
         <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas" height="300px" style="border:1px solid #000000;"></canvas>
         </div>
 
         <div id="dictate-container" style="display: none; padding-left: 38%">
@@ -55,6 +54,8 @@
         </div>
 
         <br><br><br><br>
+
+        <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
 
         <div style="display: flex; justify-content: center; align-items: center;">
             <button id="hideCameraButton" type="button" onclick="toggleWebcam()" style="display:none;">카메라 숨기기</button>
@@ -118,16 +119,16 @@
         const prediction = await model.predict(posenetOutput);
 
         for (let i = 0; i < maxPredictions; i++) {
-            if (prediction[i].className !== "Class 1" && prediction[i].className !== "Class 2") {
+            if (prediction[i].className !== "정상 자세" && prediction[i].className !== "거북목 자세") {
                 const classPrediction =
                     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
                 labelContainer.childNodes[i].innerHTML = classPrediction;
             } else {
-                labelContainer.childNodes[i].innerHTML = ""; // Class 1과 Class 2는 표시하지 않음
+                labelContainer.childNodes[i].innerHTML = ""; // 정상 자세과 거북목 자세는 표시하지 않음
             }
         }
 
-        let class2Probability = prediction.find(p => p.className === "Class 2").probability.toFixed(2);
+        let class2Probability = prediction.find(p => p.className === "거북목 자세").probability.toFixed(2);
 
         if (class2Probability > 0.50) {
             playSound();
