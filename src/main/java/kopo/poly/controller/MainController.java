@@ -104,8 +104,15 @@ public class MainController {
     // 로딩 페이지
     @GetMapping("/gazami6")
     public String intro6() throws Exception {
-        log.info(this.getClass().getName() + ".gazami5 함수 실행");
+        log.info(this.getClass().getName() + ".gazami6 함수 실행");
         return "/gazami6";
+    }
+
+    // 로딩 페이지
+    @GetMapping("/gazami7")
+    public String intro7() throws Exception {
+        log.info(this.getClass().getName() + ".gazami7 함수 실행");
+        return "/gazami7";
     }
 
     // 가이드 페이지
@@ -117,5 +124,20 @@ public class MainController {
         return "/guide1";
     }
 
+    @GetMapping("/guide2")
+    public String guide2(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".guide2 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/guide2";
+    }
+
+    @GetMapping("/teachable")
+    public String teachable(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".teachable 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/teachable";
+    }
 
 }

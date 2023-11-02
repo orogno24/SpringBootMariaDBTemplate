@@ -39,6 +39,10 @@
         }
     </style>
 </head>
+<audio id="myAudio" autoplay>
+    <source src="/assets/img/load.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 <body style="background-color: #31323d;">
 <div class="container">
     <div class="row">
@@ -58,7 +62,7 @@
         let delayTime = 2000; // 2초 지연 예시, 필요에 따라 조정 가능함
 
         setTimeout(function () {
-            let url = "/scan";
+            let url = "/teachable";
             location.href = url;
         }, delayTime);
     }

@@ -1,0 +1,147 @@
+.gallery button a {
+    color: inherit;  /* 버튼의 텍스트 색상을 상속받음 */
+    text-decoration: none;  /* 텍스트 밑줄 제거 */
+}
+
+@font-face {
+    font-family: 'NIXGONM-Vb';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'NIXGONM-Vb';
+}
+
+a {
+    color: #6e6e6e;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #6e6e6e;
+    text-decoration: none;
+}
+
+:root {
+    font-size: 10px;
+}
+
+.container {
+    max-width: 110.5rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+@supports (display: grid) {
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+        grid-gap: 2rem;
+    }
+}
+
+.message2 p {
+    margin-top: 200px;
+    font-weight: 400;
+    color: #6D6E85;
+    text-decoration: none;
+    font-size: 40px;
+    text-align: center;
+    letter-spacing: -2px;
+}
+
+.form button a {
+    font-family: 'NIXGONM-Vb';
+    font-weight: 500;
+    color: #515264;
+    text-decoration: none;
+    font-size: 37px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+header {
+    background-color: #33343f;
+    color: white;
+    padding: 20px;
+    border-bottom: 3px solid #2D8DB6;
+}
+
+footer {
+    background-color: #33343f;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+
+.username-color {
+    color: #15c6e5;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body {
+    overflow: hidden;
+    background-image: url("/assets/img/bg7.png");
+    /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+    background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+    background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+    background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+button {
+    padding: 12px 35px;
+    border: none;
+    background-color: #ababab;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7a7a7a;
+}
+
+#startButton {
+    background-color: #ababab;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#startButton:hover {
+    background-color: #7a7a7a;
+}
+
+.active-border {
+    border: 1px solid #6D6E85;
+}
+
+span {
+    color: #15c6e5;
+}

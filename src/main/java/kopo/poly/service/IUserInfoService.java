@@ -35,5 +35,9 @@ public interface IUserInfoService {
     // 닉네임 변경하기
     void newUserNameProc(UserInfoDTO pDTO) throws Exception;
 
+    // 등급 조회하기
     UserInfoDTO getGrade(UserInfoDTO pDTO) throws Exception;
+
+    // 등급 삽입하기
+    void updateGrade(UserInfoDTO pDTO) throws Exception;
 }

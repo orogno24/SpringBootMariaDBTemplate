@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>유의사항</title>
+  <title>거북목 진단 안내사항</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <style>
     @font-face {
@@ -36,6 +36,10 @@
       padding: 0 20px;
     }
 
+    span {
+      color: #353e9b;
+    }
+
     header {
       background-color: #33343f;
       color: white;
@@ -43,15 +47,8 @@
       border-bottom: 3px solid #2D8DB6;
     }
 
-    .header {
-      background: #7b1fa2;
-      color: #fff;
-      text-align: center;
-      padding: 20px 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
     .content {
-      background: #fff;
+      background: #f6f6f6;
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 8px;
@@ -111,16 +108,12 @@
 
   </style>
 </head>
-<audio id="myAudio" autoplay>
-  <source src="/assets/img/guide.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
 <body>
 
 <header class="p-3">
   <div class="container d-flex justify-content-between align-items-center">
     <a href="/main">
-    <img src="/assets/img/logo3.png" width="170px" height="41px" alt="Logo">
+    <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
     </a>
   </div>
 </header>
@@ -129,17 +122,20 @@
 
 <div class="container">
   <div class="content">
-    <h2>거북목 진단 시 가이드</h2>
-    <p>이 서비스는 상반신 촬영을 통해 얻은 이미지를 기반으로 귀와 어깨 사이의 거리를 분석하여 거북목의 정도를 평가합니다.<br>아래의 안내사항을 참고해 주세요!<br><br></p>
+    <h2>거북목 진단 안내사항</h2>
+    <div style="text-align: center;">
+    <img src="/assets/img/guide1.png" width="75%" height="75%" alt="Logo">
+    </div>
+    <p>이 서비스는 측면 촬영을 통해 얻은 이미지를 기반으로 거북목의 정도를 평가합니다.<br>아래의 안내사항을 참고해 주세요!<br><br></p>
     <ul style="font-weight: bold">
-      <li>본 측정은 눈에서 귀까지의 평균적인 거리(약 10cm)를 기준으로 귀와 어깨 사이의 거리를 추정합니다.
+      <li>본 측정은 눈에서 귀까지의 평균적인 거리(약 10cm)를 기준으로 <span>귀와 어깨 사이의 거리</span>를 추정합니다.
         <br>이는 대다수의 성인에게서 일정한 값을 보이는 경향이 있으나, 이는 근사치이며 개인차가 있을 수 있습니다.<br><br></li>
       <li>해당 서비스는 간단한 측정 도구로써 사용될 수 있지만,
-        의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다.<br>
+        <span>의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다.</span><br>
         실제 거북목의 정도나 상태를 정확히 평가하려면 전문적인 검진이 필요할 수 있습니다.<br><br>
       </li>
-      <li>제공된 결과는 거북목의 경미한 정도부터 심각한 정도까지를 나타내는 등급으로 표시됩니다.<br>
-        이를 통해 사용자가 자세를 교정하고 관련 운동을 꾸준히 수행함으로써 거북목이 개선될 경우,<br>
+      <li>제공된 결과는 <span>거북목의 경미한 정도부터 심각한 정도까지를 나타내는 등급</span>으로 표시됩니다.<br>
+        이를 통해 사용자가 자세를 교정하고 관련 운동을 꾸준히 수행함으로써,<br>
         등급 변화에 따라 사용자가 자신의 진전을 확인할 수 있도록 도와줍니다.<br><br></li>
     </ul>
     <a href="#video" class="button">동영상 보기</a>
@@ -149,7 +145,7 @@
     <div class="video-container">
       <!-- 여기에 동영상 iframe 코드를 넣으세요. 예: YouTube 비디오 -->
 
-      <video src="/assets/img/vid1.mp4" autoplay loop muted>
+      <video src="/assets/img/guidevideo.mp4" type="video/mp4" controls>
         이 브라우저는 비디오를 지원하지 않습니다.
       </video>
 
