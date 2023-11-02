@@ -10,9 +10,9 @@
     <source src="/assets/img/guide2.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
-<body style="background-color: #FFFBF5;">
+<body>
+<audio id="playSound" src="/assets/img/alarm.mp3"></audio>
 <main>
-
     <header class="p-3">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="/main">
@@ -23,23 +23,41 @@
 
     <div class="container">
 
-        <h1 id="statusText" style="display:none; text-align: center; color: #d6d8ea; padding-top: 5%; font-size: 24px">자세 체크 중...</h1>
-        <h1 id="analysisText" style="display:none; text-align: center; color: #5e5f73;"><strong>당신의 자세를 모니터링 중입니다.</strong></h1><br><br><br><br>
-
+        <h1 id="statusText" style="display:none; text-align: center; color: #d6d8ea; padding-top: 5%; font-size: 24px;">
+            자세 분석 중...</h1>
+        <h1 id="analysisText" style="display:none; text-align: center; color: #73748a;"><strong>[[${userName}]]님의 자세를 모니터링
+            중입니다.</strong></h1><br><br><br><br>
 
         <div style="float: left; display: flex; justify-content: center; align-items: center; margin-left: 40px; margin-right: 75px;">
             <canvas id="canvas" height="500px" width="500px"></canvas>
-            <img id="placeholderImage" src="/assets/img/logo4.png" height="500px" width="500px" style="display:none; border: 1px solid #6D6E85;">
+            <img id="placeholderImage" src="/assets/img/logo4.png" height="500px" width="500px"
+                 style="display:none; border: 1px solid #6D6E85;">
         </div>
 
         <div id="table-container" style="display: none; padding-left: 20px;">
             <table border="1" style="height: 250px; width: 450px; color: #FFFFFF; font-size: 17px">
-                <tr><th>타임라인</th></tr>
-                <tr><td>AM10:41:48 <span>자세 경고</span></td></tr>
-                <tr><td>AM11:02:32 <span>거북목</span></td></tr>
-                <tr><td>AM11:31:25 <span>자세 경고</span></td></tr>
-                <tr><td>AM11:54:29 <span>화면 이탈</span></td></tr>
-                <tr><td>PM12:04:16 <span>자세 경고</span></td></tr>
+                <thead>
+                <tr>
+                    <th style="font-weight: normal">타임라인</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
             </table>
         </div>
 
@@ -54,7 +72,43 @@
         <button id="stopButton" type="button" onclick=" " style="margin-left: 10px; display:none;">종료</button>
         <button id="editButton" type="button" onclick=" " style="margin-left: 10px; display:none;">설정</button>
     </div>
-    <div id="label-container"></div>
+    <div id="timeSettingBox" class="time-setting-box" style="display:none;">
+        <div class="time-setting-content">
+            <span class="close-time-setting">&times;</span>
+            <h2>시간 설정</h2>
+            <form id="timeSettingForm">
+                <div id="timeSetting" style="display: block; padding-top: 10px;">
+                    <form>
+                        <label>
+                            <input type="radio" name="timeOption" value="2000"> 1분
+                        </label>
+                        <label>
+                            <input type="radio" name="timeOption" value="3000" checked> 3분
+                        </label>
+                        <label>
+                            <input type="radio" name="timeOption" value="5000"> 5분
+                        </label>
+                        <label>
+                            <input type="radio" name="timeOption" value="10000"> 10분
+                        </label>
+                    </form>
+                </div>
+            </form>
+            <div id="alertSetting" style="display: block; padding-top: 20px;">
+                <h2>알림 설정</h2>
+                <form style="padding-top: 10px;">
+                    <label>
+                        <input type="radio" name="alertOption" value="alertA" checked> 알림음
+                    </label>
+                    <label>
+                        <input type="radio" name="alertOption" value="alertB"> TTS
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="label-container" style="color: #FFFFFF"></div>
 </main>
 
 <footer>
@@ -62,11 +116,6 @@
     <a href="/main" class="text-light">메인페이지로</a>
 </footer>
 <div class="black-section"></div>
-
-<audio id="alertSound" preload="auto">
-    <source src="/assets/img/alarm.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
@@ -105,6 +154,36 @@
         document.getElementById("editButton").style.display = "block";
         document.getElementById("statusText").style.display = "block";
         document.getElementById("analysisText").style.display = "block";
+
+        document.getElementById("stopButton").onclick = function() {
+            window.location.href = '/main';  // 이곳에 원하는 페이지의 URL을 설정하세요
+        };
+
+        document.getElementById("editButton").onclick = function() {
+            var timeSettingBox = document.getElementById("timeSettingBox");
+            timeSettingBox.style.display = timeSettingBox.style.display === "none" ? "block" : "none";
+        };
+
+        var close = document.getElementsByClassName("close-time-setting")[0];
+        close.onclick = function() {
+            var timeSettingBox = document.getElementById("timeSettingBox");
+            timeSettingBox.style.display = "none";
+        }
+
+        // 바깥 영역을 클릭하면 설정 창 닫기
+        window.onclick = function(event) {
+            var timeSettingBox = document.getElementById("timeSettingBox");
+            if (event.target == timeSettingBox) {
+                timeSettingBox.style.display = "none";
+            }
+        }
+
+        // 라디오 버튼의 변화를 감지하여 timeSettingForUpdate 값을 업데이트
+        document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                timeSettingForUpdate = this.value;
+            });
+        });
     }
 
     async function loop(timestamp) {
@@ -113,36 +192,86 @@
         window.requestAnimationFrame(loop);
     }
 
+    let count = 0;
+    let class2StartTime = 0;
+    let isClass2Active = false;
+    let class3StartTime = 0;
+    let isClass3Active = false;
+
     async function predict() {
         const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
         const prediction = await model.predict(posenetOutput);
 
         for (let i = 0; i < maxPredictions; i++) {
-            if (prediction[i].className !== "정상 자세" && prediction[i].className !== "거북목 자세") {
-                const classPrediction =
-                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                labelContainer.childNodes[i].innerHTML = classPrediction;
-            } else {
-                labelContainer.childNodes[i].innerHTML = ""; // 정상 자세과 거북목 자세는 표시하지 않음
-            }
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
         }
 
-        let class2Probability = prediction.find(p => p.className === "거북목 자세").probability.toFixed(2);
-
-        if (class2Probability > 0.50) {
-            playSound();
+        const class2 = prediction.find(p => p.className === "Class 2");
+        if (class2 && class2.probability.toFixed(2) === "1.00") {
+            if (!isClass2Active) {
+                isClass2Active = true;
+                class2StartTime = Date.now();
+            } else if (Date.now() - class2StartTime > 2000) {
+                updateTimeline();
+                count++;
+                isClass2Active = false;
+            }
         } else {
-            document.getElementById("alertSound").pause();
-            document.getElementById("alertSound").currentTime = 0;
+            isClass2Active = false;
+        }
+
+        const class3 = prediction.find(p => p.className === "Class 3");
+        if (class3 && class3.probability.toFixed(2) === "1.00") {
+            if (!isClass3Active) {
+                isClass3Active = true;
+                class3StartTime = Date.now();
+            } else if (Date.now() - class3StartTime > 3000) { // 3초 체크
+                updateTimelineForClass3();
+                count++;
+                isClass3Active = false;
+            }
+        } else {
+            isClass3Active = false;
         }
 
         drawPose(pose);
     }
 
-    function playSound() {
-        var sound = document.getElementById("alertSound");
-        if (sound.paused) {
-            sound.play();
+    const playSound = document.getElementById("playSound");
+
+    function sound() {
+        playSound.play();
+    }
+
+    function updateTimeline() {
+        const currentTime = new Date();
+        const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
+        const tbody = document.querySelector("#table-container table tbody");
+        const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
+        newRow.innerHTML = `<td>${formattedTime} - <span>거북목 자세 경고</span></td>`;
+
+        sound();
+
+        alert("거북목 자세 경고! 자세를 바로잡아주세요.");
+
+        // 행 수가 5개를 초과하면 맨 아래 행을 제거
+        if (tbody.rows.length > 5 && count < 5) {
+            tbody.deleteRow(-1);
+        }
+    }
+
+    function updateTimelineForClass3() {
+        const currentTime = new Date();
+        const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
+        const tbody = document.querySelector("#table-container table tbody");
+        const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
+        newRow.innerHTML = `<td>${formattedTime} - <span style="color: #f10d0d">자리 비움</span></td>`;
+
+        // 필요한 경우 추가적인 행동 (예: 소리 재생)
+        if (tbody.rows.length > 5 && count < 5) {
+            tbody.deleteRow(-1);
         }
     }
 
@@ -151,8 +280,7 @@
             ctx.drawImage(webcam.canvas, 0, 0);
             if (pose) {
                 const minPartConfidence = 0.5;
-                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+                drawShoulders(pose, minPartConfidence, ctx);
             }
         }
     }
