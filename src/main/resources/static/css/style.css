@@ -338,17 +338,17 @@ p {
 .section .container {
     padding-top:50px;
 }
-.section .title {
+.title {
     text-align: center;
     padding:10px;
     margin-bottom: 30px;
 }
-.section .title h1 {
+.title h1 {
     font-weight: normal;
     margin-bottom: 20px;
     padding: 0;
 }
-.section .title > p {
+.title > p {
     font-size: 20px;
     color: #FFF;
     font-weight: lighter;

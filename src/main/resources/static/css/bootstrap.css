@@ -328,6 +328,16 @@ a:focus {
   width: 300px;
 }
 
+#first-person {
+  margin-left: 17%
+}
+
+@media (max-width: 767px) {
+  #first-person {
+    margin-left: 0%
+  }
+}
+
 .span3 {
   width: 220px;
 }
