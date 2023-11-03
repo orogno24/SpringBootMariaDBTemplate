@@ -93,14 +93,13 @@ footer {
 
 body {
     overflow: hidden;
-    background-image: url("/assets/img/bg7.png");
+    background-image: url("/assets/img/bg5.png");
     /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
     background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
     background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
     background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 .center-container {
@@ -114,16 +113,17 @@ body {
 button {
     padding: 12px 35px;
     border: none;
-    background-color: #ababab;
+    background-color: #8f8f96;
     color: #fff;
     font-size: 17px;
     cursor: pointer;
     border-radius: 25px;
     transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);  /* 그림자 추가 */
 }
 
 button:hover {
-    background-color: #7a7a7a;
+    background-color: #62626c;
 }
 
 #startButton {
@@ -139,11 +139,53 @@ button:hover {
 }
 
 .active-border {
-    border: 1px solid #6D6E85;
+    border: 1px solid #6e6e6e;
 }
 
 span {
-    color: #15c6e5;
+    color: #d90d00;
+}
+
+
+
+#startButton {
+    background-color: #5ab2c5;
+    border: none;
+    color: white;
+    padding: 15px 32px; /* 상하, 좌우 패딩 */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* 그림자 효과 */
+    transition-duration: 0.4s; /* 마우스 호버 시 전환 시간 */
+}
+
+#startButton:hover {
+    background-color: #4993a2; /* 호버 시 색상 변경 */
+}
+
+.pose {
+    font-weight: bold;
+    font-size: 20px;
+    color: #4A4A4A; /* 짙은 회색 톤 */
+    background-color: #F2F2F2; /* 밝은 회색 배경 */
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block; /* 더 좋은 시각적 구분을 위해 */
+}
+
+/* 테이블 스타일링 */
+table {
+    border: none;
+    background-color: #e3e3e3;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border-spacing: 0;
 }
 
 #table-container table td {
@@ -163,71 +205,6 @@ span {
     width: 100%;
 }
 
-.time-setting-box {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.time-setting-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-.close-time-setting {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-time-setting:hover,
-.close-time-setting:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#startButton {
-    background-color: #4CAF50; /* 녹색 배경 */
-    border: none;
-    color: white;
-    padding: 15px 32px; /* 상하, 좌우 패딩 */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px; /* 모서리 둥글게 */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* 그림자 효과 */
-    transition-duration: 0.4s; /* 마우스 호버 시 전환 시간 */
-}
-
-#startButton:hover {
-    background-color: #45a049; /* 호버 시 색상 변경 */
-}
-
-/* 테이블 스타일링 */
-table {
-    background-color: #131313; /* 배경색 */
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-}
-
-/* 테이블 헤더 스타일링 */
-th {
-    background-color: #3d3d3d; /* 헤더 배경색 */
-}
-
 /* 반응형 테이블 */
 @media screen and (max-width: 600px) {
     table {
@@ -236,3 +213,43 @@ th {
     }
 }
 
+/* 짝수 번째 행에 대한 스타일 */
+#table-container table tbody tr:nth-child(even) {
+    background-color: #fafafa; /* 흰색 배경 */
+}
+
+/* 홀수 번째 행에 대한 스타일 */
+#table-container table tbody tr:nth-child(odd) {
+    background-color: #efefef; /* 회색 배경 */
+}
+
+/* 스크롤바 전체의 스타일 (Chrome, Safari) */
+#table-container table tbody::-webkit-scrollbar {
+    width: 12px; /* 스크롤바의 너비 */
+}
+
+/* 스크롤바의 핸들 (바) 부분의 스타일 (Chrome, Safari) */
+#table-container table tbody::-webkit-scrollbar-thumb {
+    background-color: #94d5da; /* 핸들의 배경색 */
+    border-radius: 6px; /* 핸들의 모서리 둥글게 */
+}
+
+/* 스크롤바의 트랙 (레일) 부분의 스타일 (Chrome, Safari) */
+#table-container table tbody::-webkit-scrollbar-track {
+    background-color: #e3e3e3; /* 트랙의 배경색 */
+    border-radius: 6px; /* 트랙의 모서리 둥글게 */
+}
+
+/* 스크롤바의 핸들 (바) 부분의 스타일 (Firefox) */
+#table-container table tbody::-webkit-scrollbar-thumb:horizontal,
+#table-container table tbody::-webkit-scrollbar-thumb:vertical {
+    background-color: #94d5da; /* 핸들의 배경색 */
+    border-radius: 6px; /* 핸들의 모서리 둥글게 */
+}
+
+/* 스크롤바의 트랙 (레일) 부분의 스타일 (Firefox) */
+#table-container table tbody::-webkit-scrollbar-track:horizontal,
+#table-container table tbody::-webkit-scrollbar-track:vertical {
+    background-color: #e3e3e3; /* 트랙의 배경색 */
+    border-radius: 6px; /* 트랙의 모서리 둥글게 */
+}

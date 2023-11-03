@@ -1,130 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-  <link rel="icon" href="favicon.ico">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.css" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="demo.css" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/pose.js" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="demo.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.1/camera_utils.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.1/control_utils.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.2/drawing_utils.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.2/pose.js" crossorigin="anonymous"></script>
 
-  <style>
-    @font-face {
-      font-family: 'NIXGONM-Vb';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
+    <style>
+        @font-face {
+            font-family: 'NIXGONM-Vb';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    * {
-      font-family: 'NIXGONM-Vb';
-    }
+        * {
+            font-family: 'NIXGONM-Vb';
+        }
 
-    header {
-      background-color: #33343f;
-      color: white;
-      padding: 20px;
-      border-bottom: 3px solid #2D8DB6;
-    }
+        header {
+            background-color: #33343f;
+            color: white;
+            padding: 20px;
+            border-bottom: 3px solid #2D8DB6;
+        }
 
-    footer {
-      background-color: #33343f;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+        footer {
+            background-color: #33343f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-    .coordinates {
-      font-weight: bold;    /* 볼드체 적용 */
-      font-size: 20px;     /* 폰트 크기 설정 */
-    }
+        @keyframes flash {
+            0% {
+                background-color: red;
+            }
+            100% {
+                background-color: transparent;
+            }
+        }
 
-    @keyframes flash {
-      0%   { background-color: red; }
-      100% { background-color: transparent; }
-    }
+        body.flash-effect {
+            animation: flash 3s;
+        }
 
-    body.flash-effect {
-      animation: flash 3s;
-    }
+        .username-color {
+            color: #15c6e5;
+        }
 
-    .username-color {
-      color: #15c6e5;
-    }
+        body {
+            overflow: hidden;
+            background-image: url("/assets/img/bg5.png");
+            /*background: linear-gradient(45deg, #093c5b, #1488CC);*/
+            background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+            background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+            background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-      background-color: #FFFBF5; /* 원하는 기본 바탕색으로 설정 */
-    }
+        article {
+            background-color: #93b5b7;
+        }
 
-  </style>
+        .coordinates {
+            font-weight: bold;
+            font-size: 20px;
+            color: #4A4A4A; /* 짙은 회색 톤 */
+            background-color: #F2F2F2; /* 밝은 회색 배경 */
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block; /* 더 좋은 시각적 구분을 위해 */
+        }
+    </style>
 
 </head>
 <audio id="myAudio" autoplay>
-  <source src="/assets/img/tts3.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
+    <source src="/assets/img/tts3.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
 </audio>
 <body>
 
 <header class="p-3" style="display: flex; justify-content: space-between; align-items: center;">
-  <div class="container d-flex align-items-center">
-    <a href="/main">
-    <img src="/assets/img/turtleg.gif" width="10%" height="10%" alt="Logo" style="cursor: pointer;">
-    </a>
-    <h2 style="margin-left: 10px;"><span class="username-color">[[${userName}]]</span>님 거북목 진단중..</h2>
-  </div>
+    <div class="container d-flex align-items-center">
+        <a href="/main">
+            <img src="/assets/img/turtleg.gif" width="10%" height="10%" alt="Logo" style="cursor: pointer;">
+        </a>
+        <h2 style="margin-left: 10px;"><span class="username-color">[[${userName}]]</span>님 거북목 진단중..</h2>
+    </div>
 </header>
-<audio id="notificationSound" src="/assets/img/tts1.mp3"></audio>
-<audio id="notificationSound2" src="/assets/img/tts2.mp3"></audio>
+<audio id="notificationSound" src="/assets/img/alarm.mp3"></audio>
+<audio id="notificationSound2" src="/assets/img/alarm2.mp3"></audio>
 <audio id="notificationSound4" src="/assets/img/tts4.mp3"></audio>
+
+<br>
+
 <!-- CONTENTS -->
 <div class="container" style="margin-top: 20px;">
 
-  <div class="columns">
+    <div class="columns">
 
-    <!-- WEBCAM INPUT -->
-    <div class="column">
-      <article class="panel is-info">
-        <p class="panel-heading" style="background: #4e4f60; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
-          웹캠 화면
-        </p>
-        <div class="panel-block" style="display: flex; justify-content: center; align-items: center;">
-          <video class="input_video5"></video>
+        <!-- WEBCAM INPUT -->
+        <div class="column">
+            <article id="myArticle" class="panel is-info" style="background-color: #f8f8f8">
+                <p class="panel-heading"
+                   style="background: #33343f; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
+                    웹캠 화면
+                </p>
+                <div class="panel-block" style="display: flex; justify-content: center; align-items: center;">
+                    <video class="input_video5"></video>
+                </div>
+            </article>
         </div>
-      </article>
+
+        <!-- MEDIAPIPE OUTPUT -->
+        <div class="column">
+            <article id="myArticle2" class="panel is-info" style="background-color: #f8f8f8">
+                <p class="panel-heading"
+                   style="background: #33343f; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
+                    Pose Detection 적용
+                </p>
+                <div class="panel-block" style="display: flex; justify-content: center; align-items: center;">
+                    <canvas class="output5" width="480px" height="480px"></canvas>
+                </div>
+            </article>
+        </div>
     </div>
 
-
-    <!-- MEDIAPIPE OUTPUT -->
-    <div class="column">
-      <article class="panel is-info">
-        <p class="panel-heading" style="background: #4e4f60; color: #f3f9ff; font-family: 'NIXGONM-Vb'; font-weight: normal;">
-          Mediapipe Pose Detection 적용
-        </p>
-        <div class="panel-block" style="display: flex; justify-content: center; align-items: center;">
-          <canvas class="output5" width="480px" height="480px"></canvas>
-        </div>
-      </article>
+    <div style="text-align: center">
+        <div id="leftShoulderCoordinates" class="coordinates">왼쪽 어깨 위치: 기다리는 중...</div>
+        <div id="rightShoulderCoordinates" class="coordinates">오른쪽 어깨 위치: 기다리는 중...</div>
+        <br>
+        <div class="coordinates" style="color: #9b231c">옆을 바라본 상태로 양쪽 어깨의 차이를 0.2 이내로 맞춘 후, 5초간 대기해 주세요.</div>
     </div>
-  </div>
-  <div id="result" class="coordinates">측정값을 cm로 변환: 기다리는 중...</div>
-  <div id="leftShoulderCoordinates" class="coordinates">왼쪽 어깨 좌표: 기다리는 중...</div>
-  <div id="rightShoulderCoordinates" class="coordinates">오른쪽 어깨 좌표: 기다리는 중...</div>
-  <br>
-  <div id="leftEyeCoordinates" class="coordinates">왼쪽 눈 좌표: 기다리는 중...</div>
-  <div id="rightEyeCoordinates" class="coordinates">오른쪽 눈 좌표: 기다리는 중...</div>
-  <br>
-  <div id="leftEarCoordinates" class="coordinates">왼쪽 귀 좌표: 기다리는 중...</div>
-  <div id="rightEarCoordinates" class="coordinates">오른쪽 귀 좌표: 기다리는 중...</div>
 
-  <div class="loading">
-    <div class="spinner"></div>
-  </div>
-  <div style="visibility: hidden;" class="control5">
-  </div>
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    <div style="visibility: hidden;" class="control5">
+    </div>
 
-  <script type="text/javascript" src="/js/pose.js"></script>
+    <script type="text/javascript" src="/js/pose.js"></script>
 </body>
 </html>

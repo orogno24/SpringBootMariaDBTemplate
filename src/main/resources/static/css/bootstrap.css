@@ -5568,3 +5568,8 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+.black-section {
+  background-color: #2b2b36; /* 검정색 배경 */
+  height: 100px; /* 높이 지정, 필요에 따라 조정 */
+}
