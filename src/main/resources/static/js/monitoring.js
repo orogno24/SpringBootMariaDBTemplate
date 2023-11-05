@@ -37,7 +37,7 @@ function drawShoulders(pose, minPartConfidence, ctx) {
         if (leftShoulder.score > minPartConfidence && rightShoulder.score > minPartConfidence) {
             // 어깨 점 그리기
             [leftShoulder, rightShoulder].forEach(keypoint => {
-                const { y, x } = keypoint.position;
+                const {y, x} = keypoint.position;
                 ctx.beginPath();
                 ctx.arc(x, y, 3, 0, 2 * Math.PI);
                 ctx.fillStyle = 'gray';
@@ -56,10 +56,10 @@ function drawShoulders(pose, minPartConfidence, ctx) {
 }
 
 
-    const URL = "/assets/my_model/";
-    let model, webcam, ctx, labelContainer, maxPredictions;
+const URL = "/assets/my_model/";
+let model, webcam, ctx, maxPredictions;
 
-    async function init() {
+async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
@@ -79,11 +79,6 @@ function drawShoulders(pose, minPartConfidence, ctx) {
     canvas.width = size;
     canvas.height = size;
     ctx = canvas.getContext("2d");
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) {
-    labelContainer.appendChild(document.createElement("div"));
-}
-
     document.getElementById("startButton").style.display = "none";
     document.getElementById("hideCameraButton").style.display = "block";
     document.getElementById("stopButton").style.display = "block";
@@ -91,97 +86,123 @@ function drawShoulders(pose, minPartConfidence, ctx) {
     document.getElementById("statusText").style.display = "block";
     document.getElementById("analysisText").style.display = "block";
 
-    document.getElementById("stopButton").onclick = function() {
-    window.location.href = '/main';  // 이곳에 원하는 페이지의 URL을 설정하세요
-};
+    document.getElementById("stopButton").onclick = function () {
+        window.location.href = '/main';  // 이곳에 원하는 페이지의 URL을 설정하세요
+    };
 
-    document.getElementById("editButton").onclick = function() {
-    var timeSettingBox = document.getElementById("timeSettingBox");
-    timeSettingBox.style.display = timeSettingBox.style.display === "none" ? "block" : "none";
-};
+    document.getElementById("editButton").onclick = function () {
+        var timeSettingBox = document.getElementById("timeSettingBox");
+        timeSettingBox.style.display = timeSettingBox.style.display === "none" ? "block" : "none";
+    };
 
     var close = document.getElementsByClassName("close-time-setting")[0];
-    close.onclick = function() {
-    var timeSettingBox = document.getElementById("timeSettingBox");
-    timeSettingBox.style.display = "none";
-}
+    close.onclick = function () {
+        var timeSettingBox = document.getElementById("timeSettingBox");
+        timeSettingBox.style.display = "none";
+    }
 
     // 바깥 영역을 클릭하면 설정 창 닫기
-    window.onclick = function(event) {
-    var timeSettingBox = document.getElementById("timeSettingBox");
-    if (event.target == timeSettingBox) {
-    timeSettingBox.style.display = "none";
-}
-}
+    window.onclick = function (event) {
+        var timeSettingBox = document.getElementById("timeSettingBox");
+        if (event.target == timeSettingBox) {
+            timeSettingBox.style.display = "none";
+        }
+    }
+
+    var close2 = document.getElementsByClassName("neckExercise-setting")[0];
+    close2.onclick = function () {
+        var neckExercise = document.getElementById("neckExercise");
+        neckExercise.style.display = "none";
+    }
+
+    // 바깥 영역을 클릭하면 설정 창 닫기
+    window.onclick = function (event) {
+        var neckExercise = document.getElementById("neckExercise");
+        if (event.target == neckExercise) {
+            neckExercise.style.display = "none";
+        }
+    }
+
 
     // 라디오 버튼의 변화를 감지하여 timeSettingForUpdate 값을 업데이트
-    document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
-    radio.addEventListener('change', function() {
-    timeSettingForUpdate = this.value;
-});
-});
+    document.querySelectorAll('input[name="timeOption"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            timeSettingForUpdate = this.value;
+        });
+    });
 }
 
-    async function loop(timestamp) {
+function showStretchingTips() {
+    // 거북목 운동 div를 가져옵니다.
+    var neckExerciseDiv = document.getElementById("neckExercise");
+
+    neckExerciseDiv.style.display = "block";
+
+    neckExerciseDiv.scrollIntoView({behavior: 'smooth'});
+}
+
+async function loop(timestamp) {
     webcam.update();
     await predict();
     window.requestAnimationFrame(loop);
 }
 
-    let count = 0;
-    let class2StartTime = 0;
-    let isClass2Active = false;
-    let class3StartTime = 0;
-    let isClass3Active = false;
+let count = 0;
+let class2StartTime = 0;
+let isClass2Active = false;
+let class3StartTime = 0;
+let isClass3Active = false;
 
-    async function predict() {
+async function predict() {
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
 
     for (let i = 0; i < maxPredictions; i++) {
-    const classPrediction =
-    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-    labelContainer.childNodes[i].innerHTML = classPrediction;
-}
+        const classPrediction =
+            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    }
 
     const class2 = prediction.find(p => p.className === "Class 2");
     if (class2 && class2.probability.toFixed(2) === "1.00") {
-    if (!isClass2Active) {
-    isClass2Active = true;
-    class2StartTime = Date.now();
-} else if (Date.now() - class2StartTime > 2000) {
-    updateTimeline();
-    count++;
-    isClass2Active = false;
-}
-} else {
-    isClass2Active = false;
-}
+        if (!isClass2Active) {
+            isClass2Active = true;
+            class2StartTime = Date.now();
+        } else if (Date.now() - class2StartTime > 2000) {
+            updateTimeline();
+            count++;
+            if (count < 2) {
+                showStretchingTips();
+            }
+            isClass2Active = false;
+        }
+    } else {
+        isClass2Active = false;
+    }
 
     const class3 = prediction.find(p => p.className === "Class 3");
     if (class3 && class3.probability.toFixed(2) === "1.00") {
-    if (!isClass3Active) {
-    isClass3Active = true;
-    class3StartTime = Date.now();
-} else if (Date.now() - class3StartTime > 3000) { // 3초 체크
-    updateTimelineForClass3();
-    count++;
-    isClass3Active = false;
-}
-} else {
-    isClass3Active = false;
-}
+        if (!isClass3Active) {
+            isClass3Active = true;
+            class3StartTime = Date.now();
+        } else if (Date.now() - class3StartTime > 3000) { // 3초 체크
+            updateTimelineForClass3();
+            count++;
+            isClass3Active = false;
+        }
+    } else {
+        isClass3Active = false;
+    }
 
     drawPose(pose);
 }
 
-    const playSound = document.getElementById("playSound");
+const playSound = document.getElementById("playSound");
 
-    function sound() {
+function sound() {
     playSound.play();
 }
 
-    function updateTimeline() {
+function updateTimeline() {
     const currentTime = new Date();
     const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
     const tbody = document.querySelector("#table-container table tbody");
@@ -194,11 +215,11 @@ function drawShoulders(pose, minPartConfidence, ctx) {
 
     // 행 수가 5개를 초과하면 맨 아래 행을 제거
     if (tbody.rows.length > 5 && count < 5) {
-    tbody.deleteRow(-1);
-}
+        tbody.deleteRow(-1);
+    }
 }
 
-    function updateTimelineForClass3() {
+function updateTimelineForClass3() {
     const currentTime = new Date();
     const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
     const tbody = document.querySelector("#table-container table tbody");
@@ -207,33 +228,33 @@ function drawShoulders(pose, minPartConfidence, ctx) {
 
     // 필요한 경우 추가적인 행동 (예: 소리 재생)
     if (tbody.rows.length > 5 && count < 5) {
-    tbody.deleteRow(-1);
-}
+        tbody.deleteRow(-1);
+    }
 }
 
-    function drawPose(pose) {
+function drawPose(pose) {
     if (webcam.canvas) {
-    ctx.drawImage(webcam.canvas, 0, 0);
-    if (pose) {
-    const minPartConfidence = 0.5;
-    drawShoulders(pose, minPartConfidence, ctx);
-}
-}
+        ctx.drawImage(webcam.canvas, 0, 0);
+        if (pose) {
+            const minPartConfidence = 0.5;
+            drawShoulders(pose, minPartConfidence, ctx);
+        }
+    }
 }
 
-    function toggleWebcam() {
+function toggleWebcam() {
     const canvasElement = document.getElementById("canvas");
     const imageElement = document.getElementById("placeholderImage");
     const hideCameraButton = document.getElementById("hideCameraButton");
 
     if (canvasElement.style.display !== "none") {
-    canvasElement.style.display = "none";
-    imageElement.style.display = "block";
-    hideCameraButton.textContent = "카메라 표시하기";
-} else {
-    canvasElement.style.display = "block";
-    imageElement.style.display = "none";
-    hideCameraButton.textContent = "카메라 숨기기";
-}
+        canvasElement.style.display = "none";
+        imageElement.style.display = "block";
+        hideCameraButton.textContent = "카메라 표시하기";
+    } else {
+        canvasElement.style.display = "block";
+        imageElement.style.display = "none";
+        hideCameraButton.textContent = "카메라 숨기기";
+    }
 }
 

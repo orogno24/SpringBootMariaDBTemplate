@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chatgpt 스타일시트 연습</title>
+    <title>자세 모니터링 페이지</title>
     <link rel="stylesheet" type="text/css" href="css/monitoring.css"/>
     <style>
-
-        .time-setting-box {
+        .neckExercise-box {
             display: none;
             position: fixed;
             z-index: 1;
@@ -16,32 +15,37 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
-        .time-setting-content {
+        .neckExercise-content {
             background-color: #ffffff;
-            margin: 15% auto; /* 상단 및 하단 마진을 유지하면서 좌우 마진을 auto로 설정 */
+            margin: auto; /* 수평 중앙 정렬을 위해 변경 */
             padding: 20px;
             border: 1px solid #888;
-            width: 50%; /* 기존의 80%에서 50%로 줄임 */
-            /* 추가로, 높이도 조절하고 싶다면 height 속성을 추가할 수 있습니다. */
+            width: 50%;
+            top: 70%; /* 상단에서 50%의 위치 */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* 선택 사항: 그림자 추가로 입체감 주기 */
         }
 
-        .close-time-setting {
+        .neckExercise-setting {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
 
-        .close-time-setting:hover,
-        .close-time-setting:focus {
+        .neckExercise-setting:hover,
+        .neckExercise-setting:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
 
+        #neckExercise p {
+            font-size: 17px; /* 원하는 크기로 조절하세요 */
+            font-weight: bold;
+        }
     </style>
 </head>
 <audio id="myAudio" autoplay>
@@ -60,8 +64,11 @@
     </header>
 
     <div class="container" style="padding-top: 3%;">
-        <h1 id="statusText" class="pose" style="display:none; text-align: center; color: #414141; font-size: 24px;"></h1>
-        <h1 id="analysisText" style="display:none; text-align: center; color: #2d2d2d; font-size: 17px; font-weight: normal">[[${userName}]]님의 자세를 모니터링
+        <h1 id="statusText" class="pose"
+            style="display:none; text-align: center; color: #464646; font-size: 24px;"></h1>
+        <h1 id="analysisText"
+            style="display:none; text-align: center; color: #2d2d2d; font-size: 17px; font-weight: normal">
+            [[${userName}]]님의 자세를 모니터링
             중입니다.
         </h1><br><br><br><br>
 
@@ -73,7 +80,7 @@
 
         <div id="table-container" style="display: none; padding-left: 20px;">
             <table style="height: 250px; width: 450px; color: #000000; font-size: 17px; border: 1px solid #6e6e6e;">
-                <thead style="color: #FFFFFF; background-color: #85c2c7">
+                <thead style="color: #2b2b36; background-color: #56d0ea">
                 <tr>
                     <th style="font-weight: normal">타임라인</th>
                 </tr>
@@ -101,7 +108,23 @@
         <br><br><br><br>
 
         <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
+    </div>
 
+    <div id="neckExercise" class="neckExercise-box" style="display:none;">
+        <div class="neckExercise-content">
+            <span class="neckExercise-setting">&times;</span>
+            <h2>거북목 운동법</h2>
+            <img src="/assets/img/test.jpg" width="70%" height="70%" alt="" style="display: block; margin: auto;">
+            <p>1. 스마트폰 등의 사용 시간을 가능한 한 줄이고, 중간 중간 쉬는 시간(스마트폰 사용을 중단하는 시간)을 자주 갖습니다.</p><br>
+            <p>2. 한 자세로 오래 사용하지 않도록 합니다.</p><br>
+            <p>3. 거치대 등으로 눈 높이에 맞도록 하여 목이 구부러지지 않게 합니다.</p><br>
+            <p>&lt;운동 방법 설명 가이드&gt;</p>
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/EksV9sxWXHw?si=GiNtGjLtMIbZCXME"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
     </div>
 
     <div style="margin-right: 20px; display: flex;">

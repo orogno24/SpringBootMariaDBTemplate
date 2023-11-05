@@ -31,12 +31,144 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57.png">
     <link rel="shortcut icon" href="images/ico/favicon.ico">
+
+    <script>
+        var map;
+
+        function searchHospital() {
+            var keyword = document.getElementById('address').value;
+
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                alert('장소를 입력해주세요.');
+                return false;
+            }
+
+            // 키워드로 장소를 검색합니다
+            var places = new kakao.maps.services.Places();
+
+            places.keywordSearch(keyword, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    // 가장 첫 번째 검색 결과의 좌표를 사용합니다
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 지도의 중심을 이동합니다
+                    map.setCenter(coords);
+
+                    // 해당 좌표를 기준으로 주변 병원을 검색합니다
+                    searchPlaces(coords);
+                } else {
+                    alert('검색 결과가 없습니다.');
+                }
+            });
+        }
+
+        // 키워드 검색을 실행하는 함수입니다
+        function searchPlaces(coords) {
+            var keyword = '병원';
+
+            var places = new kakao.maps.services.Places();
+
+            var callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    displayPlaces(result);
+                }
+            };
+
+            places.keywordSearch(keyword, callback, {
+                location: coords
+            });
+        }
+
+        // 검색 결과를 지도에 표시하는 함수입니다
+        function displayPlaces(places) {
+
+            var bounds = new kakao.maps.LatLngBounds();
+
+            for (var i=0; i<places.length; i++) {
+                displayMarker(places[i]);
+                bounds.extend(new kakao.maps.LatLng(places[i].y, places[i].x));
+            }
+
+            map.setBounds(bounds);
+        }
+
+        // 마커를 지도에 표시하는 함수입니다
+        function displayMarker(place) {
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(place.y, place.x)
+            });
+
+            // 마커에 클릭이벤트를 등록합니다
+            kakao.maps.event.addListener(marker, 'click', function() {
+                // 마커 클릭 시 인포윈도우에 표시될 내용을 만듭니다
+                var content = '<div class="info-window">' + '<img src="/assets/img/turtle.png" width="20%" height="20%" alt=" ">' +
+                    '<h4 style="color: #89ee37">' + place.place_name + '</h4>' +
+                    '<p>' + '주소: ' + (place.road_address_name || place.address_name) + '</p>' +
+                    (place.phone ? '<p>' + '전화번호: ' + place.phone + '</p>' : '') +
+                    '<a href="' + place.place_url + '" target="_blank" style="color: #15c6e5; text-decoration: underline;">상세보기</a>' + // 카카오 지도 장소 상세 페이지 링크
+                    '</div>';
+
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: content,
+                    removable: true
+                });
+                infowindow.open(map, marker);
+            });
+        }
+
+        // 지도를 생성합니다
+        function initMap() {
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            // 지도를 생성합니다
+            map = new kakao.maps.Map(mapContainer, mapOption);
+        }
+
+        // 문서가 로드될 때 지도를 초기화합니다
+        window.onload = function() {
+            initMap();
+        }
+
+    </script>
+
 </head>
 <!--    <audio id="myAudio" autoplay>-->
 <!--        <source src="/assets/img/main.mp3" type="audio/mpeg">-->
 <!--        Your browser does not support the audio element.-->
 <!--    </audio>-->
 <style>
+    #address::placeholder {
+        font-family: 'NIXGONM-Vb';
+        color: #454654;
+    }
+
+    .info-window {
+        padding: 10px; /* 패딩을 조금 더 넉넉하게 줍니다 */
+        font-size: 14px; /* 글씨 크기를 조금 더 크게 합니다 */
+        color: #fff; /* 글씨 색상을 흰색으로 변경하여 대비를 높입니다 */
+        background-color: #33343f; /* 배경 색상은 그대로 유지합니다 */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과를 추가하여 입체감을 줍니다 */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 글씨에 약간의 텍스트 그림자를 추가합니다 */
+        line-height: 1.4; /* 줄 간격을 조금 더 넓게 합니다 */
+        transition: all 0.3s ease; /* 스타일 변경에 애니메이션 효과를 적용합니다 */
+        width: 250px;
+    }
+
+    /* 호버 효과를 위한 추가 CSS */
+    .info-window:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* 그림자를 조금 더 진하게 합니다 */
+    }
+
+    .info-window h4 {
+        margin-top: 0;
+        font-size: 14px;
+    }
+
     .centered {
         text-align: center;
     }
@@ -46,6 +178,24 @@
         font-weight: bold;
         color: #ffffff;
     }
+
+    button {
+        font-family: 'NIXGONM-Vb';
+        padding: 6px 20px; /* padding 값을 조정하여 버튼 크기를 줄입니다 */
+        font-size: 14px; /* font-size 값을 조정하여 글꼴 크기를 줄입니다 */
+        margin-top: -9.5px;
+        border: none;
+        background-color: #15c6e5;
+        color: #2b2b36;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #10a6c0; /* 새로운 배경색 */
+    }
+
 </style>
 <style>
     @font-face {
@@ -372,9 +522,13 @@
         <div class="title" style="padding: 10px">
             <h1>병원 정보</h1>
         </div>
+
+        <br>
+        <label for="address"></label><input type="text" id="address" name="address" class="span8" style="font-family: NIXGONM-Vb" placeholder="당신의 주소를 입력해주세요." required="">
+        <button onclick="searchHospital()">병원 찾기</button>
         <div class="map-wrapper">
             <div class="map-canvas" id="map-canvas">Loading map...</div>
-            <div id="map" style="width:100%;height:600px;"></div>
+            <div id="map" style="width:100%;height:600px;border:1px solid #ffffff"></div>
         </div>
     </div>
 </div>
@@ -446,14 +600,6 @@
 <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962&libraries=services,clusterer"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962"></script>
-<script>
-    var container = document.getElementById('map');
-    var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3
-    };
 
-    var map = new kakao.maps.Map(container, options);
-</script>
 </body>
 </html>
