@@ -380,7 +380,7 @@ p {
 /* Third section use bacground image */
 .third-section {
     padding-bottom: 70px;
-    border-top:6px solid #15c6e5;
+    border-top:3px solid #15c6e5;
 }
 .third-section .container {
     padding-top:20px;
