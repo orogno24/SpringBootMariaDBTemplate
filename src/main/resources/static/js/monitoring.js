@@ -153,6 +153,15 @@ let isClass2Active = false;
 let class3StartTime = 0;
 let isClass3Active = false;
 
+let selectedTime = 2000; // 기본값
+
+document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
+    radio.addEventListener('change', function(event) {
+        // 선택된 라디오 버튼의 값을 읽어 selectedTime에 저장
+        selectedTime = event.target.value;
+    });
+});
+
 async function predict() {
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
@@ -167,7 +176,7 @@ async function predict() {
         if (!isClass2Active) {
             isClass2Active = true;
             class2StartTime = Date.now();
-        } else if (Date.now() - class2StartTime > 2000) {
+        } else if (Date.now() - class2StartTime > selectedTime) {
             updateTimeline();
             count++;
             if (count < 2) {

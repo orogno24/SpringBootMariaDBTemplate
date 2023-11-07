@@ -134,129 +134,26 @@
             initMap();
         }
 
+        // ID 배열
+        var videoIds = ['EksV9sxWXHw', 'anotherVideoId', 'andAnotherVideoId'];
+
+        // 각 비디오 ID에 대해 iframe을 생성
+        videoIds.forEach(function(videoId) {
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('width', '560');
+            iframe.setAttribute('height', '315');
+            iframe.setAttribute('src', 'https://www.youtube.com/embed/' + videoId);
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            iframe.setAttribute('allowfullscreen', 'true');
+
+            // 이 iframe을 원하는 DOM 요소에 추가
+            document.getElementById('videoContainer').appendChild(iframe);
+        });
+
     </script>
 
 </head>
-<!--    <audio id="myAudio" autoplay>-->
-<!--        <source src="/assets/img/main.mp3" type="audio/mpeg">-->
-<!--        Your browser does not support the audio element.-->
-<!--    </audio>-->
-<style>
-    #address::placeholder {
-        font-family: 'NIXGONM-Vb';
-        color: #454654;
-    }
-
-    .info-window {
-        padding: 10px; /* 패딩을 조금 더 넉넉하게 줍니다 */
-        font-size: 14px; /* 글씨 크기를 조금 더 크게 합니다 */
-        color: #fff; /* 글씨 색상을 흰색으로 변경하여 대비를 높입니다 */
-        background-color: #33343f; /* 배경 색상은 그대로 유지합니다 */
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과를 추가하여 입체감을 줍니다 */
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 글씨에 약간의 텍스트 그림자를 추가합니다 */
-        line-height: 1.4; /* 줄 간격을 조금 더 넓게 합니다 */
-        transition: all 0.3s ease; /* 스타일 변경에 애니메이션 효과를 적용합니다 */
-        width: 250px;
-    }
-
-    /* 호버 효과를 위한 추가 CSS */
-    .info-window:hover {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* 그림자를 조금 더 진하게 합니다 */
-    }
-
-    .info-window h4 {
-        margin-top: 0;
-        font-size: 14px;
-    }
-
-    .centered {
-        text-align: center;
-    }
-
-    .large-text {
-        font-size: 24px !important; /* 여기서 !important를 사용하여 우선순위를 높입니다. */
-        font-weight: bold;
-        color: #ffffff;
-    }
-
-    button {
-        font-family: 'NIXGONM-Vb';
-        padding: 6px 20px; /* padding 값을 조정하여 버튼 크기를 줄입니다 */
-        font-size: 14px; /* font-size 값을 조정하여 글꼴 크기를 줄입니다 */
-        margin-top: -9.5px;
-        border: none;
-        background-color: #15c6e5;
-        color: #2b2b36;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #10a6c0; /* 새로운 배경색 */
-    }
-
-</style>
-<style>
-    @font-face {
-        font-family: 'NIXGONM-Vb';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    * {
-        font-family: 'NIXGONM-Vb';
-    }
-
-    .form button a {
-        font-family: 'NIXGONM-Vb';
-        font-weight: 500;
-        color: #515264;
-        text-decoration: none;
-        font-size: 37px;
-        text-align: center;
-        letter-spacing: 1px;
-    }
-
-    .feature-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .feature {
-        border: 1px solid #ccc;
-        flex: 1 1 calc(33.333% - 20px); /* flex-grow, flex-shrink 및 flex-basis 설정 */
-        margin: 10px; /* 각 feature 사이의 간격 */
-        box-sizing: border-box;
-        /* 기타 스타일 */
-    }
-
-    .icon {
-        font-size: 2em;
-    }
-
-    @media (max-width: 768px) {
-        .feature {
-            width: calc(50% - 20px);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .feature {
-            width: 100%;
-        }
-    }
-
-    .feature:hover {
-        transform: translateY(-5px);
-    }
-
-    .username-color {
-        color: #15c6e5;
-    }
-</style>
 
 <body>
 <div class="navbar">
@@ -352,13 +249,13 @@
             <p>건강한 자세, AI로부터의 도움을 받으세요.</p>
             <!--Simple description for section goes here. -->
         </div>
-
+<!--        <div th:utext="${videos}">Search results go here</div>-->
         <div class="row-fluid">
             <div class="container">
                 <p style="text-align: center; margin-top: -30px; margin-bottom: 30px; font-size: 30px">주요 기능</p>
                 <div class="feature-grid">
                     <!-- 첫 번째 행의 기능들 -->
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="location.href='/gazami6';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon1.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             거북목 진단</h2>
@@ -366,21 +263,21 @@
                             거북목 정도에 따른 등급을 확인할 수 있습니다.</p>
                         <br><br>
                     </div>
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="location.href='/gazami7';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon2.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             자세 모니터링</h2>
                         <p style="text-align: center; transition: transform 0.3s ease;">거북목 진단을 통해 당신의 거북목 상태를 체크하세요.
                             거북목 정도에 따른 등급을 확인할 수 있습니다.</p>
                     </div>
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="location.href='/notice/noticeList';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon3.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             통계</h2>
                         <p style="text-align: center; transition: transform 0.3s ease;">거북목 진단을 통해 당신의 거북목 상태를 체크하세요.
                             거북목 정도에 따른 등급을 확인할 수 있습니다.</p>
                     </div>
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="document.getElementById('gps').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             지도</h2>
@@ -388,14 +285,14 @@
                             거북목 정도에 따른 등급을 확인할 수 있습니다.</p>
                         <br><br>
                     </div>
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon5.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             거북목 개선 팁</h2>
                         <p style="text-align: center; transition: transform 0.3s ease;">거북목 진단을 통해 당신의 거북목 상태를 체크하세요.
                             거북목 정도에 따른 등급을 확인할 수 있습니다.</p>
                     </div>
-                    <div class="feature" style="position: relative; overflow: hidden; transition: transform 0.3s ease;">
+                    <div class="feature" onclick="location.href='/notice/noticeList';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon6.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             커뮤니티</h2>
@@ -576,7 +473,7 @@
 <!-- Portfolio section end -->
 <!-- About us section start -->
 
-<div class="section primary-section">
+<div class="section primary-section" id="gps">
     <div class="triangle"></div>
     <div class="container">
         <div class="title">

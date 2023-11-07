@@ -896,3 +896,116 @@ p {
         margin-top:30px;
     }
 }
+
+@font-face {
+    font-family: 'NIXGONM-Vb';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'NIXGONM-Vb';
+}
+
+.form button a {
+    font-family: 'NIXGONM-Vb';
+    font-weight: 500;
+    color: #515264;
+    text-decoration: none;
+    font-size: 37px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.feature {
+    border: 1px solid #ccc;
+    flex: 1 1 calc(33.333% - 20px); /* flex-grow, flex-shrink 및 flex-basis 설정 */
+    margin: 10px; /* 각 feature 사이의 간격 */
+    box-sizing: border-box;
+    /* 기타 스타일 */
+}
+
+.icon {
+    font-size: 2em;
+}
+
+@media (max-width: 768px) {
+    .feature {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .feature {
+        width: 100%;
+    }
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.username-color {
+    color: #15c6e5;
+}
+
+#address::placeholder {
+    font-family: 'NIXGONM-Vb';
+    color: #454654;
+}
+
+.info-window {
+    padding: 10px; /* 패딩을 조금 더 넉넉하게 줍니다 */
+    font-size: 14px; /* 글씨 크기를 조금 더 크게 합니다 */
+    color: #fff; /* 글씨 색상을 흰색으로 변경하여 대비를 높입니다 */
+    background-color: #33343f; /* 배경 색상은 그대로 유지합니다 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과를 추가하여 입체감을 줍니다 */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 글씨에 약간의 텍스트 그림자를 추가합니다 */
+    line-height: 1.4; /* 줄 간격을 조금 더 넓게 합니다 */
+    transition: all 0.3s ease; /* 스타일 변경에 애니메이션 효과를 적용합니다 */
+    width: 250px;
+}
+
+/* 호버 효과를 위한 추가 CSS */
+.info-window:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* 그림자를 조금 더 진하게 합니다 */
+}
+
+.info-window h4 {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.large-text {
+    font-size: 24px !important; /* 여기서 !important를 사용하여 우선순위를 높입니다. */
+    font-weight: bold;
+    color: #ffffff;
+}
+
+button {
+    font-family: 'NIXGONM-Vb';
+    padding: 6px 20px; /* padding 값을 조정하여 버튼 크기를 줄입니다 */
+    font-size: 14px; /* font-size 값을 조정하여 글꼴 크기를 줄입니다 */
+    margin-top: -9.5px;
+    border: none;
+    background-color: #15c6e5;
+    color: #2b2b36;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #10a6c0; /* 새로운 배경색 */
+}

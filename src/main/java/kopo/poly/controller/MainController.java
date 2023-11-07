@@ -1,8 +1,11 @@
 package kopo.poly.controller;
 
+import kopo.poly.service.impl.YoutubeService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -13,10 +16,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MainController {
 
+    @Autowired
+    private YoutubeService youtubeService;
+
     @GetMapping("/main")
     public String main(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".main 함수 실행");
         String userName = (String) session.getAttribute("SS_USER_NAME");
+        String searchResults = youtubeService.search("거북목");
+        model.addAttribute("videos", searchResults);
         model.addAttribute("userName", userName);
         return "main";
     }
