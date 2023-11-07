@@ -234,13 +234,33 @@ function updateTimelineForClass3() {
 
 function drawPose(pose) {
     if (webcam.canvas) {
+        // 웹캠 피드를 그립니다
         ctx.drawImage(webcam.canvas, 0, 0);
+
+        // 웹캠 이미지 위에 실루엣을 그립니다
+        const silhouette = document.getElementById('silhouetteImage');
+        if (silhouette && silhouette.complete) {
+            // 이미지가 로드되었는지 확인합니다
+            const scaleX = webcam.canvas.width / silhouette.naturalWidth;
+            const scaleY = webcam.canvas.height / silhouette.naturalHeight;
+            const scale = Math.min(scaleX, scaleY);
+
+            // 이미지를 중앙에 위치시키기 위한 계산
+            const x = (webcam.canvas.width / 2) - (silhouette.naturalWidth / 2) * scale;
+            const y = (webcam.canvas.height / 2) - (silhouette.naturalHeight / 2) * scale;
+
+            // 캔버스에 실루엣 이미지를 그립니다
+            ctx.drawImage(silhouette, x, y, silhouette.naturalWidth * scale, silhouette.naturalHeight * scale);
+        }
+
+        // 포즈가 있으면 해당하는 키포인트(여기서는 어깨)를 그립니다
         if (pose) {
             const minPartConfidence = 0.5;
             drawShoulders(pose, minPartConfidence, ctx);
         }
     }
 }
+
 
 function toggleWebcam() {
     const canvasElement = document.getElementById("canvas");
