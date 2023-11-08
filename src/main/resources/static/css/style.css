@@ -304,6 +304,14 @@ p {
 .thumbnail:hover .mask {
     top:0;
 }
+
+.thumbnail.fadeInDown{
+    width: auto;
+    height : 300px;
+    overflow: hidden; /* 넘치는 부분은 숨김 */
+    white-space: nowrap; /* 줄 바꿈 금지 */
+    text-overflow: ellipsis; /* 넘치는 텍스트는 ... 으로 대체 */
+}
 /*
 2.4 Socail icons
 ************/
