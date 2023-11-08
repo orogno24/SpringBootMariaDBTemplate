@@ -29,6 +29,8 @@ public class YoutubeService {
                 .queryParam("type", "video")
                 .queryParam("q", query)
                 .queryParam("maxResults", 3)
+                .queryParam("regionCode", "KR")
+                .queryParam("relevanceLanguage", "ko")
                 .encode(StandardCharsets.UTF_8)
                 .toUriString();
 

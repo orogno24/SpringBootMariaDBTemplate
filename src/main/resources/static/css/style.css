@@ -1017,3 +1017,35 @@ button {
 button:hover {
     background-color: #10a6c0; /* 새로운 배경색 */
 }
+
+#portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#portfolio-grid .mix {
+    display: flex;
+    flex-direction: column;
+    margin: 10px; /* 각 항목 사이의 여백을 조정합니다. */
+}
+
+.thumbnail {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 부모 컨테이너에 맞춰 높이를 100%로 설정합니다. */
+}
+
+.thumbnail iframe {
+    flex: 0 0 auto; /* iframe의 크기가 변경되지 않도록 설정합니다. */
+}
+
+.thumbnail h3 {
+    flex-grow: 1; /* 제목이 남은 공간을 채우도록 설정합니다. */
+}
+
+.thumbnail p {
+    flex: 0 0 auto; /* 본문 텍스트의 크기가 변경되지 않도록 설정합니다. */
+}
