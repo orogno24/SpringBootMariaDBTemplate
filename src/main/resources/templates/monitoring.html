@@ -6,7 +6,57 @@
     <title>자세 모니터링 페이지</title>
     <link rel="stylesheet" type="text/css" href="css/monitoring.css"/>
     <style>
+        .progress-bar {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -ms-flex-pack: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #ffffff;
+            text-align: center;
+            white-space: nowrap;
+            background-color: #0059ff;
+            transition: width .6s ease;
+        }
 
+        .progress-bar-main {
+            display: table;
+            /* flex-basis: 25rem; */
+            width: 75%; /*크기 조절*/
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .bg-danger {
+            background-color: #d90909 !important;
+        }
+
+        .progress-bar-striped {
+            background-size: 1rem 1rem;
+        }
+
+        .progress {
+            display: -ms-flexbox;
+            display: flex;
+            height: 2rem;
+            overflow: hidden;
+            line-height: 0;
+            font-size: .75rem;
+            background-color: #cde6ff;
+            border-radius: 0.25rem;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            margin-left: 54rem;  /* 바 좌우 이동 */
+            margin-right: 3rem;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <audio id="myAudio" autoplay>
@@ -35,13 +85,13 @@
 
         <div style="float: left; display: flex; justify-content: center; align-items: center; margin-left: 40px; margin-right: 75px;">
             <canvas id="canvas" height="500px" width="500px"></canvas>
-            <img id="silhouetteImage" src="/assets/img/icon8.png" style="display: none;" />
+            <img id="silhouetteImage" src="/assets/img/icon8.png" style="display: none;"/>
             <img id="placeholderImage" src="/assets/img/logo4.png" height="500px" width="500px"
                  style="display:none; border: 1px solid #6e6e6e;">
         </div>
 
         <div id="table-container" style="display: none; padding-left: 20px;">
-            <table style="height: 250px; width: 450px; color: #000000; font-size: 17px; border: 1px solid #6e6e6e;">
+            <table style="height: 250px; width: 465px; color: #000000; font-size: 17px; border: 1px solid #6e6e6e;">
                 <thead style="color: #2b2b36; background-color: #56d0ea">
                 <tr>
                     <th style="font-weight: normal">타임라인</th>
@@ -67,6 +117,22 @@
             </table>
         </div>
 
+        <div id="pbox" style="display: none; margin-left: -3rem;">
+            <div class="progress-bar-container">
+                <div class="progress-bar-left-text">정상 자세</div>
+                <div class="progress-bar-main">
+                    <div class="progress" style="height: 2rem">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:0%">
+                            0%
+                        </div>
+                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width:100%">
+                            100%
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar-right-text">거북목</div>
+            </div>
+        </div>
         <br><br><br><br>
 
         <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
@@ -127,13 +193,10 @@
             </div>
         </div>
     </div>
-
     <div id="label-container" style="color: #FFFFFF"></div>
 </main>
 
 <footer>
-    <p>OpenCV를 활용한 거북목 개선 프로젝트</p>
-    <a href="/main" class="text-light">메인페이지로</a>
 </footer>
 <div class="black-section"></div>
 
@@ -141,5 +204,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
 
 <script type="text/javascript" src="/js/monitoring.js"></script>
+<script type="text/javascript" src="/js/monitoring2.js"></script>
 </body>
 </html>

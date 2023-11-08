@@ -1,32 +1,3 @@
-window.onload = function () {
-    cycleDots();
-}
-
-function cycleDots() {
-    var textElement = document.querySelector('h1'); // "자세 분석 중..." 텍스트를 포함하는 h1 태그 선택
-    var dotCount = 0;
-
-    setInterval(function () {
-        var dots = ".".repeat(dotCount);
-        textElement.textContent = "자세 분석 중" + dots; // 텍스트 업데이트
-        dotCount = (dotCount + 1) % 5; // 마침표 개수를 0에서 4까지 순환
-    }, 500); // 매 0.5초마다 실행
-}
-
-function format12HourTime(time) {
-    let hours = time.getHours();
-    let minutes = time.getMinutes();
-    let seconds = time.getSeconds();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // 시간이 0이면 12로 변경
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    return `${ampm} ${hours}:${minutes}:${seconds}`;
-}
-
 function drawShoulders(pose, minPartConfidence, ctx) {
     if (pose) {
         // 어깨 키포인트: 왼쪽 어깨 (5), 오른쪽 어깨 (6)
@@ -40,7 +11,7 @@ function drawShoulders(pose, minPartConfidence, ctx) {
                 const {y, x} = keypoint.position;
                 ctx.beginPath();
                 ctx.arc(x, y, 3, 0, 2 * Math.PI);
-                ctx.fillStyle = 'gray';
+                ctx.fillStyle = '#5ac9e3';
                 ctx.fill();
             });
 
@@ -48,7 +19,7 @@ function drawShoulders(pose, minPartConfidence, ctx) {
             ctx.beginPath();
             ctx.moveTo(leftShoulder.position.x, leftShoulder.position.y);
             ctx.lineTo(rightShoulder.position.x, rightShoulder.position.y);
-            ctx.strokeStyle = 'gray';
+            ctx.strokeStyle = '#5ac9e3';
             ctx.lineWidth = 2;
             ctx.stroke();
         }
@@ -76,6 +47,7 @@ async function init() {
     const canvas = document.getElementById("canvas");
     canvas.classList.add("active-border");
     document.getElementById("table-container").style.display = "block";
+    document.getElementById("pbox").style.display = "block";
     canvas.width = size;
     canvas.height = size;
     ctx = canvas.getContext("2d");
@@ -150,9 +122,6 @@ async function loop(timestamp) {
 let count = 0;
 let class2StartTime = 0;
 let isClass2Active = false;
-let class3StartTime = 0;
-let isClass3Active = false;
-
 let selectedTime = 2000; // 기본값
 
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
@@ -165,6 +134,25 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 async function predict() {
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
     const prediction = await model.predict(posenetOutput);
+
+    var progressBarElement = document.getElementsByClassName("progress-bar-main")[0];
+    var progressBarCode = '<div class=\"progress\" style=\"height: 2rem\">'
+
+    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-success\" role=\"progressbar\" style=\"width:'
+    progressBarCode += prediction[0].probability.toFixed(1) * 100
+    progressBarCode += '%\">'
+    progressBarCode += prediction[0].probability.toFixed(1) * 100
+    progressBarCode += '%</div>'
+
+    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-danger\" role=\"progressbar\" style=\"width:'
+    progressBarCode += prediction[1].probability.toFixed(1) * 100
+    progressBarCode += '%\">'
+    progressBarCode += prediction[1].probability.toFixed(1) * 100
+    progressBarCode += '%</div>'
+
+    progressBarCode += '</div>'
+
+    progressBarElement.innerHTML = progressBarCode;
 
     for (let i = 0; i < maxPredictions; i++) {
         const classPrediction =
@@ -188,20 +176,6 @@ async function predict() {
         isClass2Active = false;
     }
 
-    const class3 = prediction.find(p => p.className === "Class 3");
-    if (class3 && class3.probability.toFixed(2) === "1.00") {
-        if (!isClass3Active) {
-            isClass3Active = true;
-            class3StartTime = Date.now();
-        } else if (Date.now() - class3StartTime > 3000) { // 3초 체크
-            updateTimelineForClass3();
-            count++;
-            isClass3Active = false;
-        }
-    } else {
-        isClass3Active = false;
-    }
-
     drawPose(pose);
 }
 
@@ -223,19 +197,6 @@ function updateTimeline() {
     alert("거북목 자세 경고! 자세를 바로잡아주세요.");
 
     // 행 수가 5개를 초과하면 맨 아래 행을 제거
-    if (tbody.rows.length > 5 && count < 5) {
-        tbody.deleteRow(-1);
-    }
-}
-
-function updateTimelineForClass3() {
-    const currentTime = new Date();
-    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
-    const tbody = document.querySelector("#table-container table tbody");
-    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
-    newRow.innerHTML = `<td>${formattedTime} - <span style="color: #c20000">자리 비움</span></td>`;
-
-    // 필요한 경우 추가적인 행동 (예: 소리 재생)
     if (tbody.rows.length > 5 && count < 5) {
         tbody.deleteRow(-1);
     }
@@ -269,21 +230,3 @@ function drawPose(pose) {
         }
     }
 }
-
-
-function toggleWebcam() {
-    const canvasElement = document.getElementById("canvas");
-    const imageElement = document.getElementById("placeholderImage");
-    const hideCameraButton = document.getElementById("hideCameraButton");
-
-    if (canvasElement.style.display !== "none") {
-        canvasElement.style.display = "none";
-        imageElement.style.display = "block";
-        hideCameraButton.textContent = "카메라 표시하기";
-    } else {
-        canvasElement.style.display = "block";
-        imageElement.style.display = "none";
-        hideCameraButton.textContent = "카메라 숨기기";
-    }
-}
-
