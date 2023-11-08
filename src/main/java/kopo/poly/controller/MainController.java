@@ -1,5 +1,6 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.VideoInfo;
 import kopo.poly.service.impl.YoutubeService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,8 +25,8 @@ public class MainController {
     public String main(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".main 함수 실행");
         String userName = (String) session.getAttribute("SS_USER_NAME");
-        String searchResults = youtubeService.search("거북목");
-        model.addAttribute("videos", searchResults);
+        List<VideoInfo> videos = youtubeService.search("거북목");
+        model.addAttribute("videos", videos);
         model.addAttribute("userName", userName);
         return "main";
     }
@@ -121,6 +123,20 @@ public class MainController {
     public String intro7() throws Exception {
         log.info(this.getClass().getName() + ".gazami7 함수 실행");
         return "/gazami7";
+    }
+
+    // 로딩 페이지
+    @GetMapping("/gazami8")
+    public String intro8() throws Exception {
+        log.info(this.getClass().getName() + ".gazami8 함수 실행");
+        return "/gazami8";
+    }
+
+    // 로딩 페이지
+    @GetMapping("/gazami9")
+    public String intro9() throws Exception {
+        log.info(this.getClass().getName() + ".gazami9 함수 실행");
+        return "/gazami9";
     }
 
     // 가이드 페이지
