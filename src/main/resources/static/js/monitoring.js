@@ -122,7 +122,7 @@ async function loop(timestamp) {
 let count = 0;
 let class2StartTime = 0;
 let isClass2Active = false;
-let selectedTime = 2000; // 기본값
+let selectedTime = 180000; // 기본값
 
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     radio.addEventListener('change', function(event) {
