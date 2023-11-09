@@ -11,7 +11,7 @@ function drawShoulders(pose, minPartConfidence, ctx) {
                 const {y, x} = keypoint.position;
                 ctx.beginPath();
                 ctx.arc(x, y, 3, 0, 2 * Math.PI);
-                ctx.fillStyle = '#5ac9e3';
+                ctx.fillStyle = '#b5ff34';
                 ctx.fill();
             });
 
@@ -19,7 +19,7 @@ function drawShoulders(pose, minPartConfidence, ctx) {
             ctx.beginPath();
             ctx.moveTo(leftShoulder.position.x, leftShoulder.position.y);
             ctx.lineTo(rightShoulder.position.x, rightShoulder.position.y);
-            ctx.strokeStyle = '#5ac9e3';
+            ctx.strokeStyle = '#b5ff34';
             ctx.lineWidth = 2;
             ctx.stroke();
         }
@@ -190,7 +190,7 @@ function updateTimeline() {
     const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
     const tbody = document.querySelector("#table-container table tbody");
     const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
-    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고</strong></span></td>`;
+    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong><img src="/assets/img/turtle5.png" style="width: 10%;"></span></td>`;
 
     sound();
 
