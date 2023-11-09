@@ -6,57 +6,7 @@
     <title>자세 모니터링 페이지</title>
     <link rel="stylesheet" type="text/css" href="css/monitoring.css"/>
     <style>
-        .progress-bar {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            -ms-flex-pack: center;
-            justify-content: center;
-            overflow: hidden;
-            color: #ffffff;
-            text-align: center;
-            white-space: nowrap;
-            background-color: #0059ff;
-            transition: width .6s ease;
-        }
 
-        .progress-bar-main {
-            display: table;
-            /* flex-basis: 25rem; */
-            width: 70%; /*크기 조절*/
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
-
-        .bg-danger {
-            background-color: #d90909 !important;
-        }
-
-        .progress-bar-striped {
-            background-size: 1rem 1rem;
-        }
-
-        .progress {
-            display: -ms-flexbox;
-            display: flex;
-            height: 2rem;
-            overflow: hidden;
-            line-height: 0;
-            font-size: .75rem;
-            background-color: #cde6ff;
-            border-radius: 0.25rem;
-        }
-
-        .progress-bar-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1rem;
-            margin-left: 3rem;  /* 바 좌우 이동 */
-            margin-right: 3rem;
-            margin-bottom: 1rem;
-        }
     </style>
 </head>
 <audio id="myAudio" autoplay>
@@ -116,24 +66,25 @@
                 </tbody>
             </table>
         </div>
+        <br><br>
 
-        <div id="pbox" style="display: none; margin-left: -4rem;">
+        <div id="pbox" style="display: none;">
             <div class="progress-bar-container">
-                <div class="progress-bar-left-text" style="font-size: 15px">정상 자세</div>
+                <div class="progress-bar-text">&nbsp;&nbsp;정상 자세</div>
                 <div class="progress-bar-main">
                     <div class="progress" style="height: 2rem">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width:0%">
+                        <div class="progress-bar bg-success" role="progressbar" style="width:0%">
                             0%
                         </div>
-                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width:100%">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width:100%">
                             100%
                         </div>
                     </div>
                 </div>
-                <div class="progress-bar-right-text" style="font-size: 15px">거북목</div>
+                <div class="progress-bar-text">거북목 자세</div>
             </div>
         </div>
-        <br><br><br><br>
+        <br><br><br>
 
         <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
     </div>

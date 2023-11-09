@@ -197,8 +197,7 @@
             <div class="da-slide">
                 <h2 class="fittext2">서비스 소개</h2>
                 <h4>거북목 진단</h4>
-                <p>거북목 진단 서비스는 사용자의 자세를 분석하여<br>귀와 어깨 사이의 거리를 계산해 거북목의 정도를 등급으로 제공합니다.<br>
-                    지속적인 진단을 통해 사용자가 자신의 거북목 개선 정도를<br>알 수 있도록 도와줍니다.</p>
+                <p>거북목 진단 서비스는 사용자의 자세를 분석하여<br>귀와 어깨 사이의 거리를 계산해 거북목 심각도를 진단하고,<br>맞춤형 등급과 개선 권장사항을 제공합니다.</p>
                 <a href="/gazami6" class="da-link button">이동하기</a>
                 <div class="da-img">
                     <img src="/assets/img/logo2.png" alt="image01" width="320">
@@ -280,7 +279,7 @@
                         <img class="icon" src="/assets/img/icon5.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             추천 영상</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게 맞춤형 영상을 제공합니다. </p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게 맞춤형 영상을 제공합니다.</p>
                     </div>
                     <div class="feature" onclick="document.getElementById('gps').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
@@ -302,21 +301,6 @@
     </div>
 </div>
 
-<!--<div style="background-color: #2b2b36; color: aliceblue">-->
-<!--    <h1>YouTube Video Results</h1>-->
-<!--    <div th:if="${videos.isEmpty()}">-->
-<!--        <p>No videos found.</p>-->
-<!--    </div>-->
-<!--    <div th:unless="${videos.isEmpty()}">-->
-<!--        <ul>-->
-<!--            <li th:each="video : ${videos}">-->
-<!--                <span th:text="${video.title}">Video Title</span>-->
-<!--                <iframe th:src="|https://www.youtube.com/embed/${video.videoId}|" width="560" height="315" frameborder="0" allowfullscreen></iframe>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="black-section"></div>
 <!-- Service section end -->
 <!-- Portfolio section start -->
@@ -327,8 +311,12 @@
         <div class=" title">
             <h1>추천 영상</h1>
         </div>
-        <!-- Start details for portfolio project 1 -->
-
+        <div class="container centered" style="padding-top: 5px">
+            <p style="color: #2b2b36; font-weight: bold">귀찮은 검색 대신, 맞춤형 영상 리스트로 쉽고 효과적인 관리를 시작해보세요.<br>
+                매일 몇 분씩 투자하여 거북목 교정 운동을 실천하면, 목과 어깨의 긴장을 완화하고 전반적인 건강을 개선할 수 있습니다.
+            </p>
+        </div>
+        <br>
         <div id="single-project" th:unless="${videos.isEmpty()}">
 
             <ul id="portfolio-grid" class="thumbnails row">
@@ -347,8 +335,6 @@
         </div>
     </div>
 </div>
-<!-- Portfolio section end -->
-<!-- About us section start -->
 
 <div class="section primary-section" id="gps">
     <div class="triangle"></div>
@@ -457,22 +443,9 @@
             <script type="text/javascript" src="js/jquery.cslider.js"></script>
             <script type="text/javascript" src="js/jquery.placeholder.js"></script>
             <script type="text/javascript" src="js/jquery.inview.js"></script>
-            <!-- Load google maps api and call initializeMap function defined in app.js -->
-            <script async="" defer="" type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initializeMap"></script>
-            <!-- css3-mediaqueries.js for IE8 or older -->
-            <!--[if lt IE 9]>
             <script src="js/respond.min.js"></script>
-            <![endif]-->
             <script type="text/javascript" src="js/app.js"></script>
-            <script async
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsfMJi642Tr5yVcG6OsF0PgdKJBxv38Zk&callback=console.debug&libraries=maps,marker&v=beta">
-            </script>
-
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962&libraries=services,clusterer"></script>
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962"></script>
+            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962&libraries=services,clusterer"></script>
 
 </body>
 </html>

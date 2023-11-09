@@ -59,7 +59,7 @@ async function init() {
     document.getElementById("analysisText").style.display = "block";
 
     document.getElementById("stopButton").onclick = function () {
-        window.location.href = '/main';  // 이곳에 원하는 페이지의 URL을 설정하세요
+        window.location.href = '/gazami10';  // 이곳에 원하는 페이지의 URL을 설정하세요
     };
 
     document.getElementById("editButton").onclick = function () {
@@ -122,7 +122,11 @@ async function loop(timestamp) {
 let count = 0;
 let class2StartTime = 0;
 let isClass2Active = false;
-let selectedTime = 180000; // 기본값
+let selectedTime = 2000; // 기본값
+const USER_NOT_PRESENT_THRESHOLD = 0.1; // 실험을 통해 적절한 값을 찾아야함
+let userNotPresentTimer = null; // 사용자가 보이지 않는 시간을 추적하는 타이머
+const USER_NOT_PRESENT_DELAY = 5000; // 5초 지연
+let showinfo = 0; // 알림창 변수
 
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     radio.addEventListener('change', function(event) {
@@ -133,18 +137,37 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 
 async function predict() {
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
+
+    // 사용자 감지 여부를 체크합니다.
+    if (!pose || pose.score < USER_NOT_PRESENT_THRESHOLD) {
+        // 사용자가 보이지 않으면 타이머를 설정합니다.
+        if (userNotPresentTimer === null) {
+            userNotPresentTimer = setTimeout(() => {
+                updateUserAbsentTimeline();
+                count++;
+            }, USER_NOT_PRESENT_DELAY);
+        }
+        return; // 이벤트 루프의 다음 사이클로 이동합니다.
+    } else {
+        // 사용자가 감지되면 타이머를 초기화합니다.
+        if (userNotPresentTimer !== null) {
+            clearTimeout(userNotPresentTimer);
+            userNotPresentTimer = null;
+        }
+    }
+
     const prediction = await model.predict(posenetOutput);
 
     var progressBarElement = document.getElementsByClassName("progress-bar-main")[0];
     var progressBarCode = '<div class=\"progress\" style=\"height: 2rem\">'
 
-    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-success\" role=\"progressbar\" style=\"width:'
+    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-success\" role=\"progressbar\" style=\"font-size:15px;width:'
     progressBarCode += prediction[0].probability.toFixed(1) * 100
     progressBarCode += '%\">'
     progressBarCode += prediction[0].probability.toFixed(1) * 100
     progressBarCode += '%</div>'
 
-    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-danger\" role=\"progressbar\" style=\"width:'
+    progressBarCode += '<div class=\"progress-bar progress-bar-striped bg-danger\" role=\"progressbar\" style=\"font-size:15px;width:'
     progressBarCode += prediction[1].probability.toFixed(1) * 100
     progressBarCode += '%\">'
     progressBarCode += prediction[1].probability.toFixed(1) * 100
@@ -167,8 +190,9 @@ async function predict() {
         } else if (Date.now() - class2StartTime > selectedTime) {
             updateTimeline();
             count++;
-            if (count < 2) {
+            if (showinfo === 0) {
                 showStretchingTips();
+                showinfo = 1;
             }
             isClass2Active = false;
         }
@@ -177,6 +201,21 @@ async function predict() {
     }
 
     drawPose(pose);
+}
+
+function updateUserAbsentTimeline() {
+    // 타임라인에 메시지 추가
+    const currentTime = new Date();
+    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
+    const tbody = document.querySelector("#table-container table tbody");
+    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
+    newRow.innerHTML = `<td>${formattedTime} - <span style="color: #d76100"><strong>사용자 자리 비움</strong></span></td>`;
+
+    alert("사용자가 자리를 비웠습니다. 잠시 후 다시 시작하세요.");
+
+    if (tbody.rows.length > 5 && count < 5) {
+        tbody.deleteRow(-1);
+    }
 }
 
 const playSound = document.getElementById("playSound");
@@ -190,7 +229,7 @@ function updateTimeline() {
     const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
     const tbody = document.querySelector("#table-container table tbody");
     const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
-    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong><img src="/assets/img/turtle5.png" style="width: 10%;"></span></td>`;
+    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong></span></td>`;
 
     sound();
 

@@ -42,3 +42,36 @@ function toggleWebcam() {
         hideCameraButton.textContent = "카메라 숨기기";
     }
 }
+
+// alertOption 라디오 버튼의 값을 확인하고, 해당하는 효과음을 재생하는 함수
+function changeAlertSound() {
+    // 오디오 요소를 가져옵니다.
+    var audioElement = document.getElementById('playSound');
+
+    // 선택된 라디오 버튼의 값을 찾습니다.
+    var alertOptions = document.getElementsByName('alertOption');
+    for (var i = 0; i < alertOptions.length; i++) {
+        if (alertOptions[i].checked) {
+            // 선택된 alertOption에 따라 오디오 파일을 변경합니다.
+            switch (alertOptions[i].value) {
+                case 'alertA':
+                    audioElement.src = '/assets/img/alarm.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+                    break;
+                case 'alertB':
+                    audioElement.src = '/assets/img/guide2.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+                    break;
+                // 추가적인 alertOption에 대한 case를 여기에 추가할 수 있습니다.
+            }
+            break;
+        }
+    }
+}
+
+// 모든 라디오 버튼에 이벤트 리스너를 추가하여, 값이 변경될 때마다 changeAlertSound 함수가 호출되도록 합니다.
+var alertOptions = document.getElementsByName('alertOption');
+for (var i = 0; i < alertOptions.length; i++) {
+    alertOptions[i].addEventListener('change', changeAlertSound);
+}
+
+// 페이지 로드 시 기본 효과음을 설정합니다.
+document.addEventListener('DOMContentLoaded', changeAlertSound);
