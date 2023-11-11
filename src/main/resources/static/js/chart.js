@@ -114,17 +114,30 @@ var pie = document.getElementById('pie');
 var pieConfig = new Chart(pie, {
     type: 'pie',
     data: {
-        labels: ['Normal', 'Abnormal'],
+        labels: ['정상', '거북목'],
         datasets: [{
             label: '# of data',
-            data: [totalNormal, totalAbnormal],
+            data: [(totalNormal * 100 / (totalAbnormal + totalNormal)), (totalAbnormal * 100 / (totalAbnormal + totalNormal))],     // 정상 / 거북목 비율
             backgroundColor: ['rgba(103, 216, 239, 1)', 'rgba(246, 26, 104,1)'],
             borderWidth: 1
         }]
     },
     options: {
-        responsive: true, // Instruct chart js to respond nicely.
-        maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+        responsive: true,
+        maintainAspectRatio: true,
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = data.labels[tooltipItem.index] || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    var value = data.datasets[0].data[tooltipItem.index];
+                    label += Math.round(value) + '%'; // 여기서 반올림
+                    return label;
+                }
+            }
+        }
     }
 });
 //polar area chart
