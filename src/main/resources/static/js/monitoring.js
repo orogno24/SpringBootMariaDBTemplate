@@ -1,34 +1,7 @@
-function drawShoulders(pose, minPartConfidence, ctx) {
-    if (pose) {
-        // 어깨 키포인트: 왼쪽 어깨 (5), 오른쪽 어깨 (6)
-        const leftShoulder = pose.keypoints[5];
-        const rightShoulder = pose.keypoints[6];
-
-        // 두 어깨 모두 신뢰도가 충분히 높은 경우에만 선을 그립니다.
-        if (leftShoulder.score > minPartConfidence && rightShoulder.score > minPartConfidence) {
-            // 어깨 점 그리기
-            [leftShoulder, rightShoulder].forEach(keypoint => {
-                const {y, x} = keypoint.position;
-                ctx.beginPath();
-                ctx.arc(x, y, 3, 0, 2 * Math.PI);
-                ctx.fillStyle = '#b5ff34';
-                ctx.fill();
-            });
-
-            // 어깨 선 그리기
-            ctx.beginPath();
-            ctx.moveTo(leftShoulder.position.x, leftShoulder.position.y);
-            ctx.lineTo(rightShoulder.position.x, rightShoulder.position.y);
-            ctx.strokeStyle = '#b5ff34';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-    }
-}
-
-
 const URL = "/assets/my_model/";
 let model, webcam, ctx, maxPredictions;
+let normalPostureCount = 0;
+let abnormalPostureCount = 0;
 
 async function init() {
     const modelURL = URL + "model.json";
@@ -58,9 +31,9 @@ async function init() {
     document.getElementById("statusText").style.display = "block";
     document.getElementById("analysisText").style.display = "block";
 
-    document.getElementById("stopButton").onclick = function () {
-        window.location.href = '/gazami10';  // 이곳에 원하는 페이지의 URL을 설정하세요
-    };
+    // document.getElementById("stopButton").onclick = function () {
+    //     window.location.href = '/gazami10';  // 이곳에 원하는 페이지의 URL을 설정하세요
+    // };
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -95,22 +68,14 @@ async function init() {
         }
     }
 
-
     // 라디오 버튼의 변화를 감지하여 timeSettingForUpdate 값을 업데이트
     document.querySelectorAll('input[name="timeOption"]').forEach(function (radio) {
         radio.addEventListener('change', function () {
             timeSettingForUpdate = this.value;
         });
     });
-}
 
-function showStretchingTips() {
-    // 거북목 운동 div를 가져옵니다.
-    var neckExerciseDiv = document.getElementById("neckExercise");
-
-    neckExerciseDiv.style.display = "block";
-
-    neckExerciseDiv.scrollIntoView({behavior: 'smooth'});
+    startPostureEvaluation();
 }
 
 async function loop(timestamp) {
@@ -134,6 +99,41 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
         selectedTime = event.target.value;
     });
 });
+
+function startPostureEvaluation() {
+    setInterval(async function() {
+        await predict();
+    }, 6000); // 1분 (60,000밀리초) 간격으로 실행
+}
+
+function updatePostureCounts() {
+    document.getElementById('normalPostureCount').innerText = normalPostureCount;
+    document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
+}
+
+document.getElementById("stopButton").onclick = function () {
+    // 숨겨진 입력 필드에 카운트 값을 설정합니다.
+    document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
+    document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
+
+    // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+    $.ajax({
+        url: "/chart/insertChart",
+        type: "post",
+        dataType: "JSON",
+        data: $("#postureDataForm").serialize(),
+        success: function (json) {
+            alert(json.msg);
+            location.href = "/gazami10";
+        },
+        error: function (xhr, status, error) {
+            // 에러 핸들링
+            console.error("Error: " + error);
+            alert("데이터 전송 중 오류가 발생했습니다.");
+        }
+    });
+};
+
 
 async function predict() {
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
@@ -184,6 +184,8 @@ async function predict() {
 
     const class2 = prediction.find(p => p.className === "Class 2");
     if (class2 && class2.probability.toFixed(2) === "1.00") {
+        abnormalPostureCount++;
+        updatePostureCounts();
         if (!isClass2Active) {
             isClass2Active = true;
             class2StartTime = Date.now();
@@ -197,75 +199,10 @@ async function predict() {
             isClass2Active = false;
         }
     } else {
+        normalPostureCount++;
+        updatePostureCounts();
         isClass2Active = false;
     }
 
     drawPose(pose);
-}
-
-function updateUserAbsentTimeline() {
-    // 타임라인에 메시지 추가
-    const currentTime = new Date();
-    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
-    const tbody = document.querySelector("#table-container table tbody");
-    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
-    newRow.innerHTML = `<td>${formattedTime} - <span style="color: #d76100"><strong>사용자 자리 비움</strong></span></td>`;
-
-    alert("사용자가 자리를 비웠습니다. 잠시 후 다시 시작하세요.");
-
-    if (tbody.rows.length > 5 && count < 5) {
-        tbody.deleteRow(-1);
-    }
-}
-
-const playSound = document.getElementById("playSound");
-
-function sound() {
-    playSound.play();
-}
-
-function updateTimeline() {
-    const currentTime = new Date();
-    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
-    const tbody = document.querySelector("#table-container table tbody");
-    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
-    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong></span></td>`;
-
-    sound();
-
-    alert("거북목 자세 경고! 자세를 바로잡아주세요.");
-
-    // 행 수가 5개를 초과하면 맨 아래 행을 제거
-    if (tbody.rows.length > 5 && count < 5) {
-        tbody.deleteRow(-1);
-    }
-}
-
-function drawPose(pose) {
-    if (webcam.canvas) {
-        // 웹캠 피드를 그립니다
-        ctx.drawImage(webcam.canvas, 0, 0);
-
-        // 웹캠 이미지 위에 실루엣을 그립니다
-        const silhouette = document.getElementById('silhouetteImage');
-        if (silhouette && silhouette.complete) {
-            // 이미지가 로드되었는지 확인합니다
-            const scaleX = webcam.canvas.width / silhouette.naturalWidth;
-            const scaleY = webcam.canvas.height / silhouette.naturalHeight;
-            const scale = Math.min(scaleX, scaleY);
-
-            // 이미지를 중앙에 위치시키기 위한 계산
-            const x = (webcam.canvas.width / 2) - (silhouette.naturalWidth / 2) * scale;
-            const y = (webcam.canvas.height / 2) - (silhouette.naturalHeight / 2) * scale;
-
-            // 캔버스에 실루엣 이미지를 그립니다
-            ctx.drawImage(silhouette, x, y, silhouette.naturalWidth * scale, silhouette.naturalHeight * scale);
-        }
-
-        // 포즈가 있으면 해당하는 키포인트(여기서는 어깨)를 그립니다
-        if (pose) {
-            const minPartConfidence = 0.5;
-            drawShoulders(pose, minPartConfidence, ctx);
-        }
-    }
 }

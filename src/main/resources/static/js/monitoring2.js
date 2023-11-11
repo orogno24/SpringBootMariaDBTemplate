@@ -1,3 +1,107 @@
+function drawShoulders(pose, minPartConfidence, ctx) {
+    if (pose) {
+        // 어깨 키포인트: 왼쪽 어깨 (5), 오른쪽 어깨 (6)
+        const leftShoulder = pose.keypoints[5];
+        const rightShoulder = pose.keypoints[6];
+
+        // 두 어깨 모두 신뢰도가 충분히 높은 경우에만 선을 그립니다.
+        if (leftShoulder.score > minPartConfidence && rightShoulder.score > minPartConfidence) {
+            // 어깨 점 그리기
+            [leftShoulder, rightShoulder].forEach(keypoint => {
+                const {y, x} = keypoint.position;
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                ctx.fillStyle = '#b5ff34';
+                ctx.fill();
+            });
+
+            // 어깨 선 그리기
+            ctx.beginPath();
+            ctx.moveTo(leftShoulder.position.x, leftShoulder.position.y);
+            ctx.lineTo(rightShoulder.position.x, rightShoulder.position.y);
+            ctx.strokeStyle = '#b5ff34';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+    }
+}
+
+function drawPose(pose) {
+    if (webcam.canvas) {
+        // 웹캠 피드를 그립니다
+        ctx.drawImage(webcam.canvas, 0, 0);
+
+        // 웹캠 이미지 위에 실루엣을 그립니다
+        const silhouette = document.getElementById('silhouetteImage');
+        if (silhouette && silhouette.complete) {
+            // 이미지가 로드되었는지 확인합니다
+            const scaleX = webcam.canvas.width / silhouette.naturalWidth;
+            const scaleY = webcam.canvas.height / silhouette.naturalHeight;
+            const scale = Math.min(scaleX, scaleY);
+
+            // 이미지를 중앙에 위치시키기 위한 계산
+            const x = (webcam.canvas.width / 2) - (silhouette.naturalWidth / 2) * scale;
+            const y = (webcam.canvas.height / 2) - (silhouette.naturalHeight / 2) * scale;
+
+            // 캔버스에 실루엣 이미지를 그립니다
+            ctx.drawImage(silhouette, x, y, silhouette.naturalWidth * scale, silhouette.naturalHeight * scale);
+        }
+
+        // 포즈가 있으면 해당하는 키포인트(여기서는 어깨)를 그립니다
+        if (pose) {
+            const minPartConfidence = 0.5;
+            drawShoulders(pose, minPartConfidence, ctx);
+        }
+    }
+}
+
+function updateUserAbsentTimeline() {
+    // 타임라인에 메시지 추가
+    const currentTime = new Date();
+    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
+    const tbody = document.querySelector("#table-container table tbody");
+    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
+    newRow.innerHTML = `<td>${formattedTime} - <span style="color: #d76100"><strong>사용자 자리 비움</strong></span></td>`;
+
+    alert("사용자가 자리를 비웠습니다. 잠시 후 다시 시작하세요.");
+
+    if (tbody.rows.length > 5 && count < 5) {
+        tbody.deleteRow(-1);
+    }
+}
+
+function updateTimeline() {
+    const currentTime = new Date();
+    const formattedTime = format12HourTime(currentTime); // 12시간 형식으로 포맷
+    const tbody = document.querySelector("#table-container table tbody");
+    const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
+    newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong></span></td>`;
+
+    sound();
+
+    alert("거북목 자세 경고! 자세를 바로잡아주세요.");
+
+    // 행 수가 5개를 초과하면 맨 아래 행을 제거
+    if (tbody.rows.length > 5 && count < 5) {
+        tbody.deleteRow(-1);
+    }
+}
+
+function showStretchingTips() {
+    // 거북목 운동 div를 가져옵니다.
+    var neckExerciseDiv = document.getElementById("neckExercise");
+
+    neckExerciseDiv.style.display = "block";
+
+    neckExerciseDiv.scrollIntoView({behavior: 'smooth'});
+}
+
+const playSound = document.getElementById("playSound");
+
+function sound() {
+    playSound.play();
+}
+
 window.onload = function () {
     cycleDots();
 }

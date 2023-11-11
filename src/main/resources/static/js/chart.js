@@ -114,10 +114,10 @@ var pie = document.getElementById('pie');
 var pieConfig = new Chart(pie, {
     type: 'pie',
     data: {
-        labels: ['data-1', 'data-2'],
+        labels: ['Normal', 'Abnormal'],
         datasets: [{
             label: '# of data',
-            data: [40, 80],
+            data: [totalNormal, totalAbnormal],
             backgroundColor: ['rgba(103, 216, 239, 1)', 'rgba(246, 26, 104,1)'],
             borderWidth: 1
         }]

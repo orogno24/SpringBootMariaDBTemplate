@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.mapper.IChartMapper">
+
+    <insert id="insertData" parameterType="ChartDTO">
+        INSERT INTO CHART
+        (USER_ID,
+         DATE,
+         WEEK,
+         NORMAL,
+         ABNORMAL)
+        VALUES (#{userId},
+                NOW(),
+                DAYNAME(NOW()),
+                #{normal},
+                #{abnormal})
+            ON DUPLICATE KEY UPDATE
+            WEEK = VALUES(WEEK),
+            NORMAL = VALUES(NORMAL),
+            ABNORMAL = VALUES(ABNORMAL);
+    </insert>
+
+    <select id="getData" resultType="ChartDTO">
+        SELECT
+            DATE(DATE) AS dateOnly,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal
+        FROM
+            CHART
+        WHERE
+            DATE(DATE) = CURDATE()
+          AND USER_ID = #{userId}
+        GROUP BY
+            dateOnly
+    </select>
+
+
+</mapper>

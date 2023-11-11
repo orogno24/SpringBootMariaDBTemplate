@@ -84,6 +84,17 @@
                 <div class="progress-bar-text">거북목 자세</div>
             </div>
         </div>
+
+        <div>
+            <p>정상 자세 횟수: <span id="normalPostureCount">0</span></p>
+            <p>비정상 자세 횟수: <span id="abnormalPostureCount">0</span></p>
+        </div>
+
+        <form id="postureDataForm">
+            <input type="hidden" name="normalPostureCount" id="hiddenNormalPostureCount" value="0">
+            <input type="hidden" name="abnormalPostureCount" id="hiddenAbnormalPostureCount" value="0">
+        </form>
+
         <br><br><br>
 
         <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
@@ -151,6 +162,7 @@
 </footer>
 <div class="black-section"></div>
 
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
 
