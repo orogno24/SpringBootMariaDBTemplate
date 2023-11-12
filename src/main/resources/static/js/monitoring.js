@@ -2,7 +2,7 @@ const URL = "/assets/my_model/";
 let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
-
+let StartTime, totalTime;
 async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -31,9 +31,7 @@ async function init() {
     document.getElementById("statusText").style.display = "block";
     document.getElementById("analysisText").style.display = "block";
 
-    // document.getElementById("stopButton").onclick = function () {
-    //     window.location.href = '/gazami10';  // 이곳에 원하는 페이지의 URL을 설정하세요
-    // };
+    StartTime = Date.now();
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -93,6 +91,11 @@ const USER_NOT_PRESENT_DELAY = 5000; // 5초 지연
 let showinfo = 0; // 알림창 변수
 let lastUpdateTime = 0;
 const updateInterval = 600; // 1분 간격
+let time1 = 0;      // 구간 5등분
+let time2 = 0;
+let time3 = 0;
+let time4 = 0;
+let time5 = 0;
 
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     radio.addEventListener('change', function(event) {
@@ -133,6 +136,13 @@ document.getElementById("stopButton").onclick = function () {
 
 async function predict() {
     const currentTime = Date.now();
+
+    totalTime = currentTime - StartTime;
+    time1 = (totalTime / 5) + StartTime;
+    time2 = (totalTime / 5)*2 + StartTime;
+    time3 = (totalTime / 5)*3 + StartTime;
+    time4 = (totalTime / 5)*4 + StartTime;
+    time5 = currentTime;
 
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
 

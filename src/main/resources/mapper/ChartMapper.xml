@@ -51,4 +51,16 @@
             DATE;
     </select>
 
+    <insert id="insertLineData" parameterType="LineChartDTO">
+        INSERT INTO LINECHART
+        (NORMAL,
+         ABNORMAL,
+         POSE_SEQ)
+        VALUES (#{normal},
+                #{abnormal},
+                (SELECT MAX(POSE_SEQ) FROM CHART WHERE USER_ID = #{userId}))
+            ON DUPLICATE KEY UPDATE
+                        NORMAL = VALUES(NORMAL),
+                        ABNORMAL = VALUES(ABNORMAL);
+    </insert>
 </mapper>
