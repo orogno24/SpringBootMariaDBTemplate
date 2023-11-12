@@ -1,9 +1,6 @@
 package kopo.poly.controller;
 
-import kopo.poly.dto.ChartDTO;
-import kopo.poly.dto.MsgDTO;
-import kopo.poly.dto.NoticeDTO;
-import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.dto.*;
 import kopo.poly.service.IChartService;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
@@ -108,4 +105,46 @@ public class ChartController {
         return "/chart/dashboard";
     }
 
+    @ResponseBody
+    @PostMapping(value = "insertLineChart")
+    public MsgDTO insertLineData(HttpServletRequest request) {
+
+        log.info(this.getClass().getName() + ".insertLineData Start!");
+
+        String msg = ""; // 메시지 내용
+        String url = "/main";
+
+        MsgDTO dto = null; // 결과 메시지 구조
+
+        try {
+            String normal = CmmUtil.nvl(request.getParameter("normalPostureCount"));
+            String abnormal = CmmUtil.nvl(request.getParameter("abnormalPostureCount"));
+
+            log.info("normal : " + normal);
+            log.info("abnormal : " + abnormal);
+
+            // 데이터 저장하기 위해 DTO에 저장하기
+            LineChartDTO pDTO = new LineChartDTO();
+            pDTO.setNormal(normal);
+            pDTO.setAbnormal(abnormal);
+
+            chartService.insertLineData(pDTO);
+
+            msg = "등록되었습니다.";
+
+        } catch (Exception e) {
+
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+
+            log.info(this.getClass().getName() + ".insertLineData End!");
+        }
+
+        return dto;
+    }
 }

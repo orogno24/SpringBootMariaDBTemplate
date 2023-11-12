@@ -1,6 +1,7 @@
 package kopo.poly.persistance.mapper;
 
 import kopo.poly.dto.ChartDTO;
+import kopo.poly.dto.LineChartDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface IChartMapper {
     ChartDTO getData(ChartDTO pDTO) throws Exception;
 
     List<ChartDTO> getWeek(ChartDTO pDTO) throws Exception;
+
+    void insertLineData(LineChartDTO pDTO) throws Exception;
 
 }
