@@ -75,7 +75,6 @@ async function init() {
         });
     });
 
-    startPostureEvaluation();
 }
 
 async function loop(timestamp) {
@@ -92,6 +91,8 @@ const USER_NOT_PRESENT_THRESHOLD = 0.1; // 실험을 통해 적절한 값을 찾
 let userNotPresentTimer = null; // 사용자가 보이지 않는 시간을 추적하는 타이머
 const USER_NOT_PRESENT_DELAY = 5000; // 5초 지연
 let showinfo = 0; // 알림창 변수
+let lastUpdateTime = 0;
+const updateInterval = 600; // 1분 간격
 
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     radio.addEventListener('change', function(event) {
@@ -100,11 +101,6 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     });
 });
 
-function startPostureEvaluation() {
-    setInterval(async function() {
-        await predict();
-    }, 6000); // 1분 (60,000밀리초) 간격으로 실행
-}
 
 function updatePostureCounts() {
     document.getElementById('normalPostureCount').innerText = normalPostureCount;
@@ -136,6 +132,8 @@ document.getElementById("stopButton").onclick = function () {
 
 
 async function predict() {
+    const currentTime = Date.now();
+
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
 
     // 사용자 감지 여부를 체크합니다.
@@ -184,7 +182,12 @@ async function predict() {
 
     const class2 = prediction.find(p => p.className === "Class 2");
     if (class2 && class2.probability.toFixed(2) === "1.00") {
-        abnormalPostureCount++;
+
+        if (currentTime - lastUpdateTime >= updateInterval) {
+            abnormalPostureCount++;
+            lastUpdateTime = currentTime;
+        }
+
         updatePostureCounts();
         if (!isClass2Active) {
             isClass2Active = true;
@@ -199,7 +202,10 @@ async function predict() {
             isClass2Active = false;
         }
     } else {
-        normalPostureCount++;
+        if (currentTime - lastUpdateTime >= updateInterval) {
+            normalPostureCount++;
+            lastUpdateTime = currentTime;
+        }
         updatePostureCounts();
         isClass2Active = false;
     }

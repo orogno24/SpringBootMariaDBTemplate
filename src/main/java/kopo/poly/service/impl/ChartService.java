@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,5 +44,13 @@ public class ChartService implements IChartService {
         log.info(this.getClass().getName() + ".getData start!");
 
         return chartMapper.getData(pDTO);
+    }
+
+    @Override
+    public List<ChartDTO> getWeek(ChartDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getWeek start!");
+
+        return chartMapper.getWeek(pDTO);
     }
 }

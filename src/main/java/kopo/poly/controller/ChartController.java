@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -80,24 +82,30 @@ public class ChartController {
 
         log.info("session user_id : " + userId);
 
-        /*
-         * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
-         */
         ChartDTO pDTO = new ChartDTO();
         pDTO.setUserId(userId);
 
-        // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
         ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
+        List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))
+                .orElseGet(ArrayList::new);
 
         log.info("TotalNormal: " + rDTO.getTotalNormal());
         log.info("TotalAbnormal: " + rDTO.getTotalAbnormal());
 
         // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("chartData", rList);
+
         model.addAttribute("rDTO", rDTO);
 
         log.info(this.getClass().getName() + ".dounut End!");
 
         return "chart/dounut";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard() throws Exception {
+        log.info(this.getClass().getName() + ".dashboard 함수 실행");
+        return "/chart/dashboard";
     }
 
 }

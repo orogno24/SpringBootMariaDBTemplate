@@ -107,11 +107,21 @@
         </div>
     </main>
 </div>
+<canvas id="postureChart"></canvas>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const chartData = [[${chartData}]];
+    /*]]>*/
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
 </script>
 <script>
     const totalNormal = [[${rDTO.totalNormal}]];
     const totalAbnormal = [[${rDTO.totalAbnormal}]];
+    const labels = chartData.map(item => item.weekday);
+    const normalData = chartData.map(item => item.totalNormal);
+    const abnormalData = chartData.map(item => item.totalAbnormal);
 </script>
 <script type="text/javascript" src="/js/chart.js"></script>
 </body>

@@ -35,5 +35,20 @@
             dateOnly
     </select>
 
+    <select id="getWeek" resultType="ChartDTO">
+        SELECT
+            DAYNAME(DATE) AS weekday,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal
+        FROM
+            CHART
+        WHERE
+            DATE >= CURDATE() - INTERVAL 7 DAY
+          AND USER_ID = #{userId}
+        GROUP BY
+            DAYOFWEEK(DATE)
+        ORDER BY
+            DATE;
+    </select>
 
 </mapper>
