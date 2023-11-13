@@ -71,11 +71,57 @@ public class ChartController {
         return dto;
     }
 
+    @ResponseBody
+    @PostMapping(value = "insertLineChart")
+    public MsgDTO insertLineData(HttpServletRequest request, HttpSession session) {
+
+        log.info(this.getClass().getName() + ".insertLineData Start!");
+
+        String msg = ""; // 메시지 내용
+
+        MsgDTO dto = null; // 결과 메시지 구조
+
+        try {
+            String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+            String normal = CmmUtil.nvl(request.getParameter("minnormalPostureCount"));
+            String abnormal = CmmUtil.nvl(request.getParameter("minabnormalPostureCount"));
+
+            log.info("session user_id : " + userId);
+            log.info("minnormal : " + normal);
+            log.info("minabnormal : " + abnormal);
+
+            // 데이터 저장하기 위해 DTO에 저장하기
+            LineChartDTO pDTO = new LineChartDTO();
+            pDTO.setUserId(userId);
+            pDTO.setNormal(normal);
+            pDTO.setAbnormal(abnormal);
+
+            chartService.insertLineData(pDTO);
+
+            msg = "등록되었습니다.";
+
+        } catch (Exception e) {
+
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+
+            log.info(this.getClass().getName() + ".insertLineData End!");
+        }
+
+        return dto;
+    }
+
     @GetMapping("dounut")
     public String dounut(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
         log.info(this.getClass().getName() + ".dounut 함수 실행");
 
         String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
 
         log.info("session user_id : " + userId);
 
@@ -108,11 +154,15 @@ public class ChartController {
         log.info("session user_id : " + userId);
 
         ChartDTO pDTO = new ChartDTO();
+        LineChartDTO pDTO2 = new LineChartDTO();
         pDTO.setUserId(userId);
+        pDTO2.setUserId(userId);
+
 
         ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
         List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))
                 .orElseGet(ArrayList::new);
+        chartService.insertLineData(pDTO2);
 
         log.info("TotalNormal: " + rDTO.getTotalNormal());
         log.info("TotalAbnormal: " + rDTO.getTotalAbnormal());
@@ -136,46 +186,5 @@ public class ChartController {
         return "/chart/dashboard2";
     }
 
-    @ResponseBody
-    @PostMapping(value = "insertLineChart")
-    public MsgDTO insertLineData(HttpServletRequest request) {
 
-        log.info(this.getClass().getName() + ".insertLineData Start!");
-
-        String msg = ""; // 메시지 내용
-        String url = "/main";
-
-        MsgDTO dto = null; // 결과 메시지 구조
-
-        try {
-            String normal = CmmUtil.nvl(request.getParameter("normalPostureCount"));
-            String abnormal = CmmUtil.nvl(request.getParameter("abnormalPostureCount"));
-
-            log.info("normal : " + normal);
-            log.info("abnormal : " + abnormal);
-
-            // 데이터 저장하기 위해 DTO에 저장하기
-            LineChartDTO pDTO = new LineChartDTO();
-            pDTO.setNormal(normal);
-            pDTO.setAbnormal(abnormal);
-
-            chartService.insertLineData(pDTO);
-
-            msg = "등록되었습니다.";
-
-        } catch (Exception e) {
-
-            msg = "실패하였습니다. : " + e.getMessage();
-            log.info(e.toString());
-            e.printStackTrace();
-
-        } finally {
-            dto = new MsgDTO();
-            dto.setMsg(msg);
-
-            log.info(this.getClass().getName() + ".insertLineData End!");
-        }
-
-        return dto;
-    }
 }

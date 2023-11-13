@@ -18,4 +18,7 @@ public interface IChartMapper {
 
     void insertLineData(LineChartDTO pDTO) throws Exception;
 
+    List<LineChartDTO> getLineData(LineChartDTO pDTO) throws Exception;
+
+
 }
