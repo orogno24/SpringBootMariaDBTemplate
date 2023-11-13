@@ -4,22 +4,22 @@
     <title>통계</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
     <style type="text/css">
     </style>
 </head>
-
 <body>
 
 <ul id="slide-out" class="side-nav fixed z-depth-2" style="background-color: #2D2F36">
-    <li class="center no-padding" >
+    <li class="center no-padding">
         <div class="indigo darken-2 white-text" style="height: 180px; background-color: #15c6e5">
             <div class="row" style="background: #33343f">
                 <img style="margin-top: 10%;" width="75" height="75" src="/assets/img/logo7.png"/>
 
-                <p style="margin-top: -13%;" >
+                <p style="margin-top: -13%;">
                     <span style="color: #15c6e5">[[${userName}]]</span>님의 페이지
                 </p>
             </div>
@@ -27,7 +27,6 @@
     </li>
 
     <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
-
 
     <ul class="collapsible" data-collapsible="accordion">
         <li id="dash_users">
@@ -50,45 +49,37 @@
             <div id="dash_products_body" class="collapsible-body">
                 <ul>
                     <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Products</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Orders</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
                     </li>
                 </ul>
             </div>
         </li>
 
         <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>커뮤니티</b></div>
+            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
             <div id="dash_categories_body" class="collapsible-body">
                 <ul>
                     <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
                     </li>
 
                     <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Sub Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
                     </li>
                 </ul>
             </div>
         </li>
     </ul>
 </ul>
-
 <header>
-    <ul class="dropdown-content" id="user_dropdown">
-        <li><a class="indigo-text" href="#!">Profile</a></li>
-        <li><a class="indigo-text" href="#!">Logout</a></li>
-    </ul>
+
 
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
             <img style="margin-top: 17px; margin-left: 5px;" src="/assets/img/chart.png"/>
 
-            <ul class="right hide-on-med-and-down">
-                <li>
-                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
-                </li>
-            </ul>
+
 
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
@@ -105,38 +96,46 @@
 <main>
     <div class="row">
         <div class="col s6">
-            <div style="padding: 35px; min-height: 352px; overflow: auto; background-color: #fdfdfd;" align="center" class="card">
+            <div style="padding: 35px; min-height: 352px; overflow: auto; background-color: #fdfdfd;" align="center"
+                 class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36">오늘의 자세 점수</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">오늘의
+                            자세 점수</b>
                     </div>
                 </div>
 
+                <img src="/assets/img/logo.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
+
                 <div class="score">
-                    <p style="font-size: 50px; font-weight: bold">[[${userName}]]님의 자세 점수: <span style="color: #15c6e5">85</span>점</p>
+                    <p style="font-size: 50px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
+                            style="color: #a8001d;">85</span>점</p>
                 </div>
 
-                <p style="font-size: 20px;"> <img src="/assets/img/turtle.png" alt="" width="10%">
-                    <span style="color: #24be32">Mr. 거북</span>: 잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
+                <p style="font-size: 20px; margin-top: 20px; color: #555;">
+                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
                 </p>
-
             </div>
         </div>
 
         <div class="col s6">
-            <div style="padding: 35px; min-height: 352px; overflow: auto;" align="center" class="card">
+            <div style="padding: 35px; min-height: 352px; overflow: auto; background-color: #fdfdfd;" align="center"
+                 class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36">사용자 자세 점수 평균</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">사용자 평균 점수</b>
                     </div>
                 </div>
 
+                <img src="/assets/img/turtle.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
+
                 <div class="score">
-                    <p style="font-size: 50px; font-weight: bold">사용자 자세 점수 평균: <span style="color: #15c6e5">64</span>점</p>
+                    <p style="font-size: 50px; font-weight: bold; color: #333;">사용자 평균 점수: <span
+                            style="color: #a8001d;">56</span>점</p>
                 </div>
 
-                <p style="font-size: 20px;"> <img src="/assets/img/turtle5.png" alt="" width="10%">
-                    <span style="color: #9a1212">붉은거북</span>: 사용자들의 전체 점수 평균과 비교해보세요!
+                <p style="font-size: 20px; margin-top: 20px; color: #555;">
+                    전체 사용자들의 평균 자세 점수와 비교할 수 있습니다.
                 </p>
 
             </div>
@@ -148,11 +147,17 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36">사용자 자세 점수 평균</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                            정상/비정상 자세 비율 통계
+                        </b>
                     </div>
                 </div>
                 <canvas class="pie-chart" id="pie">
                 </canvas>
+                <p style="font-size: 18px;">
+                   개인별 정상/비정상 자세 통계값을 나타내는 그래프입니다.
+                </p>
+
             </div>
         </div>
 
@@ -160,26 +165,16 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b>Category Management</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                            정상/비정상 자세 비율 전체 통계
+                        </b>
                     </div>
                 </div>
-                <div class="row">
-                    <a href="#!">
-                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
-                            <i class="indigo-text text-lighten-1 large material-icons">view_list</i>
-                            <span class="indigo-text text-lighten-1"><h5>Category</h5></span>
-                        </div>
-                    </a>
-                    <div class="col s1">&nbsp;</div>
-                    <div class="col s1">&nbsp;</div>
-
-                    <a href="#!">
-                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
-                            <i class="indigo-text text-lighten-1 large material-icons">view_list</i>
-                            <span class="truncate indigo-text text-lighten-1"><h5>Sub Category</h5></span>
-                        </div>
-                    </a>
-                </div>
+                <canvas class="pie-chart" id="pie2">
+                </canvas>
+                <p style="font-size: 18px;">
+                    전체 사용자 정상/비정상 자세 통계값을 나타내는 그래프입니다.
+                </p>
             </div>
         </div>
     </div>
@@ -188,11 +183,17 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36">사용자 자세 점수 평균</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                            주간 사용 통계
+                        </b>
                     </div>
                 </div>
                 <canvas id="postureChart">
                 </canvas>
+                <p style="font-size: 18px;">
+                    개인별 주간 사용 통계값을 나타내는 그래프입니다.
+                </p>
+
             </div>
         </div>
 
@@ -200,25 +201,17 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b>Category Management</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                            시간별 사용 통계
+                        </b>
                     </div>
                 </div>
-                <div class="row">
-                    <a href="#!">
-                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
-                            <i class="indigo-text text-lighten-1 large material-icons">view_list</i>
-                            <span class="indigo-text text-lighten-1"><h5>Category</h5></span>
-                        </div>
-                    </a>
-                    <div class="col s1">&nbsp;</div>
-                    <div class="col s1">&nbsp;</div>
-
-                    <a href="#!">
-                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
-                            <i class="indigo-text text-lighten-1 large material-icons">view_list</i>
-                            <span class="truncate indigo-text text-lighten-1"><h5>Sub Category</h5></span>
-                        </div>
-                    </a>
+                <div style="height: 85%">
+                    <canvas id="line">
+                    </canvas>
+                    <p style="font-size: 18px;">
+                        전체 사용자별 주간 사용 통계값을 나타내는 그래프입니다.
+                    </p>
                 </div>
             </div>
         </div>
@@ -226,31 +219,32 @@
 
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">add</i>
+            <i class="large material-icons">account_circle</i>
         </a>
 
         <ul>
             <li>
-                <a class="btn-floating red"><i class="material-icons">note_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add a note</a>
+                <a class="btn-floating light red"><i class="material-icons">home</i></a>
+                <a href="" class="btn-floating fab-tip">메인페이지</a>
             </li>
 
             <li>
-                <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
-                <a href="" class="btn-floating fab-tip">Add a photo</a>
+                <a class="btn-floating mint"><i class="material-icons">view_kanban</i></a>
+                <a href="" class="btn-floating fab-tip">자세 모니터링</a>
             </li>
 
             <li>
-                <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add an alarm</a>
+                <a class="btn-floating green"><i class="material-icons">map</i></a>
+                <a href="" class="btn-floating fab-tip">지도</a>
             </li>
 
             <li>
-                <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
-                <a href="" class="btn-floating fab-tip">Add a master password</a>
+                <a class="btn-floating blue"><i class="material-icons">settings_accessibility</i></a>
+                <a href="" class="btn-floating fab-tip">커뮤니티</a>
             </li>
         </ul>
     </div>
+
 </main>
 
 <footer class="indigo page-footer">
@@ -277,21 +271,23 @@
     </div>
 </footer>
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var maxHeight = 0;
-        $('.card').each(function() {
+        $('.card').each(function () {
             if ($(this).height() > maxHeight) {
                 maxHeight = $(this).height();
             }
         }).height(maxHeight);
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.button-collapse').sideNav();
         $('.collapsible').collapsible();
         $('select').material_select();
