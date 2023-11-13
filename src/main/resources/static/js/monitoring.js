@@ -3,6 +3,8 @@ let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
 let StartTime, totalTime;
+let minnormalPostureCount = 0;
+let minabnormalPostureCount = 0;
 async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -108,6 +110,8 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 function updatePostureCounts() {
     document.getElementById('normalPostureCount').innerText = normalPostureCount;
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
+    // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
+    // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
 }
 
 document.getElementById("stopButton").onclick = function () {
@@ -133,16 +137,15 @@ document.getElementById("stopButton").onclick = function () {
     });
 };
 
-
 async function predict() {
     const currentTime = Date.now();
 
     totalTime = currentTime - StartTime;
-    time1 = (totalTime / 5) + StartTime;
-    time2 = (totalTime / 5)*2 + StartTime;
-    time3 = (totalTime / 5)*3 + StartTime;
-    time4 = (totalTime / 5)*4 + StartTime;
-    time5 = currentTime;
+    time1 = (totalTime / 5);
+    time2 = (totalTime / 5)*2;
+    time3 = (totalTime / 5)*3;
+    time4 = (totalTime / 5)*4;
+    time5 = totalTime;
 
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
 

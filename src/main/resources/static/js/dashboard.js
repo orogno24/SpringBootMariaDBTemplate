@@ -92,22 +92,34 @@ var pieConfig = new Chart(pie2, {
 });
 
 var line = document.getElementById('line');
-line.height = 200
 var lineConfig = new Chart(line, {
     type: 'line',
     data: {
-        labels: ['data-1', 'data-2', 'data-3', 'data-4', 'data-5', 'data-6'],
+        labels: ['data-1', 'data-2', 'data-3', 'data-4', 'data-5', 'data-6'],           // 시간별로 들어가야함
         datasets: [{
-            label: '# of data', // Name the series
-            data: [10, 15, 20, 10, 25, 5, 10], // Specify the data values array
+            label: '# of data', //
+            data: [10, 15, 20, 10, 25, 5, 10], //          // 시간별 정상 / 거북목 비율
             fill: false,
-            borderColor: '#55e7ff', // Add custom color border (Line)
-            backgroundColor: '#3399ad', // Add custom color background (Points and Fill)
-            borderWidth: 2 // Specify bar border width
+            borderColor: '#2196f3', //
+            backgroundColor: '#2196f3', //
+            borderWidth: 1 //
         }]
     },
     options: {
-        responsive: true, // Instruct chart js to respond nicely.
-        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+        responsive: true,
+        maintainAspectRatio: true,
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = data.labels[tooltipItem.index] || '';
+                    if (label) {
+                        label += ': ';
+                    }
+                    var value = data.datasets[0].data[tooltipItem.index];
+                    label += Math.round(value) + '%'; // 여기서 반올림
+                    return label;
+                }
+            }
+        }
     }
-})
+});

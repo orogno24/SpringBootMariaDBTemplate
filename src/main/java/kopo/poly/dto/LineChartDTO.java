@@ -18,4 +18,5 @@ public class LineChartDTO {
     private int totalAbnormal;
 
     private long PoseSeq;
+    private String userId;
 }
