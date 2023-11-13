@@ -26,7 +26,8 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="#!"><b>메인페이지로</b></a></li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
+
 
     <ul class="collapsible" data-collapsible="accordion">
         <li id="dash_users">
@@ -34,11 +35,11 @@
             <div id="dash_users_body" class="collapsible-body">
                 <ul>
                     <li id="users_seller">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">자세 모니터링</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/guide2">가이드 영상</a>
                     </li>
 
                     <li id="users_customer">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">지도</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/monitoring">자세 모니터링</a>
                     </li>
                 </ul>
             </div>
@@ -49,23 +50,23 @@
             <div id="dash_products_body" class="collapsible-body">
                 <ul>
                     <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Products</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Orders</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
                     </li>
                 </ul>
             </div>
         </li>
 
         <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>커뮤니티</b></div>
+            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
             <div id="dash_categories_body" class="collapsible-body">
                 <ul>
                     <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
                     </li>
 
                     <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Sub Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
                     </li>
                 </ul>
             </div>
@@ -82,12 +83,6 @@
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
             <img style="margin-top: 17px; margin-left: 5px;" src="/assets/img/chart.png"/>
-
-            <ul class="right hide-on-med-and-down">
-                <li>
-                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
-                </li>
-            </ul>
 
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
@@ -152,8 +147,12 @@
                 </div>
                 <canvas class="pie-chart" id="pie">
                 </canvas>
+                <p style="font-size: 20px;">
+                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
+                </p>
             </div>
         </div>
+
 
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
@@ -192,7 +191,11 @@
                 </div>
                 <canvas id="postureChart">
                 </canvas>
+                <p style="font-size: 20px;">
+                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
+                </p>
             </div>
+
         </div>
 
         <div class="col s6">
@@ -225,29 +228,32 @@
 
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">add</i>
+            <i class="large material-icons">account_circle</i>
         </a>
 
         <ul>
             <li>
-                <a class="btn-floating red"><i class="material-icons">note_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add a note</a>
+                <a class="btn-floating light red"><i class="material-icons">home</i></a>
+                <a href="" class="btn-floating fab-tip">메인페이지</a>
             </li>
 
             <li>
-                <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
-                <a href="" class="btn-floating fab-tip">Add a photo</a>
+                <a class="btn-floating mint"><i class="material-icons">view_kanban</i></a>
+                <a href="" class="btn-floating fab-tip">자세 모니터링</a>
             </li>
 
             <li>
-                <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add an alarm</a>
+                <a class="btn-floating green"><i class="material-icons">map</i></a>
+                <a href="" class="btn-floating fab-tip">지도</a>
             </li>
 
             <li>
-                <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
-                <a href="" class="btn-floating fab-tip">Add a master password</a>
+                <a class="btn-floating blue"><i class="material-icons">settings_accessibility</i></a>
+                <a href="" class="btn-floating fab-tip">커뮤니티</a>
             </li>
+
+
+
         </ul>
     </div>
 </main>
@@ -256,13 +262,14 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h5 class="white-text">Icon Credits</h5>
+                <h5 class="white-text">개인별 자세 평균 통계</h5>
                 <ul id='credits'>
                     <li>
-                        Gif Logo made using <a href="http://formtypemaker.appspot.com/">Form Type Maker</a> from <a href="https://github.com/romannurik/FORMTypeMaker">romannurik</a>
+                        사용자의 자세 점수는 <a href="/guide1">거북목 측정</a> 과 <a href="/guide2">자세 모니터링</a>에서 추출한 점수이며
                     </li>
                     <li>
-                        Icons made by <a href="https://material.io/icons/">Google</a>, available under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License Version 2.0</a>
+                        간단한 관찰 도구로써 사용될 수 있지만, 의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다. <br/>
+                        실제 거북목의 정도나 상태를 정확히 평가하려면 전문적인 검진이 필요할 수 있습니다.
                     </li>
                 </ul>
             </div>
@@ -270,7 +277,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            <span>Made By <a style='font-weight: bold;' href="https://github.com/piedcipher" target="_blank">Tirth Patel</a></span>
+            <span>주변 병원 정보를 찾고싶으면 >>> <a style='font-weight: bold;' href="/main" target="_blank">병원 찾기</a></span>
         </div>
     </div>
 </footer>

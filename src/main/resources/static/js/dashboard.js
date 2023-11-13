@@ -39,14 +39,14 @@ new Chart(ctx, {
         datasets: [{
             label: 'Normal Posture',
             data: normalData,
-            backgroundColor: "#4fff1f",
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: "#15c6e5",
+            borderColor: 'transparent',
             borderWidth: 1
         }, {
             label: 'Abnormal Posture',
             data: abnormalData,
-            backgroundColor: "#dc3545",
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: "#505162",
+            borderColor: 'transparent',
             borderWidth: 1
         }]
     },
