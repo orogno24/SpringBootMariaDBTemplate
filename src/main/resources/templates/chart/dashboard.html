@@ -11,7 +11,6 @@
     <style type="text/css">
     </style>
 </head>
-
 <body>
 
 <ul id="slide-out" class="side-nav fixed z-depth-2" style="background-color: #2D2F36">
@@ -27,57 +26,60 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a></li>
-    <li id="dash_dashboard2"><a class="waves-effect" href="/guide2"><b>메인페이지로</b></a></li>
-    <li id="dash_dashboard3"><a class="waves-effect" href="/main"><b>메인페이지로</b></a></li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
 
     <ul class="collapsible" data-collapsible="accordion">
+        <li id="dash_users">
+            <div id="dash_users_header" class="collapsible-header waves-effect"><b>자세 모니터링</b></div>
+            <div id="dash_users_body" class="collapsible-body">
+                <ul>
+                    <li id="users_seller">
+                        <a class="waves-effect" style="text-decoration: none;" href="/guide2">가이드 영상</a>
+                    </li>
 
+                    <li id="users_customer">
+                        <a class="waves-effect" style="text-decoration: none;" href="/monitoring">자세 모니터링</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
 
         <li id="dash_products">
             <div id="dash_products_header" class="collapsible-header waves-effect"><b>지도</b></div>
             <div id="dash_products_body" class="collapsible-body">
                 <ul>
                     <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Products</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Orders</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
                     </li>
                 </ul>
             </div>
         </li>
 
         <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>커뮤니티</b></div>
+            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
             <div id="dash_categories_body" class="collapsible-body">
                 <ul>
                     <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
                     </li>
 
                     <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="#!">Sub Category</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
                     </li>
                 </ul>
             </div>
         </li>
     </ul>
 </ul>
-
 <header>
-    <ul class="dropdown-content" id="user_dropdown">
-        <li><a class="indigo-text" href="#!">Profile</a></li>
-        <li><a class="indigo-text" href="#!">Logout</a></li>
-    </ul>
+
 
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
             <img style="margin-top: 17px; margin-left: 5px;" src="/assets/img/chart.png"/>
 
-            <ul class="right hide-on-med-and-down">
-                <li>
-                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
-                </li>
-            </ul>
+
 
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
@@ -103,7 +105,7 @@
                     </div>
                 </div>
 
-                <img src="/assets/img/bg3.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
+                <img src="/assets/img/logo.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
 
                 <div class="score">
                     <p style="font-size: 50px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
@@ -152,6 +154,10 @@
                 </div>
                 <canvas class="pie-chart" id="pie">
                 </canvas>
+                <p style="font-size: 18px;">
+                    개인별 정상/비정상 자세 통계값을 나타내는 그래프입니다
+                </p>
+
             </div>
         </div>
 
@@ -166,6 +172,9 @@
                 </div>
                 <canvas class="pie-chart" id="pie2">
                 </canvas>
+                <p style="font-size: 18px;">
+                    전체 사용자 정상/비정상 자세 통계값을 나타내는 그래프입니다.
+                </p>
             </div>
         </div>
     </div>
@@ -181,6 +190,10 @@
                 </div>
                 <canvas id="postureChart">
                 </canvas>
+                <p style="font-size: 18px;">
+                    개인별 주간 사용 통계값을 나타내는 그래프입니다.
+                </p>
+
             </div>
         </div>
 
@@ -194,8 +207,11 @@
                     </div>
                 </div>
                 <div style="height: 85%">
-                <canvas id="line">
-                </canvas>
+                    <canvas id="line">
+                    </canvas>
+                    <p style="font-size: 18px;">
+                        전체 사용자별 주간 사용 통계값을 나타내는 그래프입니다.
+                    </p>
                 </div>
             </div>
         </div>
@@ -203,39 +219,58 @@
 
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">add</i>
+            <i class="large material-icons">account_circle</i>
         </a>
 
         <ul>
             <li>
-                <a class="btn-floating red"><i class="material-icons">note_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add a note</a>
+                <a class="btn-floating light red"><i class="material-icons">home</i></a>
+                <a href="" class="btn-floating fab-tip">메인페이지</a>
             </li>
 
             <li>
-                <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
-                <a href="" class="btn-floating fab-tip">Add a photo</a>
+                <a class="btn-floating mint"><i class="material-icons">view_kanban</i></a>
+                <a href="" class="btn-floating fab-tip">자세 모니터링</a>
             </li>
 
             <li>
-                <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add an alarm</a>
+                <a class="btn-floating green"><i class="material-icons">map</i></a>
+                <a href="" class="btn-floating fab-tip">지도</a>
             </li>
 
             <li>
-                <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
-                <a href="" class="btn-floating fab-tip">Add a master password</a>
+                <a class="btn-floating blue"><i class="material-icons">settings_accessibility</i></a>
+                <a href="" class="btn-floating fab-tip">커뮤니티</a>
             </li>
         </ul>
     </div>
+
 </main>
 
-<footer class="indigo page-footer" style="margin-top: 30px">
+<footer class="indigo page-footer">
     <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h5 class="white-text">개인별 자세 평균 통계</h5>
+                <ul id='credits'>
+                    <li>
+                        사용자의 자세 점수는 <a href="/guide1">거북목 측정</a> 과 <a href="/guide2">자세 모니터링</a>에서 추출한 점수이며
+                    </li>
+                    <li>
+                        간단한 관찰 도구로써 사용될 수 있지만, 의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다. <br/>
+                        실제 거북목의 정도나 상태를 정확히 평가하려면 전문적인 검진이 필요할 수 있습니다.
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="footer-copyright">
+        <div class="container">
+            <span>주변 병원 정보를 찾고싶으면 >>> <a style='font-weight: bold;' href="/main" target="_blank">병원 찾기</a></span>
+        </div>
     </div>
 </footer>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
