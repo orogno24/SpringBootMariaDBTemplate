@@ -100,9 +100,40 @@ public class ChartController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() throws Exception {
+    public String dashboard(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".dashboard 함수 실행");
+
+        String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        log.info("session user_id : " + userId);
+
+        ChartDTO pDTO = new ChartDTO();
+        pDTO.setUserId(userId);
+
+        ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
+        List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))
+                .orElseGet(ArrayList::new);
+
+        log.info("TotalNormal: " + rDTO.getTotalNormal());
+        log.info("TotalAbnormal: " + rDTO.getTotalAbnormal());
+
+        // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("chartData", rList);
+
+        model.addAttribute("rDTO", rDTO);
+
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+
         return "/chart/dashboard";
+    }
+
+    @GetMapping("/dashboard2")
+    public String dashboard2(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".dashboard2 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/chart/dashboard2";
     }
 
     @ResponseBody
