@@ -50,23 +50,23 @@
             <div id="dash_products_body" class="collapsible-body">
                 <ul>
                     <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!">Products</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!">Orders</a>
                     </li>
                 </ul>
             </div>
         </li>
 
         <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
+            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>커뮤니티</b></div>
             <div id="dash_categories_body" class="collapsible-body">
                 <ul>
                     <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!">Category</a>
                     </li>
 
                     <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!">Sub Category</a>
                     </li>
                 </ul>
             </div>
@@ -83,6 +83,12 @@
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
             <img style="margin-top: 17px; margin-left: 5px;" src="/assets/img/chart.png"/>
+
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                </li>
+            </ul>
 
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
@@ -147,12 +153,8 @@
                 </div>
                 <canvas class="pie-chart" id="pie">
                 </canvas>
-                <p style="font-size: 20px;">
-                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
-                </p>
             </div>
         </div>
-
 
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
@@ -191,11 +193,7 @@
                 </div>
                 <canvas id="postureChart">
                 </canvas>
-                <p style="font-size: 20px;">
-                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
-                </p>
             </div>
-
         </div>
 
         <div class="col s6">
@@ -228,32 +226,29 @@
 
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">account_circle</i>
+            <i class="large material-icons">add</i>
         </a>
 
         <ul>
             <li>
-                <a class="btn-floating light red"><i class="material-icons">home</i></a>
-                <a href="" class="btn-floating fab-tip">메인페이지</a>
+                <a class="btn-floating red"><i class="material-icons">note_add</i></a>
+                <a href="" class="btn-floating fab-tip">Add a note</a>
             </li>
 
             <li>
-                <a class="btn-floating mint"><i class="material-icons">view_kanban</i></a>
-                <a href="" class="btn-floating fab-tip">자세 모니터링</a>
+                <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
+                <a href="" class="btn-floating fab-tip">Add a photo</a>
             </li>
 
             <li>
-                <a class="btn-floating green"><i class="material-icons">map</i></a>
-                <a href="" class="btn-floating fab-tip">지도</a>
+                <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
+                <a href="" class="btn-floating fab-tip">Add an alarm</a>
             </li>
 
             <li>
-                <a class="btn-floating blue"><i class="material-icons">settings_accessibility</i></a>
-                <a href="" class="btn-floating fab-tip">커뮤니티</a>
+                <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
+                <a href="" class="btn-floating fab-tip">Add a master password</a>
             </li>
-
-
-
         </ul>
     </div>
 </main>
