@@ -98,11 +98,11 @@ var lineConfig = new Chart(line, {
         labels: ['data-1', 'data-2', 'data-3', 'data-4', 'data-5', 'data-6'],           // 시간별로 들어가야함
         datasets: [{
             label: '# of data', //
-            data: [10, 15, 20, 10, 25, 5, 10], //          // 시간별 정상 / 거북목 비율
+            data: [0, 15, 20, 10, 25, 5], //          // 시간별 정상 / 거북목 비율
             fill: false,
-            borderColor: '#2196f3', //
-            backgroundColor: '#2196f3', //
-            borderWidth: 1 //
+            borderColor: '#3399ad', //
+            backgroundColor: '#55e7ff', //
+            borderWidth: 2 //
         }]
     },
     options: {

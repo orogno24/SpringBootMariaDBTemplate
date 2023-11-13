@@ -9,16 +9,33 @@
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
     <style type="text/css">
+        .card {
+            margin-left: 3.2rem;
+            overflow: hidden;
+            background-color: #fbfbfb;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-radius: 8px;
+            max-width: 750px;
+        }
+
+        .emoticon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px; /* Adjust the size as needed */
+        }
     </style>
 </head>
+
 <body>
 
 <ul id="slide-out" class="side-nav fixed z-depth-2" style="background-color: #2D2F36">
     <li class="center no-padding">
         <div class="indigo darken-2 white-text" style="height: 180px; background-color: #15c6e5">
             <div class="row" style="background: #33343f">
-                <img style="margin-top: 10%;" width="75" height="75" src="/assets/img/logo7.png"/>
-
+                <img id="myImage" style="margin-top: 10%; cursor: pointer;" width="75" height="75"
+                     src="/assets/img/logo7.png"/>
                 <p style="margin-top: -13%;">
                     <span style="color: #15c6e5">[[${userName}]]</span>님의 페이지
                 </p>
@@ -26,60 +43,28 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a></li>
+    <li id="dash_dashboard2"><a class="waves-effect" href="/gazami7"><b>자세 모니터링</b></a></li>
+    <li id="dash_dashboard3"><a class="waves-effect" href="/main#gps"><b>지도</b></a></li>
+    <li id="dash_dashboard4"><a class="waves-effect" href="/main"><b>커뮤니티</b></a></li>
 
-    <ul class="collapsible" data-collapsible="accordion">
-        <li id="dash_users">
-            <div id="dash_users_header" class="collapsible-header waves-effect"><b>자세 모니터링</b></div>
-            <div id="dash_users_body" class="collapsible-body">
-                <ul>
-                    <li id="users_seller">
-                        <a class="waves-effect" style="text-decoration: none;" href="/guide2">가이드 영상</a>
-                    </li>
-
-                    <li id="users_customer">
-                        <a class="waves-effect" style="text-decoration: none;" href="/monitoring">자세 모니터링</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li id="dash_products">
-            <div id="dash_products_header" class="collapsible-header waves-effect"><b>지도</b></div>
-            <div id="dash_products_body" class="collapsible-body">
-                <ul>
-                    <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
-            <div id="dash_categories_body" class="collapsible-body">
-                <ul>
-                    <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
-                    </li>
-
-                    <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
 </ul>
-<header>
 
+<header>
+    <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="indigo-text" href="#!">Profile</a></li>
+        <li><a class="indigo-text" href="#!">Logout</a></li>
+    </ul>
 
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
             <img style="margin-top: 17px; margin-left: 5px;" src="/assets/img/chart.png"/>
 
-
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                </li>
+            </ul>
 
             <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
@@ -95,21 +80,30 @@
 
 <main>
     <div class="row">
-        <div class="col s6">
-            <div style="padding: 35px; min-height: 352px; overflow: auto; background-color: #fdfdfd;" align="center"
+        <div class="col s6" style="margin-right: -2.5rem">
+            <div style="padding: 35px;" align="center"
                  class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer">😊</span>
+                    <div id="infoText" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>안녕하세요, 루미아 섬의 생존자 여러분!
+                            11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
+
+                            다양한 선물을 준비했으니
+                            이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
+                    </div>
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">오늘의
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">오늘의
                             자세 점수</b>
                     </div>
                 </div>
 
-                <img src="/assets/img/logo.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
+                <img src="/assets/img/bg3.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
 
                 <div class="score">
                     <p style="font-size: 50px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
-                            style="color: #a8001d;">85</span>점</p>
+                            id="score"
+                            style="color: #0dcb2c;">85</span>점</p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
@@ -119,19 +113,21 @@
         </div>
 
         <div class="col s6">
-            <div style="padding: 35px; min-height: 352px; overflow: auto; background-color: #fdfdfd;" align="center"
+            <div style="padding: 35px;" align="center"
                  class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">사용자 평균 점수</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">사용자
+                            평균 점수</b>
                     </div>
                 </div>
 
-                <img src="/assets/img/turtle.png" alt="Posture Icon" style="height: 80px; margin-bottom: 50px">
+                <img src="/assets/img/bg3.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
 
                 <div class="score">
-                    <p style="font-size: 50px; font-weight: bold; color: #333;">사용자 평균 점수: <span
-                            style="color: #a8001d;">56</span>점</p>
+                    <p style="font-size: 50px; font-weight: bold; color: #333;">사용자 평균 점수: <span id="score2"
+                                                                                                 style="color: #94021c;">56</span>점
+                    </p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
@@ -143,12 +139,12 @@
     </div>
 
     <div class="row">
-        <div class="col s6">
+        <div class="col s6" style="margin-right: -2.5rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
-                            정상/비정상 자세 비율 통계
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                            자세 분석 통계
                         </b>
                     </div>
                 </div>
@@ -165,8 +161,8 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
-                            정상/비정상 자세 비율 전체 통계
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                            사용자 평균 자세 분석 통계
                         </b>
                     </div>
                 </div>
@@ -179,11 +175,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s6">
+        <div class="col s6" style="margin-right: -2.5rem; margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
                             주간 사용 통계
                         </b>
                     </div>
@@ -197,11 +193,11 @@
             </div>
         </div>
 
-        <div class="col s6">
+        <div class="col s6" style="margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom: 5px;">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
                             시간별 사용 통계
                         </b>
                     </div>
@@ -247,7 +243,7 @@
 
 </main>
 
-<footer class="indigo page-footer">
+<footer class="indigo page-footer" style="margin-top: 30px">
     <div class="container">
         <div class="row">
             <div class="col s12">
@@ -292,6 +288,56 @@
         $('.collapsible').collapsible();
         $('select').material_select();
     });
+
+    document.getElementById('myImage').addEventListener('click', function () {
+        window.location.href = '/main';
+    });
+
+    window.onload = function () {
+        var hash = window.location.hash;
+        if (hash && document.getElementById(hash.substring(1))) {
+            document.getElementById(hash.substring(1)).scrollIntoView();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const scoreElement = document.getElementById('score');
+        const endScore = 85; // 설정한 최종 점수
+        let currentScore = 1; // 시작 점수
+
+        const timer = setInterval(() => {
+            scoreElement.textContent = `${currentScore}`;
+            if (currentScore < endScore) {
+                currentScore++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const scoreElement = document.getElementById('score2');
+        const endScore = 56; // 설정한 최종 점수
+        let currentScore = 1; // 시작 점수
+
+        const timer = setInterval(() => {
+            scoreElement.textContent = `${currentScore}`;
+            if (currentScore < endScore) {
+                currentScore++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+    });
+
+    function toggleInfo() {
+        var infoDiv = document.getElementById("infoText");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+        } else {
+            infoDiv.style.display = "none";
+        }
+    }
 </script>
 <script th:inline="javascript">
     /*<![CDATA[*/
