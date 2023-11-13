@@ -243,3 +243,40 @@ html, body {
 		max-width: 1536px;
 	}
 }
+
+@font-face {
+	font-family: 'NIXGONM-Vb';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: 'NIXGONM-Vb';
+}
+
+body {
+	background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+	background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+	background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+	line-height: 1.6;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+header {
+	background-color: #33343f;
+	color: white;
+	padding: 20px;
+	border-bottom: 5px solid #2D8DB6;
+}
+
+.black-section {
+	background-color: #33343f; /* 검정색 배경 */
+	height: 500px; /* 높이 지정, 필요에 따라 조정 */
+}
+
+.username-color {
+	color: #15c6e5;
+}

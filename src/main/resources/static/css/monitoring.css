@@ -113,7 +113,7 @@ body {
 button {
     padding: 12px 35px;
     border: none;
-    background-color: #8f8f96;
+    background-color: #99999f;
     color: #fff;
     font-size: 17px;
     cursor: pointer;
@@ -325,4 +325,62 @@ table {
 #neckExercise p {
     font-size: 17px; /* 원하는 크기로 조절하세요 */
     font-weight: bold;
+}
+
+.progress-bar-text {
+    font-size: 14px;
+    color: #4A4A4A;
+    font-weight: bold;
+}
+
+.progress-bar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #0059ff;
+    transition: width .6s ease;
+}
+
+.progress-bar-main {
+    display: table;
+    /* flex-basis: 25rem; */
+    width: 65%; /*크기 조절*/
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.bg-success {
+    background-image: linear-gradient(to right, #0059ff, #568cf8);
+}
+
+.bg-danger {
+    background-image: linear-gradient(to right, #f85032, #ef1d08);
+}
+
+.progress {
+    display: -ms-flexbox;
+    display: flex;
+    height: 2rem;
+    overflow: hidden;
+    line-height: 0;
+    font-size: .75rem;
+    background-color: #cde6ff;
+    border-radius: 0.25rem;
+}
+
+.progress-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 3rem;  /* 바 좌우 이동 */
+    margin-right: 3rem;
+    margin-bottom: 1rem;
 }

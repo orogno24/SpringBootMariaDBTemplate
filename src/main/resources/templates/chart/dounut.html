@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>
+        7 widgets
+    </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="stylesheet" type="text/css" href="/css/chart.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" rel="stylesheet" type="text/css">
+    <style>
+    </style>
+</head>
+<body>
+<header class="p-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/main">
+            <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo" style="margin-left: 200px">
+        </a>
+    </div>
+</header>
+<div class="container">
+    <main>
+        <div class="dashboard-container">
+            <div class="card-1">
+                <h4 class="chart-lbl">
+                    Doughnut Chart
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="content-center">
+                    <div class="doughnut-chart-container">
+                        <canvas class="doughnut-chart" id="doughnut">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card-2">
+                <h4 class="chart-lbl">
+                    정상 자세 / 비정상 자세 비율
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="content-center">
+                    <div class="pie-chart-container">
+                        <canvas class="pie-chart" id="pie">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card-3">
+                <h4 class="chart-lbl">
+                    Polar Area
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="content-center">
+                    <div class="polar-chart-container">
+                        <canvas class="polar-chart" id="polar">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card-4">
+                <h4 class="chart-lbl">
+                    Bubble Chart
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="bubble-chart-container">
+                    <canvas class="bubble-chart" id="bubble">
+                    </canvas>
+                </div>
+            </div>
+            <div class="card-5">
+                <h4 class="chart-lbl">
+                    Bar Chart
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="bar-chart-container">
+                    <canvas class="bar-chart" id="bar">
+                    </canvas>
+                </div>
+            </div>
+            <div class="card-6">
+                <h4 class="chart-lbl">
+                    line Chart
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="line-chart-container">
+                    <canvas class="line-chart" id="line">
+                    </canvas>
+                </div>
+            </div>
+            <div class="card-7">
+                <h4 class="chart-lbl">
+                    Mixed Chart
+                </h4>
+                <div class="divider">
+                </div>
+                <div class="mixed-chart-container">
+                    <canvas class="mixed-chart" id="mixed">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<canvas id="postureChart"></canvas>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const chartData = [[${chartData}]];
+    /*]]>*/
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
+</script>
+<script>
+    const totalNormal = [[${rDTO.totalNormal}]];
+    const totalAbnormal = [[${rDTO.totalAbnormal}]];
+    const labels = chartData.map(item => item.weekday);
+    const normalData = chartData.map(item => item.totalNormal);
+    const abnormalData = chartData.map(item => item.totalAbnormal);
+</script>
+<script type="text/javascript" src="/js/chart.js"></script>
+</body>
+</html>

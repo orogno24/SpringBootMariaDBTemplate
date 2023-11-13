@@ -139,6 +139,13 @@ public class MainController {
         return "/gazami9";
     }
 
+    // 로딩 페이지
+    @GetMapping("/gazami10")
+    public String intro10() throws Exception {
+        log.info(this.getClass().getName() + ".gazami10 함수 실행");
+        return "/gazami10";
+    }
+
     // 가이드 페이지
     @GetMapping("/guide1")
     public String guide1(HttpSession session, ModelMap model) throws Exception {
