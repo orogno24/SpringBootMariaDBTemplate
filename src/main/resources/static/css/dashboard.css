@@ -108,3 +108,45 @@ body {
     margin-top: -10px;
     transform: translateX(100%);
 }
+
+#infoText {
+    display: none; /* 처음에는 숨김 상태 */
+    position: absolute;
+    right: 10px; /* 필요에 따라 조정 */
+    top: 50px; /* 필요에 따라 조정 */
+    width: 500px; /* 필요에 따라 조정 */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100; /* 다른 내용 위에 표시되도록 함 */
+}
+
+#infoText::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent #f9f9f9;
+    transform: translate(0, -50%);
+}
+
+.card {
+    margin-left: 3.2rem;
+    overflow: hidden;
+    background-color: #fbfbfb;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 8px;
+    max-width: 750px;
+}
+
+.emoticon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px; /* Adjust the size as needed */
+}

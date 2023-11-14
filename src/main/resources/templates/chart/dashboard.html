@@ -9,22 +9,6 @@
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
     <style type="text/css">
-        .card {
-            margin-left: 3.2rem;
-            overflow: hidden;
-            background-color: #fbfbfb;
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-            text-align: center;
-            border-radius: 8px;
-            max-width: 750px;
-        }
-
-        .emoticon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 30px; /* Adjust the size as needed */
-        }
     </style>
 </head>
 
@@ -43,18 +27,54 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a></li>
-    <li id="dash_dashboard2"><a class="waves-effect" href="/gazami7"><b>자세 모니터링</b></a></li>
-    <li id="dash_dashboard3"><a class="waves-effect" href="/main#gps"><b>지도</b></a></li>
-    <li id="dash_dashboard4"><a class="waves-effect" href="/main"><b>커뮤니티</b></a></li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
 
-</ul>
+    <ul class="collapsible" data-collapsible="accordion">
+        <li id="dash_users">
+            <div id="dash_users_header" class="collapsible-header waves-effect"><b>자세 모니터링</b></div>
+            <div id="dash_users_body" class="collapsible-body">
+                <ul>
+                    <li id="users_seller">
+                        <a class="waves-effect" style="text-decoration: none;" href="/guide2">가이드 영상</a>
+                    </li>
 
-<header>
-    <ul class="dropdown-content" id="user_dropdown">
-        <li><a class="indigo-text" href="#!">Profile</a></li>
-        <li><a class="indigo-text" href="#!">Logout</a></li>
+                    <li id="users_customer">
+                        <a class="waves-effect" style="text-decoration: none;" href="/monitoring">자세 모니터링</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li id="dash_products">
+            <div id="dash_products_header" class="collapsible-header waves-effect"><b>지도</b></div>
+            <div id="dash_products_body" class="collapsible-body">
+                <ul>
+                    <li id="products_product">
+                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
+                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li id="dash_categories">
+            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
+            <div id="dash_categories_body" class="collapsible-body">
+                <ul>
+                    <li id="categories_category">
+                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
+                    </li>
+
+                    <li id="categories_sub_category">
+                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     </ul>
+</ul>
+<header>
+
 
     <nav class="indigo" role="navigation">
         <div class="nav-wrapper">
@@ -81,7 +101,7 @@
 <main>
     <div class="row">
         <div class="col s6" style="margin-right: -2.5rem">
-            <div style="padding: 35px;" align="center"
+            <div style="padding: 35px; position: relative;" align="center"
                  class="card">
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer">😊</span>
@@ -103,7 +123,7 @@
                 <div class="score">
                     <p style="font-size: 50px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
                             id="score"
-                            style="color: #0dcb2c;">85</span>점</p>
+                            style="color: #0dcb2c;">85</span>/100점</p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
@@ -126,7 +146,7 @@
 
                 <div class="score">
                     <p style="font-size: 50px; font-weight: bold; color: #333;">사용자 평균 점수: <span id="score2"
-                                                                                                 style="color: #94021c;">56</span>점
+                                                                                                 style="color: #94021c;">56</span>/100점
                     </p>
                 </div>
 
