@@ -2,9 +2,12 @@ const URL = "/assets/my_model/";
 let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
-let StartTime, totalTime;
+let StartTime;
+let startTime, endTime;
 let minnormalPostureCount = 0;
 let minabnormalPostureCount = 0;
+let totalTime = 0;
+
 async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
@@ -34,6 +37,7 @@ async function init() {
     document.getElementById("analysisText").style.display = "block";
 
     StartTime = Date.now();
+    startTime = Date.now();
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -110,14 +114,21 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 function updatePostureCounts() {
     document.getElementById('normalPostureCount').innerText = normalPostureCount;
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
+    document.getElementById('totalTime').innerText = totalTime;
     // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
     // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
 }
 
 document.getElementById("stopButton").onclick = function () {
+
+    endTime = Date.now();
+
+    const totalTime = endTime - startTime;
+
     // 숨겨진 입력 필드에 카운트 값을 설정합니다.
     document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
     document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
+    document.getElementById('hiddenTotalTime').value = totalTime / 1000;
 
     // AJAX 요청을 통해 서버로 데이터를 전송합니다.
     $.ajax({

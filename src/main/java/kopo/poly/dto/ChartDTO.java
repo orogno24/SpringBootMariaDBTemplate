@@ -22,5 +22,8 @@ public class ChartDTO {
 
     private int totalAbnormal;
 
+    private String totalTime;
+
     private String weekday;
+
 }

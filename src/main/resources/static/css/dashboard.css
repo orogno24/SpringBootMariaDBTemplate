@@ -115,6 +115,8 @@ body {
     right: 10px; /* 필요에 따라 조정 */
     top: 50px; /* 필요에 따라 조정 */
     width: 500px; /* 필요에 따라 조정 */
+    height: 0; /* 높이를 0으로 설정 */
+    overflow: visible; /* 내용이 보이도록 설정 */
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #d1d1d1;
@@ -122,6 +124,7 @@ body {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 100; /* 다른 내용 위에 표시되도록 함 */
 }
+
 
 #infoText::after {
     content: "";

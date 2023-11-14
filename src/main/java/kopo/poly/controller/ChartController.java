@@ -40,16 +40,19 @@ public class ChartController {
             String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
             String normal = CmmUtil.nvl(request.getParameter("normalPostureCount"));
             String abnormal = CmmUtil.nvl(request.getParameter("abnormalPostureCount"));
+            String totalTime = CmmUtil.nvl(request.getParameter("totalTime"));
 
             log.info("session user_id : " + userId);
             log.info("normal : " + normal);
             log.info("abnormal : " + abnormal);
+            log.info("totalTime : " + totalTime);
 
             // 데이터 저장하기 위해 DTO에 저장하기
             ChartDTO pDTO = new ChartDTO();
             pDTO.setUserId(userId);
             pDTO.setNormal(normal);
             pDTO.setAbnormal(abnormal);
+            pDTO.setTotalTime(totalTime);
 
             chartService.insertData(pDTO);
 
@@ -116,35 +119,6 @@ public class ChartController {
         return dto;
     }
 
-    @GetMapping("dounut")
-    public String dounut(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
-        log.info(this.getClass().getName() + ".dounut 함수 실행");
-
-        String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-
-
-        log.info("session user_id : " + userId);
-
-        ChartDTO pDTO = new ChartDTO();
-        pDTO.setUserId(userId);
-
-        ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
-        List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))
-                .orElseGet(ArrayList::new);
-
-        log.info("TotalNormal: " + rDTO.getTotalNormal());
-        log.info("TotalAbnormal: " + rDTO.getTotalAbnormal());
-
-        // 조회된 리스트 결과값 넣어주기
-        model.addAttribute("chartData", rList);
-
-        model.addAttribute("rDTO", rDTO);
-
-        log.info(this.getClass().getName() + ".dounut End!");
-
-        return "chart/dounut";
-    }
-
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".dashboard 함수 실행");
@@ -157,7 +131,6 @@ public class ChartController {
         LineChartDTO pDTO2 = new LineChartDTO();
         pDTO.setUserId(userId);
         pDTO2.setUserId(userId);
-
 
         ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
         List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))

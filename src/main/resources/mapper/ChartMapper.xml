@@ -9,12 +9,14 @@
          DATE,
          WEEK,
          NORMAL,
-         ABNORMAL)
+         ABNORMAL,
+         TOTALTIME)
         VALUES (#{userId},
                 NOW(),
                 DAYNAME(NOW()),
                 #{normal},
-                #{abnormal})
+                #{abnormal},
+                #{totalTime})
             ON DUPLICATE KEY UPDATE
             WEEK = VALUES(WEEK),
             NORMAL = VALUES(NORMAL),
@@ -25,7 +27,8 @@
         SELECT
             DATE(DATE) AS dateOnly,
             SUM(NORMAL) AS totalNormal,
-            SUM(ABNORMAL) AS totalAbnormal
+            SUM(ABNORMAL) AS totalAbnormal,
+            SUM(TOTALTIME) AS TOTALTIME
         FROM
             CHART
         WHERE

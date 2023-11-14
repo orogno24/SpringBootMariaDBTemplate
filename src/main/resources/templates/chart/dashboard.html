@@ -9,6 +9,13 @@
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
 
     <style type="text/css">
+
+        .waves-effect:hover {
+            border: 1px solid #15c6e5;
+            background-color: #2b2b36;
+            transition: border-color 1s ease;
+        }
+
     </style>
 </head>
 
@@ -28,50 +35,10 @@
     </li>
 
     <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
+    <li id="dash_dashboard2"><a class="waves-effect" href="/gazami7"><b>자세 모니터링</b></a> </li>
+    <li id="dash_dashboard3"><a class="waves-effect" href="/main"><b>지도</b></a> </li>
+    <li id="dash_dashboard4"><a class="waves-effect" href="/gazami9"><b>커뮤니티</b></a> </li>
 
-    <ul class="collapsible" data-collapsible="accordion">
-        <li id="dash_users">
-            <div id="dash_users_header" class="collapsible-header waves-effect"><b>자세 모니터링</b></div>
-            <div id="dash_users_body" class="collapsible-body">
-                <ul>
-                    <li id="users_seller">
-                        <a class="waves-effect" style="text-decoration: none;" href="/guide2">가이드 영상</a>
-                    </li>
-
-                    <li id="users_customer">
-                        <a class="waves-effect" style="text-decoration: none;" href="/monitoring">자세 모니터링</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li id="dash_products">
-            <div id="dash_products_header" class="collapsible-header waves-effect"><b>지도</b></div>
-            <div id="dash_products_body" class="collapsible-body">
-                <ul>
-                    <li id="products_product">
-                        <a class="waves-effect" style="text-decoration: none;" href="/main">병원찾기</a>
-                        <a class="waves-effect" style="text-decoration: none;" href="#!"> </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li id="dash_categories">
-            <div id="dash_categories_header" class="collapsible-header waves-effect"><b>사용자</b></div>
-            <div id="dash_categories_body" class="collapsible-body">
-                <ul>
-                    <li id="categories_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/notice/noticeList">커뮤니티</a>
-                    </li>
-
-                    <li id="categories_sub_category">
-                        <a class="waves-effect" style="text-decoration: none;" href="/user/profile">프로필</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
 </ul>
 <header>
 
@@ -92,7 +59,7 @@
 
     <nav>
         <div class="nav-wrapper indigo darken-3">
-            <span style="color:#b2b2b2;">&nbsp;&nbsp;현재 페이지에서 당신의 통계를 확인할 수 있습니다.</span>
+            <span style="color:#b2b2b2;">&nbsp;&nbsp;현재 페이지에서 당신의 기록을 확인할 수 있습니다.</span>
             <div style="margin-right: 20px;" id="timestamp" class="right"></div>
         </div>
     </nav>
@@ -113,7 +80,7 @@
                             이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
                     </div>
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">오늘의
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">오늘의
                             자세 점수</b>
                     </div>
                 </div>
@@ -121,13 +88,16 @@
                 <img src="/assets/img/bg3.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
 
                 <div class="score">
-                    <p style="font-size: 50px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
-                            id="score"
-                            style="color: #0dcb2c;">85</span>/100점</p>
+                    <p style="font-size: 35px; font-weight: bold; color: #333;">[[${userName}]]님의 자세 점수: <span
+                            id="scoreDisplay"
+                            style="color: #0dcb2c;"></span>점</p>
+                    <p style="font-size: 35px; font-weight: bold; color: #333; margin-top: -25px">전체 사용자 평균 점수: <span id="score2"
+                                                                                                 style="color: #a8001d;">56</span>점
+                    </p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
-                    잘 하고 있어요! 조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
+                    전체 사용자 점수보다 12점 더 높습니다!<br>조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
                 </p>
             </div>
         </div>
@@ -137,21 +107,20 @@
                  class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">사용자
-                            평균 점수</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">자세 모니터링 이용 시간</b>
                     </div>
                 </div>
 
-                <img src="/assets/img/bg3.png" alt="Posture Icon" style="height: 160px; margin-bottom: -30px">
+                <img src="/assets/img/turtle.png" alt="Posture Icon" style="height: 100px; margin-top: 55px; margin-bottom: -20px">
 
                 <div class="score">
-                    <p style="font-size: 50px; font-weight: bold; color: #333;">사용자 평균 점수: <span id="score2"
-                                                                                                 style="color: #94021c;">56</span>/100점
+                    <p style="font-size: 40px; font-weight: bold; color: #333;">오늘의 서비스 이용 시간: <span id="score3"
+                            style="color: #343434;"></span>초
                     </p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
-                    전체 사용자들의 평균 자세 점수와 비교할 수 있습니다.
+                    정기적인 자세 모니터링은 건강한 생활 습관을 유지하는 데 중요한 역할을 합니다.
                 </p>
 
             </div>
@@ -163,7 +132,7 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             자세 분석 통계
                         </b>
                     </div>
@@ -181,7 +150,7 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             사용자 평균 자세 분석 통계
                         </b>
                     </div>
@@ -199,7 +168,7 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             주간 사용 통계
                         </b>
                     </div>
@@ -217,7 +186,7 @@
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #a8001d; display: inline-block; padding-bottom : 2px">
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             시간별 사용 통계
                         </b>
                     </div>
@@ -320,44 +289,17 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const scoreElement = document.getElementById('score');
-        const endScore = 85; // 설정한 최종 점수
-        let currentScore = 1; // 시작 점수
-
-        const timer = setInterval(() => {
-            scoreElement.textContent = `${currentScore}`;
-            if (currentScore < endScore) {
-                currentScore++;
-            } else {
-                clearInterval(timer);
-            }
-        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
-    });
-
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const scoreElement = document.getElementById('score2');
-        const endScore = 56; // 설정한 최종 점수
-        let currentScore = 1; // 시작 점수
-
-        const timer = setInterval(() => {
-            scoreElement.textContent = `${currentScore}`;
-            if (currentScore < endScore) {
-                currentScore++;
-            } else {
-                clearInterval(timer);
-            }
-        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
-    });
-
     function toggleInfo() {
         var infoDiv = document.getElementById("infoText");
         if (infoDiv.style.display === "none") {
             infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
         } else {
             infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
         }
     }
+
 </script>
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -372,9 +314,65 @@
 <script>
     const totalNormal = [[${rDTO.totalNormal}]];
     const totalAbnormal = [[${rDTO.totalAbnormal}]];
+    const totalTime = [[${rDTO.totalTime}]];
     const labels = chartData.map(item => item.weekday);
     const normalData = chartData.map(item => item.totalNormal);
     const abnormalData = chartData.map(item => item.totalAbnormal);
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        if (totalTime === 5) {
+            const score1 = document.getElementById('score1');
+
+            if (score1) {
+                score1.textContent = 'Your new text here';
+            }
+        }
+
+        const scoreElement = document.getElementById('scoreDisplay');
+        const endScore = (totalNormal * 100 / (totalAbnormal + totalNormal)); // 설정한 최종 점수
+        let currentScore = 1; // 시작 점수
+
+        const timer = setInterval(() => {
+            scoreElement.textContent = `${currentScore}`;
+            if (currentScore < endScore) {
+                currentScore++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const scoreElement = document.getElementById('score2');
+        const endScore = 53; // 설정한 최종 점수
+        let currentScore = 1; // 시작 점수
+
+        const timer = setInterval(() => {
+            scoreElement.textContent = `${currentScore}`;
+            if (currentScore < endScore) {
+                currentScore++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const scoreElement = document.getElementById('score3');
+        const endScore = totalTime; // 설정한 최종 점수
+        let currentScore = 1; // 시작 점수
+
+        const timer = setInterval(() => {
+            scoreElement.textContent = `${currentScore}`;
+            if (currentScore < endScore) {
+                currentScore++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+    });
+
+
 </script>
 <script type="text/javascript" src="/js/dashboard.js"></script>
 </body>
