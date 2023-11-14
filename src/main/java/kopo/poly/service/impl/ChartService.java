@@ -39,6 +39,15 @@ public class ChartService implements IChartService {
     }
 
     @Override
+    public ChartDTO getTotalData(ChartDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getTotalData start!");
+
+        return chartMapper.getTotalData(pDTO);
+    }
+
+
+    @Override
     public List<ChartDTO> getWeek(ChartDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".getWeek start!");

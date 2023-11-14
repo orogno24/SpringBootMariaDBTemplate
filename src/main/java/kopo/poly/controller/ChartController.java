@@ -133,6 +133,7 @@ public class ChartController {
         pDTO2.setUserId(userId);
 
         ChartDTO rDTO = Optional.ofNullable(chartService.getData(pDTO)).orElseGet(ChartDTO::new);
+        ChartDTO tDTO = Optional.ofNullable(chartService.getTotalData(pDTO)).orElseGet(ChartDTO::new);
         List<ChartDTO> rList = Optional.ofNullable(chartService.getWeek(pDTO))
                 .orElseGet(ArrayList::new);
         chartService.insertLineData(pDTO2);
@@ -144,6 +145,7 @@ public class ChartController {
         model.addAttribute("chartData", rList);
 
         model.addAttribute("rDTO", rDTO);
+        model.addAttribute("tDTO", tDTO);
 
         String userName = (String) session.getAttribute("SS_USER_NAME");
         model.addAttribute("userName", userName);

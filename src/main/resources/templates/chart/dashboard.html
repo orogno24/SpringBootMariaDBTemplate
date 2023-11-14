@@ -71,7 +71,7 @@
             <div style="padding: 35px; position: relative;" align="center"
                  class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer">😊</span>
+                    <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div id="infoText" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>안녕하세요, 루미아 섬의 생존자 여러분!
                             11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
@@ -97,7 +97,7 @@
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
-                    전체 사용자 점수보다 12점 더 높습니다!<br>조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.
+                    <span id="score4">사용자 평균 점수보다 12점 더 높습니다!</span><br><span id="score5"></span>
                 </p>
             </div>
         </div>
@@ -106,6 +106,7 @@
             <div style="padding: 35px;" align="center"
                  class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">자세 모니터링 이용 시간</b>
                     </div>
@@ -115,7 +116,7 @@
 
                 <div class="score">
                     <p style="font-size: 40px; font-weight: bold; color: #333;">오늘의 서비스 이용 시간: <span id="score3"
-                            style="color: #343434;"></span>초
+                            style="color: #343434;"></span>
                     </p>
                 </div>
 
@@ -131,6 +132,7 @@
         <div class="col s6" style="margin-right: -2.5rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon3" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             자세 분석 통계
@@ -149,6 +151,7 @@
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon4" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             사용자 평균 자세 분석 통계
@@ -167,6 +170,7 @@
         <div class="col s6" style="margin-right: -2.5rem; margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon5" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             주간 사용 통계
@@ -185,6 +189,7 @@
         <div class="col s6" style="margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
+                    <span class="emoticon" id="infoEmoticon6" onclick="toggleInfo()" style="cursor: pointer">📣</span>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             시간별 사용 통계
@@ -315,21 +320,16 @@
     const totalNormal = [[${rDTO.totalNormal}]];
     const totalAbnormal = [[${rDTO.totalAbnormal}]];
     const totalTime = [[${rDTO.totalTime}]];
+    const totalNormal2 = [[${tDTO.totalNormal}]];
+    const totalAbnormal2 = [[${tDTO.totalAbnormal}]];
     const labels = chartData.map(item => item.weekday);
     const normalData = chartData.map(item => item.totalNormal);
     const abnormalData = chartData.map(item => item.totalAbnormal);
 
     document.addEventListener('DOMContentLoaded', (event) => {
-        if (totalTime === 5) {
-            const score1 = document.getElementById('score1');
-
-            if (score1) {
-                score1.textContent = 'Your new text here';
-            }
-        }
 
         const scoreElement = document.getElementById('scoreDisplay');
-        const endScore = (totalNormal * 100 / (totalAbnormal + totalNormal)); // 설정한 최종 점수
+        const endScore = Math.round(totalNormal * 100 / (totalAbnormal + totalNormal));// 설정한 최종 점수
         let currentScore = 1; // 시작 점수
 
         const timer = setInterval(() => {
@@ -340,36 +340,67 @@
                 clearInterval(timer);
             }
         }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
-    });
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const scoreElement = document.getElementById('score2');
-        const endScore = 53; // 설정한 최종 점수
-        let currentScore = 1; // 시작 점수
+        const scoreElement2 = document.getElementById('score2');
+        const endScore2 = Math.round(totalNormal2 * 100 / (totalAbnormal2 + totalNormal2)); // 설정한 최종 점수
+        let currentScore2 = 1; // 시작 점수
 
-        const timer = setInterval(() => {
-            scoreElement.textContent = `${currentScore}`;
-            if (currentScore < endScore) {
-                currentScore++;
+        const timer2 = setInterval(() => {
+            scoreElement2.textContent = `${currentScore2}`;
+            if (currentScore2 < endScore2) {
+                currentScore2++;
             } else {
-                clearInterval(timer);
+                clearInterval(timer2);
             }
         }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+
+
+        if (endScore >= 75) {
+            scoreElement.style.color = "#25beee";
+            document.getElementById("score5").innerHTML = `탁월한 자세를 유지하고 계십니다! 그 습관을 계속 유지해주세요!🤗`;
+        } else if (endScore >= 50 && endScore < 75) {
+            scoreElement.style.color = "#38e038"
+            document.getElementById("score5").innerHTML = `조금만 더 주의를 기울이면 완벽한 자세를 유지할 수 있을 거예요.😊`;
+        } else if (endScore >= 25 && endScore < 50) {
+            scoreElement.style.color = "#ea8738"
+            document.getElementById("score5").innerHTML = `자세 점수가 보통 수준이지만 더 개선될 여지가 있을 거에요!😉`;
+        } else if (endScore >= 0 && endScore < 25) {
+            scoreElement.style.color = "#d92622"
+            document.getElementById("score5").innerHTML = `목을 허리에 가깝게 유지하고, 화면에 가까이 앉아 보세요. 허리에 부담이 가지 않도록 의자 높이를 조절해주세요.😞`;
+        }
+
+        if (endScore > endScore2) {
+            const difference = endScore - endScore2;
+            document.getElementById("score4").innerHTML = `자세 점수가 사용자 평균보다 ${difference}점 더 높습니다!`;
+        } else if (endScore === endScore2) {
+            document.getElementById("score4").innerHTML = "사용자 평균점수와 같은 자세 점수를 획득했습니다!";
+        } else {
+            const difference2 = endScore2 - endScore;
+            document.getElementById("score4").innerHTML = `자세 점수가 사용자 평균보다 ${difference2}점 더 낮습니다!`;
+        }
+
+
     });
 
     document.addEventListener('DOMContentLoaded', (event) => {
         const scoreElement = document.getElementById('score3');
-        const endScore = totalTime; // 설정한 최종 점수
-        let currentScore = 1; // 시작 점수
+        const endScore = totalTime; // 설정한 최종 시간
+        let currentScore = 1; // 시작 시간
 
         const timer = setInterval(() => {
-            scoreElement.textContent = `${currentScore}`;
+            // 분과 초로 변환
+            let minutes = Math.floor(currentScore / 60);
+            let seconds = currentScore % 60;
+
+            // 분과 초를 문자열로 형식화
+            scoreElement.textContent = `${minutes}분 ${seconds}초`;
+
             if (currentScore < endScore) {
                 currentScore++;
             } else {
                 clearInterval(timer);
             }
-        }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+        }, 5); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
     });
 
 

@@ -6,7 +6,7 @@ var pieConfig = new Chart(pie, {
         datasets: [{
             label: '# of data',
             data: [(totalNormal * 100 / (totalAbnormal + totalNormal)), (totalAbnormal * 100 / (totalAbnormal + totalNormal))],
-            backgroundColor: ['#55e7ff', '#3399ad'],
+            backgroundColor: ['#55e7ff', '#ff4f70'],
             borderColor: 'transparent',
             borderWidth: 2
         }]
@@ -45,7 +45,7 @@ new Chart(ctx, {
         }, {
             label: 'Abnormal Posture',
             data: abnormalData,
-            backgroundColor: "#3aa8be",
+            backgroundColor: "#ff4f70",
             borderColor: 'transparent',
             borderWidth: 1
         }]
@@ -67,7 +67,7 @@ var pieConfig = new Chart(pie2, {
         datasets: [{
             label: '# of data',
             data: [3, 2],
-            backgroundColor: ['#55e7ff', '#3399ad'],
+            backgroundColor: ['#55e7ff', '#ff4f70'],
             borderColor: 'transparent',
             borderWidth: 2
         }]
