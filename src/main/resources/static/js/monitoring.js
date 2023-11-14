@@ -2,7 +2,6 @@ const URL = "/assets/my_model/";
 let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
-let StartTime;
 let startTime, endTime;
 let minnormalPostureCount = 0;
 let minabnormalPostureCount = 0;
@@ -36,7 +35,6 @@ async function init() {
     document.getElementById("statusText").style.display = "block";
     document.getElementById("analysisText").style.display = "block";
 
-    StartTime = Date.now();
     startTime = Date.now();
 
     document.getElementById("editButton").onclick = function () {
@@ -151,7 +149,7 @@ document.getElementById("stopButton").onclick = function () {
 async function predict() {
     const currentTime = Date.now();
 
-    totalTime = currentTime - StartTime;
+    totalTime = currentTime - startTime;
     time1 = (totalTime / 5);
     time2 = (totalTime / 5)*2;
     time3 = (totalTime / 5)*3;
