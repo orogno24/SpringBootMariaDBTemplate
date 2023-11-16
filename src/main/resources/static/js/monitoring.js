@@ -94,13 +94,7 @@ let userNotPresentTimer = null; // 사용자가 보이지 않는 시간을 추�
 const USER_NOT_PRESENT_DELAY = 5000; // 5초 지연
 let showinfo = 0; // 알림창 변수
 let lastUpdateTime = 0;
-const updateInterval = 600; // 1분 간격
-let time1 = 0;      // 구간 5등분
-let time2 = 0;
-let time3 = 0;
-let time4 = 0;
-let time5 = 0;
-
+const updateInterval = 1000; // 1초 간격
 document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
     radio.addEventListener('change', function(event) {
         // 선택된 라디오 버튼의 값을 읽어 selectedTime에 저장
@@ -113,6 +107,7 @@ function updatePostureCounts() {
     document.getElementById('normalPostureCount').innerText = normalPostureCount;
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
     document.getElementById('totalTime').innerText = totalTime;
+    document.getElementById('point').innerText = normalPostureCount / 15;
     // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
     // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
 }
@@ -127,6 +122,7 @@ document.getElementById("stopButton").onclick = function () {
     document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
     document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
     document.getElementById('hiddenTotalTime').value = totalTime / 1000;
+    document.getElementById('hiddenPoint').value = normalPostureCount / 15;
 
     // AJAX 요청을 통해 서버로 데이터를 전송합니다.
     $.ajax({
@@ -150,11 +146,6 @@ async function predict() {
     const currentTime = Date.now();
 
     totalTime = currentTime - startTime;
-    time1 = (totalTime / 5);
-    time2 = (totalTime / 5)*2;
-    time3 = (totalTime / 5)*3;
-    time4 = (totalTime / 5)*4;
-    time5 = totalTime;
 
     const {pose, posenetOutput} = await model.estimatePose(webcam.canvas);
 
