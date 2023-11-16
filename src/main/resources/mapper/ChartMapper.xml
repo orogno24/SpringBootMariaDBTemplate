@@ -38,6 +38,20 @@
             dateOnly
     </select>
 
+    <select id="getTotalData" resultType="ChartDTO">
+        SELECT
+            DATE(DATE) AS dateOnly,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal,
+            SUM(TOTALTIME) AS TOTALTIME
+        FROM
+            CHART
+        WHERE
+            DATE(DATE) = CURDATE()
+        GROUP BY
+            dateOnly
+    </select>
+
     <select id="getWeek" resultType="ChartDTO">
         SELECT
             DAYNAME(DATE) AS weekday,

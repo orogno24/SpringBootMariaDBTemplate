@@ -14,6 +14,8 @@ public interface IChartMapper {
 
     ChartDTO getData(ChartDTO pDTO) throws Exception;
 
+    ChartDTO getTotalData(ChartDTO pDTO) throws Exception;
+
     List<ChartDTO> getWeek(ChartDTO pDTO) throws Exception;
 
     void insertLineData(LineChartDTO pDTO) throws Exception;
