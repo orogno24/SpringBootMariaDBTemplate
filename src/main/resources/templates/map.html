@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>병원 검색</title>
+  <!-- Load css styles -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <link rel="stylesheet" type="text/css" href="css/pluton.css"/>
+  <!--[if IE 7]>
+  <link rel="stylesheet" type="text/css" href="css/pluton-ie7.css"/>
+  <![endif]-->
+  <link rel="stylesheet" type="text/css" href="css/jquery.cslider.css"/>
+  <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css"/>
+  <link rel="stylesheet" type="text/css" href="css/animate.css"/>
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72.png">
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57.png">
+  <link rel="shortcut icon" href="images/ico/favicon.ico">
+  <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+  <style>
+    /* hospitalList의 스크롤바에 대한 스타일 */
+    #hospitalList::-webkit-scrollbar {
+      width: 10px; /* 스크롤바의 너비 */
+    }
+
+    /* hospitalList의 스크롤바 트랙(바탕) 스타일 */
+    #hospitalList::-webkit-scrollbar-track {
+      background: #f1f1f1; /* 트랙의 배경색 */
+      border-radius: 10px; /* 트랙의 모서리 둥글게 */
+    }
+
+    /* hospitalList의 스크롤바 핸들(움직이는 부분) 스타일 */
+    #hospitalList::-webkit-scrollbar-thumb {
+      background: #888; /* 핸들의 색상 */
+      border-radius: 10px; /* 핸들의 모서리 둥글게 */
+    }
+
+    /* hospitalList의 스크롤바 핸들에 마우스 호버 시 스타일 */
+    #hospitalList::-webkit-scrollbar-thumb:hover {
+      background: #555; /* 호버 시 핸들의 색상 */
+    }
+
+    #map {
+      width: 64%; /* 또는 다른 가로 길이 */
+      height: 400px;
+      margin: 0 auto;
+    }
+    #hospitalList {
+      width: 63%; /* 또는 다른 가로 길이 */
+      margin: 20px auto 0;
+      border: 1px solid #ddd;
+      padding: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    #hospitalList li {
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    #hospitalList li:hover {
+      border: 1px solid #15c6e5;
+    }
+    .info-window h4 {
+      margin: 5px 0;
+    }
+    .info-window p {
+      margin: 0;
+    }
+    .info-window a {
+      color: #15c6e5;
+    }
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+  </style>
+
+  <script>
+    var map;
+
+    function searchHospital() {
+      var keyword = document.getElementById('address').value;
+
+      if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('장소를 입력해주세요.');
+        return false;
+      }
+
+      // 키워드로 장소를 검색합니다
+      var places = new kakao.maps.services.Places();
+
+      places.keywordSearch(keyword, function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          // 가장 첫 번째 검색 결과의 좌표를 사용합니다
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+          // 지도의 중심을 이동합니다
+          map.setCenter(coords);
+
+          // 해당 좌표를 기준으로 주변 병원을 검색합니다
+          searchPlaces(coords);
+        } else {
+          alert('검색 결과가 없습니다.');
+        }
+      });
+    }
+
+    // 키워드 검색을 실행하는 함수입니다
+    function searchPlaces(coords) {
+      var keyword = '병원';
+
+      var places = new kakao.maps.services.Places();
+
+      var callback = function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          displayPlaces(result);
+        }
+      };
+
+      places.keywordSearch(keyword, callback, {
+        location: coords
+      });
+    }
+
+    // 검색 결과를 지도에 표시하는 함수입니다
+    function displayPlaces(places) {
+
+      var bounds = new kakao.maps.LatLngBounds();
+      var listEl = document.getElementById('hospitalList'), // 리스트를 표시할 요소
+              fragment = document.createDocumentFragment(), // 문서 조각 생성
+              listItem;
+
+      listEl.innerHTML = '';
+
+      for (var i = 0; i < places.length; i++) {
+        displayMarker(places[i]);
+        bounds.extend(new kakao.maps.LatLng(places[i].y, places[i].x));
+
+        // 리스트에 병원 정보 추가
+        listItem = document.createElement('li');
+        listItem.innerHTML = '<span style="color: #89ee37">' + places[i].place_name + '</span><br>' +
+                '주소: ' + (places[i].road_address_name || places[i].address_name) +
+                (places[i].phone ? '<br>전화번호: ' + places[i].phone : '') +
+                // 상세보기 링크 추가
+                '<br><a href="' + places[i].place_url + '" target="_blank" style="color: #15c6e5; text-decoration: underline;">상세보기</a>';
+        fragment.appendChild(listItem);
+      }
+
+      listEl.appendChild(fragment);
+      map.setBounds(bounds);
+    }
+
+    // 마커를 지도에 표시하는 함수입니다
+    function displayMarker(place) {
+      var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x)
+      });
+
+      // 마커에 클릭이벤트를 등록합니다
+      kakao.maps.event.addListener(marker, 'click', function () {
+        // 마커 클릭 시 인포윈도우에 표시될 내용을 만듭니다
+        var content = '<div class="info-window">' + '<img src="/assets/img/turtle.png" width="20%" height="20%" alt=" ">' +
+                '<h4 style="color: #89ee37">' + place.place_name + '</h4>' +
+                '<p>' + '주소: ' + (place.road_address_name || place.address_name) + '</p>' +
+                (place.phone ? '<p>' + '전화번호: ' + place.phone + '</p>' : '') +
+                '<a href="' + place.place_url + '" target="_blank" style="color: #15c6e5; text-decoration: underline;">상세보기</a>' + // 카카오 지도 장소 상세 페이지 링크
+                '</div>';
+
+        var infowindow = new kakao.maps.InfoWindow({
+          content: content,
+          removable: true
+        });
+        infowindow.open(map, marker);
+      });
+    }
+
+    // 지도를 생성합니다
+    function initMap() {
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+              mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+              };
+
+      // 지도를 생성합니다
+      map = new kakao.maps.Map(mapContainer, mapOption);
+    }
+
+    // 문서가 로드될 때 지도를 초기화합니다
+    window.onload = function () {
+      initMap();
+    }
+
+  </script>
+</head>
+<body style="background-color: #2b2b36">
+<div class="navbar" style="border-bottom: 1px solid #15c6e5;">
+  <div class="navbar-inner">
+    <div class="container">
+      <a href="/main" class="brand">
+        <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
+        <!-- This is website logo -->
+      </a>
+      <!-- Navigation button, visible on small resolution -->
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <img src="/assets/img/logo5.png" width="30" height="30" alt="Logo">
+      </button>
+      <!-- Main navigation -->
+      <div class="nav-collapse collapse pull-right">
+        <ul class="nav" id="top-navigation">
+          <li class="active"><a href="#home">메인 페이지</a></li>
+          <li><a href="/gazami6">거북목 진단</a></li>
+          <li><a href="/gazami7">자세 모니터링</a></li>
+          <li><a href="/gazami8">통계</a></li>
+          <li><a href="/gazami9">커뮤니티</a></li>
+          <li><a href="/gazami3">프로필</a></li>
+          <li><span>&nbsp;&nbsp;</span></li>
+          <li><a href=""><span class="username-color">[[${userName}]]</span>님, 환영합니다!</a></li>
+        </ul>
+      </div>
+      <!-- End main navigation -->
+    </div>
+  </div>
+</div>
+<br><br>
+<div class="container">
+  <div class="title" style="border-bottom: 2px solid #FFF;">
+    <h1>병원 찾기</h1>
+  </div>
+  <div class="container centered" style="padding-top: 5px">
+    <p style="color: #ffffff;">사용자의 현재 위치 또는 원하는 지역을 입력하여 가까운 병원을 찾을 수 있습니다.<br>
+      사용자의 주소를 입력하면 입력된 주소의 주변 병원을 알려주며 표시된 위치를 클릭하면, 주소, 병원 전화번호와 상세정보를 확인하실 수 있습니다.</p>
+  </div>
+
+  <div style="margin: 0 auto;">
+  <label for="address"></label><input type="text" id="address" name="address" class="span8"
+                                      style="font-family: NIXGONM-Vb" placeholder="주소를 입력해주세요. 예) 서울시 강남구"
+                                      required="">
+  <button onclick="searchHospital()">병원 찾기</button>
+  </div>
+
+</div>
+
+<div id="map"></div>
+<ul id="hospitalList"></ul>
+<div style="height: 70px;"></div>
+
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mixitup.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
+<script type="text/javascript" src="js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="js/jquery.inview.js"></script>
+<script src="js/respond.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962&libraries=services,clusterer"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962"></script>
+</body>
+</html>

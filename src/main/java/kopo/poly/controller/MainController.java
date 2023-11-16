@@ -165,4 +165,12 @@ public class MainController {
         return "/monitoring";
     }
 
+    @GetMapping("/map")
+    public String map(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".map 함수 실행");
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
+        return "/map";
+    }
+
 }
