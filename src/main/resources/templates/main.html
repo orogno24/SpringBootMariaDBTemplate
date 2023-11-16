@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 페이지</title>
-    <!-- Load Roboto font -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet'
-          type='text/css'>
     <!-- Load css styles -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css"/>
@@ -129,24 +125,6 @@
         window.onload = function () {
             initMap();
         }
-
-        // ID 배열
-        var videoIds = ['EksV9sxWXHw', 'anotherVideoId', 'andAnotherVideoId'];
-
-        // 각 비디오 ID에 대해 iframe을 생성
-        videoIds.forEach(function(videoId) {
-            var iframe = document.createElement('iframe');
-            iframe.setAttribute('width', '560');
-            iframe.setAttribute('height', '315');
-            iframe.setAttribute('src', 'https://www.youtube.com/embed/' + videoId);
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-            iframe.setAttribute('allowfullscreen', 'true');
-
-            // 이 iframe을 원하는 DOM 요소에 추가
-            document.getElementById('videoContainer').appendChild(iframe);
-        });
-
     </script>
 
 </head>
@@ -166,10 +144,10 @@
             <!-- Main navigation -->
             <div class="nav-collapse collapse pull-right">
                 <ul class="nav" id="top-navigation">
-                    <li class="active"><a href="#home">메인 페이지</a></li>
-                    <li><a href="/gazami6">거북목 진단</a></li>
+                    <li class="active"><a href="/gazami6">거북목 진단</a></li>
                     <li><a href="/gazami7">자세 모니터링</a></li>
                     <li><a href="/gazami8">통계</a></li>
+                    <li><a href="/map">병원 검색</a></li>
                     <li><a href="/gazami9">커뮤니티</a></li>
                     <li><a href="/gazami3">프로필</a></li>
                     <li><span>&nbsp;&nbsp;</span></li>
@@ -278,7 +256,7 @@
                             추천 영상</h2>
                         <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게 맞춤형 영상을 제공합니다. </p>
                     </div>
-                    <div class="feature" onclick="document.getElementById('gps').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature" onclick="location.href='/map';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             지도</h2>

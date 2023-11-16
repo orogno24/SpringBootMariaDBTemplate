@@ -62,7 +62,7 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @PostMapping(value = "loginProc")       // 로그인함수.
+    @PostMapping(value = "loginProc")       // 로그인함수
     public MsgDTO loginProc(HttpServletRequest request, HttpSession session) {
         log.info(this.getClass().getName() + ".loginProc Start!");
 
@@ -456,5 +456,11 @@ public class UserInfoController {
         log.info(this.getClass().getName() + ".gradeProc End!");
 
         return dto;
+    }
+
+    @GetMapping("/turtle")
+    public String turtle() throws Exception {
+        log.info(this.getClass().getName() + ".turtle 함수 실행");
+        return "/user/turtle";
     }
 }

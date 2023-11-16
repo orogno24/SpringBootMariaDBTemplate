@@ -2,7 +2,7 @@ var pie = document.getElementById('pie');
 var pieConfig = new Chart(pie, {
     type: 'pie',
     data: {
-        labels: ['Normal', 'Abnormal'],
+        labels: ['정상 자세', '거북목 자세'],
         datasets: [{
             label: '# of data',
             data: [(totalNormal * 100 / (totalAbnormal + totalNormal)), (totalAbnormal * 100 / (totalAbnormal + totalNormal))],
@@ -12,11 +12,16 @@ var pieConfig = new Chart(pie, {
         }]
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: true,
+        responsive: false,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 20
+            }
+        },
         tooltips: {
             callbacks: {
-                label: function(tooltipItem, data) {
+                label: function (tooltipItem, data) {
                     var label = data.labels[tooltipItem.index] || '';
                     if (label) {
                         label += ': ';
@@ -25,6 +30,12 @@ var pieConfig = new Chart(pie, {
                     label += Math.round(value) + '%'; // 여기서 반올림
                     return label;
                 }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'NIXGONM-Vb',
+                fontSize: 13 // 원하는 글꼴 크기
             }
         }
     }
@@ -37,13 +48,13 @@ new Chart(ctx, {
     data: {
         labels: labels,
         datasets: [{
-            label: 'Normal Posture',
+            label: '정상 자세',
             data: normalData,
             backgroundColor: "#55e7ff",
             borderColor: 'transparent',
             borderWidth: 1
         }, {
-            label: 'Abnormal Posture',
+            label: '거북목 자세',
             data: abnormalData,
             backgroundColor: "#ff4f70",
             borderColor: 'transparent',
@@ -55,15 +66,23 @@ new Chart(ctx, {
             y: {
                 beginAtZero: true
             }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'NIXGONM-Vb',
+                fontSize: 13 // 원하는 글꼴 크기
+            }
         }
+
     }
 });
+
 
 var pie2 = document.getElementById('pie2');
 var pieConfig = new Chart(pie2, {
     type: 'pie',
     data: {
-        labels: ['Normal', 'Abnormal'],
+        labels: ['정상 자세', '거북목 자세'],
         datasets: [{
             label: '# of data',
             data: [3, 2],
@@ -73,11 +92,16 @@ var pieConfig = new Chart(pie2, {
         }]
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: true,
+        responsive: false,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 20
+            }
+        },
         tooltips: {
             callbacks: {
-                label: function(tooltipItem, data) {
+                label: function (tooltipItem, data) {
                     var label = data.labels[tooltipItem.index] || '';
                     if (label) {
                         label += ': ';
@@ -86,6 +110,12 @@ var pieConfig = new Chart(pie2, {
                     label += Math.round(value) + '%'; // 여기서 반올림
                     return label;
                 }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'NIXGONM-Vb',
+                fontSize: 13 // 원하는 글꼴 크기
             }
         }
     }
@@ -97,12 +127,12 @@ var lineConfig = new Chart(line, {
     data: {
         labels: ['data-1', 'data-2', 'data-3', 'data-4', 'data-5', 'data-6'],           // 시간별로 들어가야함
         datasets: [{
-            label: '# of data', //
+            label: '시간대별 자세 비율', //
             data: [0, 15, 20, 10, 25, 5], //          // 시간별 정상 / 거북목 비율
             fill: false,
-            borderColor: '#3399ad', //
-            backgroundColor: '#55e7ff', //
-            borderWidth: 2 //
+            borderColor: '#55e7ff', //
+            backgroundColor: '#ff4f70', //
+            borderWidth: 3 //
         }]
     },
     options: {
@@ -110,7 +140,7 @@ var lineConfig = new Chart(line, {
         maintainAspectRatio: true,
         tooltips: {
             callbacks: {
-                label: function(tooltipItem, data) {
+                label: function (tooltipItem, data) {
                     var label = data.labels[tooltipItem.index] || '';
                     if (label) {
                         label += ': ';
