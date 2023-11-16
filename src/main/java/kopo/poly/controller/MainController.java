@@ -31,12 +31,6 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/chart")
-    public String chart() throws Exception {
-        log.info(this.getClass().getName() + ".chart 함수 실행");
-        return "chart";
-    }
-
     @GetMapping("/pose")
     public String pose(HttpSession session, ModelMap model) throws Exception {
         String userName = (String) session.getAttribute("SS_USER_NAME");

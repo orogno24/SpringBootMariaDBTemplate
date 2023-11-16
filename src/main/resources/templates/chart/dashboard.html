@@ -106,7 +106,14 @@
             <div style="padding: 35px;" align="center"
                  class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer">📣</span>
+                    <div id="infoText2" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>안녕하세요, 루미아 섬의 생존자 여러분!
+                            11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
+
+                            다양한 선물을 준비했으니
+                            이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
+                    </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">자세 모니터링 이용 시간</b>
                     </div>
@@ -132,14 +139,17 @@
         <div class="col s6" style="margin-right: -2.5rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon3" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon3" onclick="toggleInfo3()" style="cursor: pointer">📣</span>
+                    <div id="infoText3" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>자세 모니터링 기능을 사용하는 동안 사용자가 거북목 자세와 올바른 자세로 있었던 시간을 비율로 나타냅니다.</p>
+                    </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             자세 분석 통계
                         </b>
                     </div>
                 </div>
-                <canvas class="pie-chart" id="pie">
+                <canvas class="pie-chart" width="400" height="300" id="pie">
                 </canvas>
                 <p style="font-size: 18px;">
                     개인별 정상/비정상 자세 통계값을 나타내는 그래프입니다
@@ -151,14 +161,19 @@
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon4" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon4" onclick="toggleInfo4()" style="cursor: pointer">📣</span>
+                    <div id="infoText4" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>모든 사용자가 자세 모니터링 기능을 사용하는 동안<br>
+                            거북목 자세와 올바른 자세로 있었던 시간을 비율로 나타냅니다.<br>
+                            사용자들의 평균적인 통계를 알 수 있습니다.</p>
+                    </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             사용자 평균 자세 분석 통계
                         </b>
                     </div>
                 </div>
-                <canvas class="pie-chart" id="pie2">
+                <canvas class="pie-chart" width="400" height="300" id="pie2">
                 </canvas>
                 <p style="font-size: 18px;">
                     전체 사용자 정상/비정상 자세 통계값을 나타내는 그래프입니다.
@@ -170,7 +185,10 @@
         <div class="col s6" style="margin-right: -2.5rem; margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon5" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon5" onclick="toggleInfo5()" style="cursor: pointer">📣</span>
+                    <div id="infoText5" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>자세 모니터링을 사용하는 동안 모인 데이터를 주간별로 나타냅니다.</p>
+                    </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             주간 사용 통계
@@ -189,7 +207,11 @@
         <div class="col s6" style="margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon6" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon6" onclick="toggleInfo6()" style="cursor: pointer">📣</span>
+                    <div id="infoText6" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
+                        <p>자세 모니터링을 사용한 가장 최근 기록을 나타냅니다.<br>
+                            기록은 측정시간을 다섯 구간으로 나누어 사용자가 어느 시점에서 주로 자세가 흐트러지는지 알 수 있습니다.</p>
+                    </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
                             시간별 사용 통계
@@ -305,6 +327,61 @@
         }
     }
 
+    function toggleInfo2() {
+        var infoDiv = document.getElementById("infoText2");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
+        } else {
+            infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
+        }
+    }
+
+    function toggleInfo3() {
+        var infoDiv = document.getElementById("infoText3");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
+        } else {
+            infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
+        }
+    }
+
+    function toggleInfo4() {
+        var infoDiv = document.getElementById("infoText4");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
+        } else {
+            infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
+        }
+    }
+
+    function toggleInfo5() {
+        var infoDiv = document.getElementById("infoText5");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
+        } else {
+            infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
+        }
+    }
+
+    function toggleInfo6() {
+        var infoDiv = document.getElementById("infoText6");
+        if (infoDiv.style.display === "none") {
+            infoDiv.style.display = "block";
+            infoDiv.style.height = "auto"; // 높이를 auto로 설정하여 내용에 맞게 조정
+        } else {
+            infoDiv.style.display = "none";
+            infoDiv.style.height = "0"; // 다시 숨길 때 높이를 0으로 설정
+        }
+    }
+
 </script>
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -313,6 +390,16 @@
     /*<![CDATA[*/
     const LinechartData = [[${LinechartData}]];
     /*]]>*/
+
+    const dayMapping = {
+        "Monday": "월요일",
+        "Tuesday": "화요일",
+        "Wednesday": "수요일",
+        "Thursday": "목요일",
+        "Friday": "금요일",
+        "Saturday": "토요일",
+        "Sunday": "일요일"
+    };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
 </script>
@@ -322,7 +409,7 @@
     const totalTime = [[${rDTO.totalTime}]];
     const totalNormal2 = [[${tDTO.totalNormal}]];
     const totalAbnormal2 = [[${tDTO.totalAbnormal}]];
-    const labels = chartData.map(item => item.weekday);
+    const labels = chartData.map(item => dayMapping[item.weekday]);
     const normalData = chartData.map(item => item.totalNormal);
     const abnormalData = chartData.map(item => item.totalAbnormal);
 
@@ -402,7 +489,6 @@
             }
         }, 5); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
     });
-
 
 </script>
 <script type="text/javascript" src="/js/dashboard.js"></script>

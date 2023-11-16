@@ -9,6 +9,11 @@
     font-family: 'NIXGONM-Vb';
 }
 
+#pie, #pie2 {
+    display: block;
+    margin: 0 auto;
+}
+
 header,
 main,
 footer {
@@ -109,7 +114,7 @@ body {
     transform: translateX(100%);
 }
 
-#infoText {
+#infoText, #infoText2, #infoText3, #infoText4, #infoText5, #infoText6 {
     display: none; /* 처음에는 숨김 상태 */
     position: absolute;
     right: 10px; /* 필요에 따라 조정 */

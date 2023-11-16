@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>거북이 키우기</title>
+    <link rel="stylesheet" type="text/css" href="/css/turtle.css"/>
+    <style>
+        .exp-bar-outer {
+            width: 100%;
+            background-color: #e0e0e0; /* 미니멀리즘 색상 */
+            border: 2px solid #424242;
+            border-radius: 5px;
+        }
+
+        .exp-bar-inner {
+            width: 0%;
+            height: 20px;
+            background: #76ff03; /* 네온 그린 색상 */
+            transition: width 2s ease; /* 부드러운 전환 */
+            box-shadow: 0 0 12px rgba(178, 255, 89, 0.31); /* 부드러운 네온 효과 */
+            text-align: center;
+            color: #000000; /* 경험치 값 텍스트 색상 */
+            line-height: 20px;
+            font-size: 12px; /* 작은 글씨체 */
+        }
+
+        .square-container {
+            display: flex;
+            justify-content: flex-start; /* 정사각형들을 왼쪽으로 정렬 */
+            margin-bottom: 20px; /* 컨테이너 간 수직 간격 조정 */
+            padding-left: 0; /* 왼쪽 패딩 제거 또는 줄임 */
+        }
+
+        .square {
+            position: relative; /* 이미지 위치 조정을 위해 필요 */
+            width: 120px; /* 정사각형 크기 */
+            height: 120px;
+            background-color: transparent; /* 배경색 투명 */
+            border: 2px solid #949494; /* 더 두꺼운 테두리로 변경 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            margin: 10px; /* 각 정사각형 주변의 여백 설정 */
+            margin-right: 20px; /* 정사각형 간 수평 간격 조정 */
+            overflow: hidden; /* 이미지가 정사각형 밖으로 나가지 않도록 함 */
+        }
+
+        .square img {
+            width: 100%; /* 이미지 너비를 정사각형에 맞춤 */
+            height: auto; /* 이미지 높이를 비율에 맞게 자동 조정 */
+            object-fit: cover; /* 이미지가 정사각형을 꽉 채우도록 함 */
+            border-radius: 3px; /* 이미지 모서리를 둥글게 */
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="content">
+        <div class="info" style="margin-left: -40px">
+            <div class="square-container">
+                <div class="square"><img src="/assets/img/food1.png" alt="Image 1"></div>
+                <div class="square"><img src="/assets/img/food2.png" alt="Image 2"></div>
+            </div>
+            <div class="square-container">
+                <div class="square"><img src="/assets/img/food3.png" alt="Image 3"></div>
+                <div class="square"><img src="/assets/img/food4.png" alt="Image 4"></div>
+            </div>
+        </div>
+        <div class="swiper mySwiper">
+            <h2 style="font-family: 'NIXGONM-Vb'; color: #cbcbcb; font-weight: normal">Lv. 2 <span
+                    style="color: #ff6434;font-weight: bold">거북게</span></h2>
+
+            <img src="/assets/img/turtlelv2.gif" alt="" style="width: 70%; margin-top: 70px; margin-left: 45px">
+            <div class="exp-bar-outer" style="margin-top: 15px; margin-bottom: 20px">
+                <div class="exp-bar-inner" id="expBar"></div>
+            </div>
+            <button class="btn" style="color: #32454d">밥주기</button>
+        </div>
+    </div>
+
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</section>
+<script>
+    var exp = 70;
+
+    function updateExpBar(exp) {
+        var expBar = document.getElementById("expBar");
+        expBar.style.width = exp + '%';
+    }
+
+    updateExpBar(exp);
+</script>
+</body>
+</html>
