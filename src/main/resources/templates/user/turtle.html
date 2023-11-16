@@ -24,80 +24,127 @@
             font-size: 12px; /* 작은 글씨체 */
         }
 
-        .square-container {
+        .item-list {
+            font-size: 22px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: 70px;
+            width: 400px; /* 조절 필요: 너비를 더 크게 설정 */
+            height: 400px; /* 조절 필요: 높이를 더 크게 설정 */
+            padding: 10px;
+            /*background-color: #f5f5f5;*/
+            /*border: 2px solid #424242;*/
+            /*border-radius: 5px;*/
+        }
+
+        .item {
             display: flex;
-            justify-content: flex-start; /* 정사각형들을 왼쪽으로 정렬 */
-            margin-bottom: 20px; /* 컨테이너 간 수직 간격 조정 */
-            padding-left: 0; /* 왼쪽 패딩 제거 또는 줄임 */
+            align-items: center;
+            margin-bottom: 10px;
         }
 
-        .square {
-            position: relative; /* 이미지 위치 조정을 위해 필요 */
-            width: 120px; /* 정사각형 크기 */
-            height: 120px;
-            background-color: transparent; /* 배경색 투명 */
-            border: 2px solid #949494; /* 더 두꺼운 테두리로 변경 */
-            border-radius: 5px; /* 모서리 둥글게 */
-            margin: 10px; /* 각 정사각형 주변의 여백 설정 */
-            margin-right: 20px; /* 정사각형 간 수평 간격 조정 */
-            overflow: hidden; /* 이미지가 정사각형 밖으로 나가지 않도록 함 */
+        .item img {
+            width: 90px;
+            height: 90px;
+            margin-right: 10px;
         }
 
-        .square img {
-            width: 100%; /* 이미지 너비를 정사각형에 맞춤 */
-            height: auto; /* 이미지 높이를 비율에 맞게 자동 조정 */
-            object-fit: cover; /* 이미지가 정사각형을 꽉 채우도록 함 */
-            border-radius: 3px; /* 이미지 모서리를 둥글게 */
+        .item-name {
+            font-weight: bold;
+        }
+
+        /* 아이템 설명 스타일 */
+        .item-description {
+            margin-left: 10px;
+        }
+
+        /* 아이템 가격 스타일 */
+        .item-price {
+            margin-left: 10px; /* 수정: auto에서 10px로 변경 */
+            font-weight: bold;
+        }
+
+        /* 아이템 구매 버튼 스타일 */
+        .item-button {
+            font-size: 17px;
+            margin-left: auto;
+            background-color: #007bff; /* 파란색 배경 */
+            color: #fff; /* 흰색 텍스트 */
+            padding: 12px 24px; /* 버튼 내부 패딩을 조절하여 크기를 키웁니다 */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px; /* 버튼과 텍스트 사이의 오른쪽 여백을 추가합니다 */
+        }
+
+        .item-button:hover {
+            background-color: #0056b3; /* 호버 시 색상 변경 */
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .myPet {
+            /* 우측 여백을 주어 content 우측에 배치 */
+            margin-left: 475px;
+            /* 기존 스타일 코드... */
         }
     </style>
 </head>
 <body>
 <section>
     <div class="content">
-        <div class="info" style="margin-left: -40px">
-            <div class="square-container">
-                <div class="square"><img src="/assets/img/food1.png" alt="Image 1"></div>
-                <div class="square"><img src="/assets/img/food2.png" alt="Image 2"></div>
+        <div class="item-list">
+            <h2 style="font-weight: bold; font-size: 24px; margin-bottom: 10px;">상점</h2>
+            <div class="item">
+                <img src="/assets/img/food1.png" alt="아이템 1">
+                <div>
+                    <div class="item-description">초록잎사귀</div>
+                    <div class="item-price">100 골드</div>
+                </div>
+                <button class="item-button">구매</button>
             </div>
-            <div class="square-container">
-                <div class="square"><img src="/assets/img/food3.png" alt="Image 3"></div>
-                <div class="square"><img src="/assets/img/food4.png" alt="Image 4"></div>
+            <div class="item">
+                <img src="/assets/img/food2.png" alt="아이템 2">
+                <div>
+                    <div class="item-description">태양 돌</div>
+                    <div class="item-price">200 골드</div>
+                </div>
+                <button class="item-button">구매</button>
+            </div>
+            <div class="item">
+                <img src="/assets/img/food3.png" alt="아이템 3">
+                <div>
+                    <div class="item-description">황금 거북이</div>
+                    <div class="item-price">300 골드</div>
+                </div>
+                <button class="item-button">구매</button>
+            </div>
+            <div class="item">
+                <img src="/assets/img/food4.png" alt="아이템 4">
+                <div>
+                    <div class="item-description">맑은 물</div>
+                    <div class="item-price">400 골드</div>
+                </div>
+                <button class="item-button">구매</button>
             </div>
         </div>
-        <div class="swiper mySwiper">
-            <h2 style="font-family: 'NIXGONM-Vb'; color: #cbcbcb; font-weight: normal">Lv. 2 <span
-                    style="color: #ff6434;font-weight: bold">거북게</span></h2>
+        <div class="myPet">
+            <div class="swiper mySwiper">
+                <h2 style="font-family: 'NIXGONM-Vb'; color: #cbcbcb; font-weight: normal">Lv. 2 <span
+                        style="color: #ff6434;font-weight: bold">거북게</span></h2>
 
-            <img src="/assets/img/turtlelv2.gif" alt="" style="width: 70%; margin-top: 70px; margin-left: 45px">
-            <div class="exp-bar-outer" style="margin-top: 15px; margin-bottom: 20px">
-                <div class="exp-bar-inner" id="expBar"></div>
+                <img src="/assets/img/turtlelv2.gif" alt="" style="width: 70%; margin-top: 70px; margin-left: 45px">
+                <div class="exp-bar-outer" style="margin-top: 15px; margin-bottom: 20px">
+                    <div class="exp-bar-inner" id="expBar"></div>
+                </div>
+                <button class="btn" style="color: #32454d">밥주기</button>
             </div>
-            <button class="btn" style="color: #32454d">밥주기</button>
         </div>
     </div>
-
-    <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
 </section>
-<script>
-    var exp = 70;
-
-    function updateExpBar(exp) {
-        var expBar = document.getElementById("expBar");
-        expBar.style.width = exp + '%';
-    }
-
-    updateExpBar(exp);
-</script>
+<script src="/js/turtle.js"></script>
 </body>
 </html>
