@@ -24,6 +24,7 @@ import java.util.Optional;
 public class ChartController {
 
     private final IChartService chartService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언함.
+    private final IUserInfoService userInfoService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언함.
 
     @ResponseBody
     @PostMapping(value = "insertChart")
@@ -41,20 +42,28 @@ public class ChartController {
             String normal = CmmUtil.nvl(request.getParameter("normalPostureCount"));
             String abnormal = CmmUtil.nvl(request.getParameter("abnormalPostureCount"));
             String totalTime = CmmUtil.nvl(request.getParameter("totalTime"));
+            String point = CmmUtil.nvl(request.getParameter("point"));
 
             log.info("session user_id : " + userId);
             log.info("normal : " + normal);
             log.info("abnormal : " + abnormal);
             log.info("totalTime : " + totalTime);
+            log.info("point : " + point);
 
             // 데이터 저장하기 위해 DTO에 저장하기
             ChartDTO pDTO = new ChartDTO();
+            UserInfoDTO uDTO = new UserInfoDTO();
+
             pDTO.setUserId(userId);
             pDTO.setNormal(normal);
             pDTO.setAbnormal(abnormal);
             pDTO.setTotalTime(totalTime);
 
+            uDTO.setUserId(userId);
+            uDTO.setPoint(point);
+
             chartService.insertData(pDTO);
+            userInfoService.updatePoint(uDTO);
 
             msg = "등록되었습니다.";
 

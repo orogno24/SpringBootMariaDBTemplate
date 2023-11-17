@@ -84,7 +84,7 @@
 
     <!-- 거북목 등급 조회 -->
     <select id="getGrade" parameterType="UserInfoDTO" resultType="UserInfoDTO">
-        SELECT GRADE, USER_NAME FROM USER_INFO
+        SELECT GRADE, USER_NAME, POINT, EXP FROM USER_INFO
         WHERE USER_ID = #{userId}
     </select>
 
@@ -97,7 +97,7 @@
 
     <update id="updatePoint" parameterType="UserInfoDTO">
         UPDATE USER_INFO
-        SET POINT = #{point}
+        SET POINT = POINT + #{point}
         WHERE USER_ID = #{userId}
     </update>
 
