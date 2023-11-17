@@ -40,4 +40,6 @@ public interface IUserInfoService {
 
     // 등급 삽입하기
     void updateGrade(UserInfoDTO pDTO) throws Exception;
+
+    void updatePoint(UserInfoDTO pDTO) throws Exception;
 }

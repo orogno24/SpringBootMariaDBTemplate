@@ -3,83 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <title>거북이 키우기</title>
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/turtle.css"/>
     <style>
+        .myPet h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #ff8026; /* Warm color for the level and name */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+        }
+
+        .points-display {
+            font-size: 18px; /* Slightly larger font size */
+            margin: 15px 0; /* More vertical spacing */
+            background: rgba(70, 70, 70, 0.4); /* Semi-transparent background */
+            padding: 10px;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3); /* Inner shadow for depth */
+        }
+
         .exp-bar-outer {
-            width: 100%;
-            background-color: #e0e0e0; /* 미니멀리즘 색상 */
-            border: 2px solid #424242;
-            border-radius: 5px;
+            width: 80%; /* Adjusted width for better layout */
+            /* Center the bar */
+            margin: 20px auto;
+            background-color: #555; /* Dark background for contrast */
+            border-radius: 16px; /* Rounded corners */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+            overflow: hidden; /* Ensures the inner bar stays within the corners */
         }
 
         .exp-bar-inner {
-            width: 0%;
-            height: 20px;
-            background: #76ff03; /* 네온 그린 색상 */
-            transition: width 2s ease; /* 부드러운 전환 */
-            box-shadow: 0 0 12px rgba(178, 255, 89, 0.31); /* 부드러운 네온 효과 */
-            text-align: center;
-            color: #000000; /* 경험치 값 텍스트 색상 */
-            line-height: 20px;
-            font-size: 12px; /* 작은 글씨체 */
+            height: 16px; /* Increased height for better visibility */
+            background: linear-gradient(to right, #76ff03, #8dec2a); /* Gradient effect */
+            width: 0%; /* Example width to represent the current exp percentage */
+            transition: width 2s ease;
+
+            /* Adding a glow effect */
+            box-shadow: 0 0 10px #76ff03;
+            position: relative; /* Position relative to allow pseudo-elements */
         }
 
+        /* Adding a glow to the left of the bar to signify progress */
+        .exp-bar-inner:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px; /* Position slightly to the left of the bar */
+            width: 20px;
+            height: 100%;
+            background: radial-gradient(circle closest-side, #76ff03, transparent);
+            transition: width 2s ease;
+        }
+
+        /* Style for the text within the experience bar, if you decide to keep it */
+        .exp-bar-inner .exp-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            line-height: 24px; /* Match the bar height */
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+        }
         .item-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
             font-size: 22px;
             position: absolute;
             top: 0;
             left: 0;
+            margin-top: 25px;
             margin-left: 70px;
-            width: 400px; /* 조절 필요: 너비를 더 크게 설정 */
-            height: 400px; /* 조절 필요: 높이를 더 크게 설정 */
-            padding: 10px;
-            /*background-color: #f5f5f5;*/
-            /*border: 2px solid #424242;*/
-            /*border-radius: 5px;*/
+            width: 400px;
+            height: 400px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .item {
+            background-color: #424242;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
         }
 
         .item img {
             width: 90px;
             height: 90px;
-            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
-        .item-name {
-            font-weight: bold;
+        .item-info {
+            width: 100%;
         }
 
-        /* 아이템 설명 스타일 */
         .item-description {
-            margin-left: 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #5dfa32;
         }
 
-        /* 아이템 가격 스타일 */
-        .item-price {
-            margin-left: 10px; /* 수정: auto에서 10px로 변경 */
-            font-weight: bold;
-        }
-
-        /* 아이템 구매 버튼 스타일 */
         .item-button {
+            width: calc(100% - 20px);
+            padding: 12px 24px;
             font-size: 17px;
-            margin-left: auto;
-            background-color: #007bff; /* 파란색 배경 */
-            color: #fff; /* 흰색 텍스트 */
-            padding: 12px 24px; /* 버튼 내부 패딩을 조절하여 크기를 키웁니다 */
+            background-color: #555;
+            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-right: 5px; /* 버튼과 텍스트 사이의 오른쪽 여백을 추가합니다 */
+            transition: background-color 0.3s ease;
         }
 
         .item-button:hover {
-            background-color: #0056b3; /* 호버 시 색상 변경 */
+            background-color: #777;
         }
 
         .content {
@@ -87,9 +132,14 @@
         }
 
         .myPet {
-            /* 우측 여백을 주어 content 우측에 배치 */
             margin-left: 475px;
-            /* 기존 스타일 코드... */
+        }
+
+        .points-display {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 10px; /* Spacing before the experience bar */
+            text-align: center; /* Center the text */
         }
     </style>
 </head>
@@ -97,38 +147,37 @@
 <section>
     <div class="content">
         <div class="item-list">
-            <h2 style="font-weight: bold; font-size: 24px; margin-bottom: 10px;">상점</h2>
             <div class="item">
+                <div class="item-info">
+                    <div class="item-description">시금치</div>
+                </div>
                 <img src="/assets/img/food1.png" alt="아이템 1">
-                <div>
-                    <div class="item-description">초록잎사귀</div>
-                    <div class="item-price">100 골드</div>
-                </div>
-                <button class="item-button">구매</button>
+
+                <button class="item-button">1 포인트</button>
             </div>
             <div class="item">
+                <div class="item-info">
+                    <div class="item-description">브로콜리</div>
+                </div>
                 <img src="/assets/img/food2.png" alt="아이템 2">
-                <div>
-                    <div class="item-description">태양 돌</div>
-                    <div class="item-price">200 골드</div>
-                </div>
-                <button class="item-button">구매</button>
+
+                <button class="item-button">5 포인트</button>
             </div>
             <div class="item">
+                <div class="item-info">
+                    <div class="item-description">샤인머스켓</div>
+                </div>
                 <img src="/assets/img/food3.png" alt="아이템 3">
-                <div>
-                    <div class="item-description">황금 거북이</div>
-                    <div class="item-price">300 골드</div>
-                </div>
-                <button class="item-button">구매</button>
+
+                <button class="item-button">30 포인트</button>
             </div>
             <div class="item">
-                <img src="/assets/img/food4.png" alt="아이템 4">
-                <div>
-                    <div class="item-description">맑은 물</div>
-                    <div class="item-price">400 골드</div>
+                <div class="item-info">
+                    <div class="item-description">수박</div>
                 </div>
-                <button class="item-button">구매</button>
+                <img src="/assets/img/food4.png" alt="아이템 4">
+
+                <button class="item-button">100 포인트</button>
             </div>
         </div>
         <div class="myPet">
@@ -140,7 +189,10 @@
                 <div class="exp-bar-outer" style="margin-top: 15px; margin-bottom: 20px">
                     <div class="exp-bar-inner" id="expBar"></div>
                 </div>
-                <button class="btn" style="color: #32454d">밥주기</button>
+                <div class="points-display">
+                    <div>[[${rDTO.userName}]]님의 보유 포인트: <span id="current-gold">[[${rDTO.point}]]포인트</span></div>
+                    <div>경험치: <span id="current-exp">150</span> / <span id="required-exp">300</span></div>
+                </div>
             </div>
         </div>
     </div>

@@ -459,8 +459,23 @@ public class UserInfoController {
     }
 
     @GetMapping("/turtle")
-    public String turtle() throws Exception {
+    public String turtle(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".turtle 함수 실행");
+        String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        log.info("프로필 userId : " + userId);
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUserId(userId);
+
+        UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getGrade(pDTO))
+                .orElseGet(UserInfoDTO::new);
+
+        log.info("point : " + rDTO.getPoint());
+
+        model.addAttribute("rDTO", rDTO);
+
         return "/user/turtle";
     }
+
 }
