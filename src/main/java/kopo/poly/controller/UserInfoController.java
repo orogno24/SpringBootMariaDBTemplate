@@ -48,6 +48,7 @@ public class UserInfoController {
                 .orElseGet(UserInfoDTO::new);
 
         log.info("grade : " + rDTO.getGrade());
+        log.info("userName : " + rDTO.getUserName());
 
         model.addAttribute("rDTO", rDTO);
 
@@ -476,6 +477,47 @@ public class UserInfoController {
         model.addAttribute("rDTO", rDTO);
 
         return "/user/turtle";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "expUpdate")
+    public MsgDTO expUpdate(HttpServletRequest request, HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + ".expUpdate Start!");
+
+        MsgDTO dto = null;
+        String msg = "";
+
+        try {
+            String userId = (String)session.getAttribute("SS_USER_ID");
+            String exp = CmmUtil.nvl(request.getParameter("exp"));
+            String point = CmmUtil.nvl(request.getParameter("point"));
+            log.info("userId : " + userId);
+            log.info("exp : " + exp);
+            log.info("point : " + point);
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+
+            pDTO.setUserId(userId);
+            pDTO.setExp(exp);
+            pDTO.setPoint(point);
+
+            userInfoService.updateExp(pDTO);
+
+            msg = "거북이에게 음식을 주었습니다! 경험치가 5 상승했습니다!";
+
+        } catch (Exception e) {
+            msg = "시스템 문제로 거북목 측정이 실패하였습니다." + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+        } finally {
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+        }
+
+        log.info(this.getClass().getName() + ".expUpdate End!");
+
+        return dto;
     }
 
 }

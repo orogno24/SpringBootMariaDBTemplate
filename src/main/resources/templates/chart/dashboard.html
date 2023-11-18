@@ -17,6 +17,24 @@
         }
 
     </style>
+    <script>
+        // DOMContentLoaded 이벤트 리스너를 추가합니다.
+        document.addEventListener('DOMContentLoaded', function() {
+            // 상수 totalTime을 정의합니다. 이 예제에서는 rDTO.totalTime 값을 사용합니다.
+            const totalTime = [[${rDTO.totalTime}]];
+
+            // totalTime이 null인지 확인합니다.
+            if (totalTime === 0) {
+                // 알림 창을 표시합니다.
+                alert('오늘의 자세 모니터링 데이터가 없습니다.\n자세 모니터링 서비스를 먼저 이용해주세요!');
+
+                // 메인 페이지로 리디렉션합니다.
+                // 'mainPage.html'을 실제 메인 페이지의 URL로 교체하세요.
+                window.location.href = '/main';
+            }
+        });
+
+    </script>
 </head>
 
 <body>
@@ -92,12 +110,12 @@
                             id="scoreDisplay"
                             style="color: #0dcb2c;"></span>점</p>
                     <p style="font-size: 35px; font-weight: bold; color: #333; margin-top: -25px">전체 사용자 평균 점수: <span id="score2"
-                                                                                                 style="color: #a8001d;">56</span>점
+                                                                                                 style="color: #a8001d;"></span>점
                     </p>
                 </div>
 
                 <p style="font-size: 20px; margin-top: 20px; color: #555;">
-                    <span id="score4">사용자 평균 점수보다 12점 더 높습니다!</span><br><span id="score5"></span>
+                    <span id="score4"></span><br><span id="score5"></span>
                 </p>
             </div>
         </div>
@@ -441,7 +459,6 @@
             }
         }, 30); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
 
-
         if (endScore >= 75) {
             scoreElement.style.color = "#25beee";
             document.getElementById("score5").innerHTML = `탁월한 자세를 유지하고 계십니다! 그 습관을 계속 유지해주세요!🤗`;
@@ -465,7 +482,6 @@
             const difference2 = endScore2 - endScore;
             document.getElementById("score4").innerHTML = `자세 점수가 사용자 평균보다 ${difference2}점 더 낮습니다!`;
         }
-
 
     });
 

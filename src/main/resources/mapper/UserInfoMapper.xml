@@ -101,4 +101,32 @@
         WHERE USER_ID = #{userId}
     </update>
 
+    <update id="updateExp" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET EXP = EXP + #{exp},
+            POINT = POINT - #{point}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <update id="updateExp2" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET EXP = EXP + 25,
+            POINT = POINT - 5
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <update id="updateExp3" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET EXP = EXP + 150,
+            POINT = POINT - 30
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <update id="updateExp4" parameterType="UserInfoDTO">
+        UPDATE USER_INFO
+        SET EXP = EXP + 500,
+            POINT = POINT - 100
+        WHERE USER_ID = #{userId}
+    </update>
+
 </mapper>

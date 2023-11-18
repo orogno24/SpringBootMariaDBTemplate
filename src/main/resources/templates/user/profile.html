@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>프로필 카드</title>
     <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
+
             // rDTO.grade의 값을 가져와서 정수로 변환합니다.
             var gradeValue = parseInt("[[${rDTO.grade}]]");
 
@@ -52,6 +54,17 @@
                 gradeText.innerHTML = "<p>거북목 정보를 확인하려면<br>먼저 거북목 진단을 완료하셔야 합니다.</p>";
                 gradeSpan.innerHTML = "";
                 gradeSpan.style.color = "#151515"
+            }
+        });
+    </script>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const userName = /*[[${rDTO.userName}]]*/ 'defaultUserName';
+
+            if (userName === null || userName === '' || userName === 'null') {
+                alert("로그인 하시길 바랍니다.");
+                window.location.href = '/user/login';
             }
         });
     </script>

@@ -42,4 +42,6 @@ public interface IUserInfoService {
     void updateGrade(UserInfoDTO pDTO) throws Exception;
 
     void updatePoint(UserInfoDTO pDTO) throws Exception;
+
+    void updateExp(UserInfoDTO pDTO) throws Exception;
 }

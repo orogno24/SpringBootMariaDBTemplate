@@ -28,7 +28,7 @@
             DATE(DATE) AS dateOnly,
             SUM(NORMAL) AS totalNormal,
             SUM(ABNORMAL) AS totalAbnormal,
-            SUM(TOTALTIME) AS TOTALTIME
+            COALESCE(SUM(TOTALTIME), 3) AS TOTALTIME
         FROM
             CHART
         WHERE

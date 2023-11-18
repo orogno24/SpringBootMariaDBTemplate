@@ -92,12 +92,12 @@ p {
     border: 1px solid #15c6e5;
     color: #fff;
     background-color: #2b2b36;
-    transition: border-color 1s ease;
 }
 .nav-pills {
     margin-bottom: 30px;
 }
 .nav-pills > li > a {
+    cursor: pointer;
     background: transparent;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -107,10 +107,11 @@ p {
     padding-right:25px;
     border: 1px solid #2b2b36;
 }
-.nav-pills > li > a:hover, .nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+.nav-pills > li > a:hover {
     background: #2b2b36;
     color: #fff;
 }
+
 .navbar .btn-navbar:hover, .navbar .btn-navbar {
     border-radius:0;
     background:#15c6e5;
@@ -473,7 +474,6 @@ p {
     text-align: center;
 }
 #portfolio-grid .mix {
-    opacity: 0;
     display: none;
 }
 /*
@@ -877,6 +877,7 @@ p {
     .nav-collapse, .nav-collapse.collapse {
         width: 100%;
         display: inherit;
+        white-space: nowrap;
     }
     .thumbnail .more {
         margin-left:-21px;

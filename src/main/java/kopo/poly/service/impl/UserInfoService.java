@@ -267,4 +267,13 @@ public class UserInfoService implements IUserInfoService {
 
         log.info(this.getClass().getName() + "updatePoint end!");
     }
+
+    @Override
+    public void updateExp(UserInfoDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + "updateExp start!");
+
+        userInfoMapper.updateExp(pDTO);
+
+        log.info(this.getClass().getName() + "updateExp end!");
+    }
 }

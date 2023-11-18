@@ -5,180 +5,94 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 페이지</title>
-    <!-- Load Roboto font -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet'
-          type='text/css'>
-    <!-- Load css styles -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <link rel="stylesheet" type="text/css" href="css/pluton.css"/>
-    <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" href="css/pluton-ie7.css"/>
-    <![endif]-->
     <link rel="stylesheet" type="text/css" href="css/jquery.cslider.css"/>
     <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css"/>
     <link rel="stylesheet" type="text/css" href="css/animate.css"/>
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57.png">
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
     <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+    <style>
+        /*.thumbnails.row li {*/
+        /*    flex: 1 1 calc(30%); !* 썸네일 너비를 줄임 *!*/
+        /*    max-width: calc(30%); !* 최대 너비도 동일하게 줄임 *!*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    box-sizing: border-box;*/
+        /*}*/
 
-    <script>
-        var map;
+        /*.thumbnails .thumbnail {*/
+        /*    height: 300px; !* 고정된 높이 설정 *!*/
+        /*    display: flex; !* Flexbox 레이아웃 적용 *!*/
+        /*    flex-direction: column; !* 수직 방향 정렬 *!*/
+        /*    justify-content: space-between; !* 내용물 간격 균등 분배 *!*/
+        /*    background-color: #2b2b36; !* 배경색 설정 *!*/
+        /*}*/
 
-        function searchHospital() {
-            var keyword = document.getElementById('address').value;
+        /*.thumbnail iframe {*/
+        /*    width: 100%; !* 컨테이너의 전체 너비를 사용 *!*/
+        /*    height: 200px; !* iframe 높이 설정 *!*/
+        /*}*/
 
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('장소를 입력해주세요.');
-                return false;
-            }
-
-            // 키워드로 장소를 검색합니다
-            var places = new kakao.maps.services.Places();
-
-            places.keywordSearch(keyword, function (result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    // 가장 첫 번째 검색 결과의 좌표를 사용합니다
-                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                    // 지도의 중심을 이동합니다
-                    map.setCenter(coords);
-
-                    // 해당 좌표를 기준으로 주변 병원을 검색합니다
-                    searchPlaces(coords);
-                } else {
-                    alert('검색 결과가 없습니다.');
-                }
-            });
+        .thumbnail h3 {
+            margin: 5px 0; /* 제목의 상하 여백 설정 */
+            word-wrap: break-word; /* 단어가 너무 길어도 줄바꿈 허용 */
+            max-height: 4.4em; /* 제목의 최대 높이 설정 (2줄 기준) */
+            overflow: hidden; /* 넘치는 내용 숨김 */
+            text-overflow: ellipsis; /* 넘치는 내용을 말줄임표로 표시 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
-
-        // 키워드 검색을 실행하는 함수입니다
-        function searchPlaces(coords) {
-            var keyword = '병원';
-
-            var places = new kakao.maps.services.Places();
-
-            var callback = function (result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    displayPlaces(result);
-                }
-            };
-
-            places.keywordSearch(keyword, callback, {
-                location: coords
-            });
-        }
-
-        // 검색 결과를 지도에 표시하는 함수입니다
-        function displayPlaces(places) {
-
-            var bounds = new kakao.maps.LatLngBounds();
-
-            for (var i = 0; i < places.length; i++) {
-                displayMarker(places[i]);
-                bounds.extend(new kakao.maps.LatLng(places[i].y, places[i].x));
-            }
-
-            map.setBounds(bounds);
-        }
-
-        // 마커를 지도에 표시하는 함수입니다
-        function displayMarker(place) {
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(place.y, place.x)
-            });
-
-            // 마커에 클릭이벤트를 등록합니다
-            kakao.maps.event.addListener(marker, 'click', function () {
-                // 마커 클릭 시 인포윈도우에 표시될 내용을 만듭니다
-                var content = '<div class="info-window">' + '<img src="/assets/img/turtle.png" width="20%" height="20%" alt=" ">' +
-                    '<h4 style="color: #89ee37">' + place.place_name + '</h4>' +
-                    '<p>' + '주소: ' + (place.road_address_name || place.address_name) + '</p>' +
-                    (place.phone ? '<p>' + '전화번호: ' + place.phone + '</p>' : '') +
-                    '<a href="' + place.place_url + '" target="_blank" style="color: #15c6e5; text-decoration: underline;">상세보기</a>' + // 카카오 지도 장소 상세 페이지 링크
-                    '</div>';
-
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: content,
-                    removable: true
-                });
-                infowindow.open(map, marker);
-            });
-        }
-
-        // 지도를 생성합니다
-        function initMap() {
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = {
-                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-
-            // 지도를 생성합니다
-            map = new kakao.maps.Map(mapContainer, mapOption);
-        }
-
-        // 문서가 로드될 때 지도를 초기화합니다
-        window.onload = function () {
-            initMap();
-        }
-    </script>
-
-</head>
-
+    </style>
 <body>
 <div class="navbar">
     <div class="navbar-inner">
         <div class="container">
-            <a href="#" class="brand">
+            <a href="/main" class="brand">
                 <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
-                <!-- This is website logo -->
             </a>
-            <!-- Navigation button, visible on small resolution -->
+
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <img src="/assets/img/logo5.png" width="30" height="30" alt="Logo">
             </button>
-            <!-- Main navigation -->
+
             <div class="nav-collapse collapse pull-right">
                 <ul class="nav" id="top-navigation">
                     <li class="active"><a href="/gazami6">거북목 진단</a></li>
                     <li><a href="/gazami7">자세 모니터링</a></li>
                     <li><a href="/gazami8">통계</a></li>
-                    <li><a href="/map">병원찾기</a></li>
+                    <li><a href="/map">병원 찾기</a></li>
                     <li><a href="/gazami9">커뮤니티</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">프로필 <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">프로필<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/user/profile">프로필 카드</a></li>
                             <li><a href="/user/turtle">마이페이지</a></li>
-                            <li><a href="/gazami">로그아웃</a></li>
+                            <li>
+                                <a href="#" id="logoutLink">로그아웃</a>
+                            </li>
                         </ul>
                     </li>
-                    <li><span>&nbsp;&nbsp;</span></li>
                     <li><a href=""><span class="username-color">[[${userName}]]</span>님, 환영합니다!</a></li>
                 </ul>
             </div>
-            <!-- End main navigation -->
+
         </div>
     </div>
 </div>
-<!-- Start home section -->
+
 <div id="home">
-    <!-- Start cSlider -->
     <div id="da-slider" class="da-slider">
         <div class="triangle"></div>
-        <!-- mask elemet use for masking background image -->
+
         <div class="mask"></div>
-        <!-- All slides centred in container element -->
+
         <div class="container">
-            <!-- Start first slide -->
+
             <div class="da-slide">
                 <h2 class="fittext2">서비스 소개</h2>
                 <h4>거북목 진단</h4>
@@ -189,8 +103,7 @@
                     <img src="/assets/img/logo2.png" alt="image01" width="320">
                 </div>
             </div>
-            <!-- End first slide -->
-            <!-- Start second slide -->
+
             <div class="da-slide">
                 <h2>서비스 소개</h2>
                 <h4>자세 모니터링</h4>
@@ -201,8 +114,7 @@
                     <img src="/assets/img/logo3.png" width="320" alt="image02">
                 </div>
             </div>
-            <!-- End second slide -->
-            <!-- Start third slide -->
+
             <div class="da-slide">
                 <h2>서비스 소개</h2>
                 <h4>통계</h4>
@@ -213,35 +125,32 @@
                     <img src="/assets/img/logo.png" width="320" alt="image03">
                 </div>
             </div>
-            <!-- Start third slide -->
-            <!-- Start cSlide navigation arrows -->
+
             <div class="da-arrows">
                 <span class="da-arrows-prev"></span>
                 <span class="da-arrows-next"></span>
             </div>
-            <!-- End cSlide navigation arrows -->
+
         </div>
     </div>
 </div>
 
-<!-- End home section -->
-<!-- Service section start -->
 <div class="section primary-section" id="service">
     <div class="container">
-        <!-- Start title section -->
+
         <div class="title">
             <h1>머신러닝 기반 거북목 개선 프로젝트</h1>
-            <!-- Section's title goes here -->
+
             <p>건강한 자세, AI로부터의 도움을 받으세요.</p>
-            <!--Simple description for section goes here. -->
         </div>
-<!--        <div th:utext="${videos}">Search results go here</div>-->
+
         <div class="row-fluid">
             <div class="container">
                 <p style="text-align: center; margin-top: -30px; margin-bottom: 30px; font-size: 30px">주요 기능</p>
                 <div class="feature-grid">
-                    <!-- 첫 번째 행의 기능들 -->
-                    <div class="feature" onclick="location.href='/gazami6';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+
+                    <div class="feature" onclick="location.href='/gazami6';"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon1.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             거북목 진단</h2>
@@ -249,36 +158,47 @@
                             정도에 따른 등급을 확인할 수 있습니다.</p>
                         <br><br>
                     </div>
-                    <div class="feature" onclick="location.href='/gazami7';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature" onclick="location.href='/gazami7';"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon2.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             자세 모니터링</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">거북목 자세를 감지하면 즉시 알림을 보내<br>바른 자세를 유지할 수 있도록 도와줍니다.</p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">거북목 자세를 감지하면 즉시 알림을 보내<br>바른 자세를
+                            유지할 수 있도록 도와줍니다.</p>
                     </div>
-                    <div class="feature" onclick="location.href='/gazami8';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature" onclick="location.href='/gazami8';"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon3.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             통계</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">사용자의 자세와 데이터를 분석하여<br>개인 맞춤형 그래프를 제공합니다.</p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">사용자의 자세와 데이터를 분석하여<br>개인 맞춤형
+                            그래프를 제공합니다.</p>
                     </div>
-                    <div class="feature" onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature"
+                         onclick="document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon5.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             추천 영상</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게 맞춤형 영상을 제공합니다. </p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게
+                            맞춤형 영상을 제공합니다. </p>
                     </div>
-                    <div class="feature" onclick="document.getElementById('gps').scrollIntoView({ behavior: 'smooth' });" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature" onclick="location.href='/map';"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             지도</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">병원 진단이 필요한 경우 지역을 입력하면<br>주변에 있는 병원을 검색할 수 있습니다.</p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">병원 진단이 필요한 경우 지역을 입력하면<br>주변에 있는
+                            병원을 검색할 수 있습니다.</p>
                         <br><br>
                     </div>
-                    <div class="feature" onclick="location.href='/gazami9';" style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
+                    <div class="feature" onclick="location.href='/gazami9';"
+                         style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon6.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
                             커뮤니티</h2>
-                        <p style="text-align: center; transition: transform 0.3s ease;">사람들과 경험을 나누며 전문가와<br>다른 회원들의 조언을 얻어보세요.</p>
+                        <p style="text-align: center; transition: transform 0.3s ease;">사람들과 경험을 나누며 전문가와<br>다른 회원들의 조언을
+                            얻어보세요.</p>
                     </div>
                 </div>
             </div>
@@ -287,79 +207,35 @@
     </div>
 </div>
 
-<!--<div style="background-color: #2b2b36; color: aliceblue">-->
-<!--    <h1>YouTube Video Results</h1>-->
-<!--    <div th:if="${videos.isEmpty()}">-->
-<!--        <p>No videos found.</p>-->
-<!--    </div>-->
-<!--    <div th:unless="${videos.isEmpty()}">-->
-<!--        <ul>-->
-<!--            <li th:each="video : ${videos}">-->
-<!--                <span th:text="${video.title}">Video Title</span>-->
-<!--                <iframe th:src="|https://www.youtube.com/embed/${video.videoId}|" width="560" height="315" frameborder="0" allowfullscreen></iframe>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="black-section"></div>
-<!-- Service section end -->
-<!-- Portfolio section start -->
 <div class="section secondary-section " id="portfolio">
-
     <div class="triangle"></div>
     <div class="container">
         <div class=" title">
-            <h1>추천 영상</h1>
+            <h1>오늘의 추천 영상</h1>
+            <p style="font-weight: bold">카테고리별로 추천된 영상 리스트로 쉽고 효과적인 관리를 시작해보세요.<br>
+                매일 몇 분씩 투자하여 거북목 교정 운동을 실천하면, 목과 어깨의 긴장을 완화하고 전반적인 건강을 개선할 수 있습니다.</p>
         </div>
-        <!-- Start details for portfolio project 1 -->
-
-        <div id="single-project" th:unless="${videos.isEmpty()}">
-
+        <ul class="nav nav-pills">
+            <li class="filter">
+                <a onclick="searchYouTube('거북목 운동')">거북목 운동</a>
+            </li>
+            <li class="filter">
+                <a onclick="searchYouTube('거북목 스트레칭')">거북목 스트레칭</a>
+            </li>
+            <li class="filter">
+                <a onclick="searchYouTube('거북목 교정')">거북목 교정</a>
+            </li>
+        </ul>
+        <div id="single-project">
             <ul id="portfolio-grid" class="thumbnails row">
-                <li th:each="video : ${videos}" class="span4 mix web">
-                    <div class="thumbnail">
-                        <iframe width="370" height="200"
-                                th:src="|https://www.youtube.com/embed/${video.videoId}|"
-                                title="YouTube video player" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
-
-                        <h3 th:text="${video.title}">영상을 불러올 수 없습니다.</h3>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
 </div>
-<!-- Portfolio section end -->
-<!-- About us section start -->
-
-<div class="section primary-section" id="gps">
-    <div class="triangle"></div>
-    <div class="container">
-        <div class="title">
-            <h1>병원 찾기</h1>
-        </div>
-        <div class="container centered" style="padding-top: 5px">
-            <p style="color: #ffffff;">사용자의 현재 위치 또는 원하는 지역을 입력하여 가까운 병원을 찾을 수 있습니다.<br>
-                사용자의 주소를 입력하면 입력된 주소의 주변 병원을 알려주며 표시된 위치를 클릭하면, 주소, 병원 전화번호와 상세정보를 확인하실 수 있습니다.</p>
-        </div>
-        <br>
-        <label for="address"></label><input type="text" id="address" name="address" class="span8"
-                                            style="font-family: NIXGONM-Vb" placeholder="주소를 입력해주세요. 예) 서울시 강남구"
-                                            required="">
-        <button onclick="searchHospital()">병원 찾기</button>
-        <div class="map-wrapper">
-            <div class="map-canvas" id="map-canvas">Loading map...</div>
-            <div id="map" style="width:100%;height:600px;border:1px solid #ffffff"></div>
-        </div>
-    </div>
-</div>
-<div class="black-section"></div>
 
 <div class="section primary-section" id="about">
-
+    <div class="triangle"></div>
     <div class="container">
         <div class="title">
             <h1>서비스 주요 이용대상</h1>
@@ -433,31 +309,152 @@
                 <a href="#">
                 </a>
             </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('logoutLink').addEventListener('click', function (event) {
+        event.preventDefault(); // 기본 링크 동작 방지
+        fetch('/logout', {method: 'POST'}) // 로그아웃 요청 보내기
+            .then(response => {
+                // 로그아웃 성공 후 처리
+                window.location.href = '/user/login'; // 로그인 페이지로 리다이렉트
+            })
+            .catch(error => {
+                // 오류 처리
+                console.error('Logout failed:', error);
+            });
+    });
+</script>
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.mixitup.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/modernizr.custom.js"></script>
+<script type="text/javascript" src="js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="js/jquery.cslider.js"></script>
+<script type="text/javascript" src="js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="js/jquery.inview.js"></script>
+<script src="js/respond.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 초기 설정으로 첫 번째 a 태그를 검정색 배경과 하얀색 글자색으로 설정
+        const defaultA = document.querySelector('.nav-pills .filter:first-child a');
+        defaultA.style.backgroundColor = '#2b2b36';
+        defaultA.style.color = 'white';
 
-            <script src="js/jquery.js"></script>
-            <script type="text/javascript" src="js/jquery.mixitup.js"></script>
-            <script type="text/javascript" src="js/bootstrap.js"></script>
-            <script type="text/javascript" src="js/modernizr.custom.js"></script>
-            <script type="text/javascript" src="js/jquery.bxslider.js"></script>
-            <script type="text/javascript" src="js/jquery.cslider.js"></script>
-            <script type="text/javascript" src="js/jquery.placeholder.js"></script>
-            <script type="text/javascript" src="js/jquery.inview.js"></script>
-            <!-- Load google maps api and call initializeMap function defined in app.js -->
-            <script async="" defer="" type="text/javascript"
-                    src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initializeMap"></script>
-            <!-- css3-mediaqueries.js for IE8 or older -->
-            <!--[if lt IE 9]>
-            <script src="js/respond.min.js"></script>
-            <![endif]-->
-            <script type="text/javascript" src="js/app.js"></script>
-            <script async
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsfMJi642Tr5yVcG6OsF0PgdKJBxv38Zk&callback=console.debug&libraries=maps,marker&v=beta">
-            </script>
+        // 모든 a 태그에 클릭 이벤트 리스너 추가
+        const links = document.querySelectorAll('.nav-pills .filter a');
+        links.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                // 모든 a 태그의 배경색과 글자색을 초기화
+                links.forEach(function(l) {
+                    l.style.backgroundColor = '';
+                    l.style.color = '';
+                });
 
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962&libraries=services,clusterer"></script>
-            <script type="text/javascript"
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cdd7525d620bba7f274e368acf8f2962"></script>
+                // 클릭된 a 태그의 배경색을 검정색으로, 글자색을 하얀색으로 변경
+                this.style.backgroundColor = '#2b2b36';
+                this.style.color = 'white';
+                event.preventDefault(); // 기본 이벤트 방지 (옵션)
+            });
+        });
+    });
 
+</script>
+<script>
+    // YouTube API 키
+    var API_KEY = 'AIzaSyC7Z6CURRfB6TPRSKaE66Q1VKb31kCJXUc'; // 여기에 실제 API 키를 입력하세요
+
+    // 유튜브 검색 실행
+    function searchYouTube(searchTerm) {
+        var encodedSearchTerm = encodeURIComponent(searchTerm);
+        var request = new XMLHttpRequest();
+        request.open('GET', 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=' + encodedSearchTerm + '&type=video&key=' + API_KEY, true);
+        request.onload = function () {
+            if (this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                displayVideos(data.items);
+            } else {
+                console.error('API 요청 실패:', this.responseText);
+            }
+        };
+        request.onerror = function () {
+            console.error('네트워크 오류 발생');
+        };
+        request.send();
+    }
+
+    // 비디오 목록을 표시하는 함수
+    function displayVideos(videos) {
+        var container = document.getElementById('portfolio-grid');
+        container.innerHTML = ''; // 컨테이너 초기화
+        videos.forEach(function (video) {
+            var listItem = document.createElement('li');
+            listItem.className = 'span4 mix web';
+            listItem.innerHTML = '<div class="thumbnail">' +
+                '<iframe width="370" height="200" src="https://www.youtube.com/embed/' + video.id.videoId + '" frameborder="0" allowfullscreen></iframe>' +
+                '<h3>' + video.snippet.title + '</h3>' + // 영상 제목 추가
+                '</div>';
+            container.appendChild(listItem);
+        });
+    }
+
+    // 페이지 로드 시 기본 검색어로 유튜브 검색 실행
+    window.onload = function () {
+        searchYouTube('거북목 운동');
+    };
+</script>
+
+<script>
+    // // YouTube API 키
+    // var API_KEY = 'AIzaSyDA9LFxcFVZSeLSemP3PS_p8hZ4f6hyHjM'; // 여기에 실제 API 키를 입력하세요
+    //
+    // // 유튜브 검색 실행
+    // function searchYouTube(searchTerm) {
+    //     searchTerm = searchTerm || '거북목'; // 기본 검색어 설정
+    //     var encodedSearchTerm = encodeURIComponent(searchTerm);
+    //
+    //     var request = new XMLHttpRequest();
+    //     request.open('GET', 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=' + encodedSearchTerm + '&type=video&key=' + API_KEY, true);
+    //     request.onload = function() {
+    //         if (this.status == 200) {
+    //             // 성공적으로 데이터를 가져온 경우
+    //             var data = JSON.parse(this.responseText);
+    //             displayVideos(data.items);
+    //         } else {
+    //             // 오류 처리
+    //             console.error('API 요청 실패:', this.responseText);
+    //         }
+    //     };
+    //     request.onerror = function() {
+    //         // 네트워크 오류 처리
+    //         console.error('네트워크 오류 발생');
+    //     };
+    //     request.send();
+    // }
+    //
+    // // 비디오 목록을 표시하는 함수
+    // function displayVideos(videos) {
+    //     var container = document.getElementById('portfolio-grid');
+    //     container.innerHTML = ''; // 컨테이너 초기화
+    //
+    //     videos.forEach(function(video) {
+    //         var li = document.createElement('li');
+    //         li.className = 'span4 web mix_all'
+    //         li.innerHTML =
+    //             '<div class="thumbnail">' +
+    //             '<iframe width="320" height="200" src="https://www.youtube.com/embed/' + video.id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+    //             '<h3>' + video.snippet.title + '</h3>' +
+    //             '</div>';
+    //         container.appendChild(li);
+    //     });
+    // }
+    //
+    // // 페이지 로드 시 기본 검색어로 유튜브 검색 실행
+    // window.onload = function() {
+    //     searchYouTube('거북목');
+    // };
+</script>
 </body>
 </html>

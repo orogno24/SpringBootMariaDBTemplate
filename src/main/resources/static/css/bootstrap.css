@@ -2289,6 +2289,7 @@ table th[class*="span"],
 }
 
 .dropdown-toggle {
+  background-color: #2b2b36;
   *margin-bottom: -3px;
 }
 
@@ -3507,13 +3508,6 @@ input[type="submit"].btn.btn-mini {
           border-radius: 5px;
 }
 
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover,
-.nav-pills > .active > a:focus {
-  color: #ffffff;
-  background-color: #0088cc;
-}
-
 .nav-stacked > li {
   float: none;
 }
@@ -3601,8 +3595,8 @@ input[type="submit"].btn.btn-mini {
 }
 
 .nav-tabs .active .dropdown-toggle .caret {
-  border-top-color: #555555;
-  border-bottom-color: #555555;
+  border-top-color: #777777;
+  border-bottom-color: #777777;
 }
 
 .nav > .dropdown.active > a:hover,
@@ -3616,7 +3610,7 @@ input[type="submit"].btn.btn-mini {
 .nav > li.dropdown.open.active > a:focus {
   color: #ffffff;
   background-color: #999999;
-  border-color: #999999;
+
 }
 
 .nav li.dropdown.open .caret,
@@ -3823,6 +3817,7 @@ input[type="submit"].btn.btn-mini {
   font-weight: 200;
   color: #777777;
   text-shadow: 0 1px 0 #ffffff;
+  z-index: 1;
 }
 
 .navbar .brand:hover,
@@ -4027,8 +4022,6 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  color: #333333;
-  text-decoration: none;
   background-color: transparent;
 }
 
@@ -4141,15 +4134,14 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav li.dropdown > a:hover .caret,
 .navbar .nav li.dropdown > a:focus .caret {
-  border-top-color: #333333;
-  border-bottom-color: #333333;
+  border-top-color: #777777;
+  border-bottom-color: #777777;
 }
 
 .navbar .nav li.dropdown.open > .dropdown-toggle,
 .navbar .nav li.dropdown.active > .dropdown-toggle,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle {
-  color: #555555;
-  background-color: #e5e5e5;
+  background-color: #2b2b36;
 }
 
 .navbar .nav li.dropdown > .dropdown-toggle .caret {
@@ -4160,8 +4152,8 @@ input[type="submit"].btn.btn-mini {
 .navbar .nav li.dropdown.open > .dropdown-toggle .caret,
 .navbar .nav li.dropdown.active > .dropdown-toggle .caret,
 .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
-  border-top-color: #555555;
-  border-bottom-color: #555555;
+  border-top-color: #777777;
+  border-bottom-color: #777777;
 }
 
 .navbar .pull-right > li > .dropdown-menu,

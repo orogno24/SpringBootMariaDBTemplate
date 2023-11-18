@@ -17,7 +17,6 @@ import java.util.List;
 public class YoutubeService {
     @Value("${youtube.api.key}")
     private String apiKey;
-
     private final RestTemplate restTemplate = new RestTemplate();
     private static final String YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
     private final ObjectMapper objectMapper = new ObjectMapper();
