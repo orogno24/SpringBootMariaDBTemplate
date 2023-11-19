@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,8 +26,8 @@ public class MainController {
     public String main(HttpSession session, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".main 함수 실행");
         String userName = (String) session.getAttribute("SS_USER_NAME");
-        List<VideoInfo> videos = youtubeService.search("거북목");
-        model.addAttribute("videos", videos);
+//        List<VideoInfo> videos = youtubeService.search("거북목");
+//        model.addAttribute("videos", videos);
         model.addAttribute("userName", userName);
         return "main";
     }
@@ -172,5 +173,18 @@ public class MainController {
         model.addAttribute("userName", userName);
         return "/map";
     }
+
+    @PostMapping("/logout")
+    public String handleLogout(HttpSession session) {
+        session.invalidate(); // 세션 정보를 모두 삭제
+        return "user/login"; // 로그인 페이지 또는 홈페이지로 리다이렉트
+    }
+
+    @GetMapping("/main2")
+    public String main2() throws Exception {
+        log.info(this.getClass().getName() + ".main2 함수 실행");
+        return "/main2";
+    }
+
 
 }

@@ -147,8 +147,15 @@ public class ChartController {
                 .orElseGet(ArrayList::new);
         chartService.insertLineData(pDTO2);
 
+        log.info("TotalTime: " + rDTO.getTotalTime());
         log.info("TotalNormal: " + rDTO.getTotalNormal());
         log.info("TotalAbnormal: " + rDTO.getTotalAbnormal());
+
+        if (rDTO.getTotalTime() == null || rDTO.getTotalTime().isEmpty()) {
+            rDTO.setTotalTime(String.valueOf(0));
+        }
+
+        log.info("newTotalTime: " + rDTO.getTotalTime());
 
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("chartData", rList);

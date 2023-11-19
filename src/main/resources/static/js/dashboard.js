@@ -85,7 +85,7 @@ var pieConfig = new Chart(pie2, {
         labels: ['정상 자세', '거북목 자세'],
         datasets: [{
             label: '# of data',
-            data: [3, 2],
+            data: [(totalNormal2 * 100 / (totalAbnormal2 + totalNormal2)), (totalAbnormal2 * 100 / (totalAbnormal2 + totalNormal2))],
             backgroundColor: ['#55e7ff', '#ff4f70'],
             borderColor: 'transparent',
             borderWidth: 2
