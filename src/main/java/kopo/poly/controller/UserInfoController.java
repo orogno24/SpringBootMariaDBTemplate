@@ -1,7 +1,9 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.ChartDTO;
 import kopo.poly.dto.MsgDTO;
 import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.service.IChartService;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
 import kopo.poly.util.EncryptUtil;
@@ -24,6 +26,8 @@ public class UserInfoController {
 
     private final IUserInfoService userInfoService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언함.
 
+    private final IChartService chartService; // 서비스는 모든 컨트롤러 함수에서 실행시킬 수 있어야 하므로 전역변수로 선언함.
+
     /**
      * 회원가입 화면으로 이동!
      */
@@ -42,15 +46,26 @@ public class UserInfoController {
         log.info("프로필 userId : " + userId);
 
         UserInfoDTO pDTO = new UserInfoDTO();
+        ChartDTO cDTO = new ChartDTO();
+
         pDTO.setUserId(userId);
+        cDTO.setUserId(userId);
 
         UserInfoDTO rDTO = Optional.ofNullable(userInfoService.getGrade(pDTO))
                 .orElseGet(UserInfoDTO::new);
 
+        ChartDTO tDTO = Optional.ofNullable(chartService.getTime(cDTO))
+                .orElseGet(ChartDTO::new);
+
         log.info("grade : " + rDTO.getGrade());
         log.info("userName : " + rDTO.getUserName());
+        log.info("totaltime : " + tDTO.getTotalTime());
+
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
 
         model.addAttribute("rDTO", rDTO);
+        model.addAttribute("tDTO", tDTO);
 
         return "user/profile";
     }
@@ -473,6 +488,9 @@ public class UserInfoController {
                 .orElseGet(UserInfoDTO::new);
 
         log.info("point : " + rDTO.getPoint());
+
+        String userName = (String) session.getAttribute("SS_USER_NAME");
+        model.addAttribute("userName", userName);
 
         model.addAttribute("rDTO", rDTO);
 

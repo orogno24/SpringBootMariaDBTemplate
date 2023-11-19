@@ -22,5 +22,5 @@ public interface IChartMapper {
 
     List<LineChartDTO> getLineData(LineChartDTO pDTO) throws Exception;
 
-
+    ChartDTO getTime(ChartDTO pDTO) throws Exception;
 }

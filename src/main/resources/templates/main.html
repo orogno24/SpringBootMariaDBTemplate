@@ -37,6 +37,10 @@
         /*    height: 200px; !* iframe 높이 설정 *!*/
         /*}*/
 
+        .thumbnail {
+            border: 2px solid #191a1c;
+        }
+
         .thumbnail h3 {
             margin: 5px 0; /* 제목의 상하 여백 설정 */
             word-wrap: break-word; /* 단어가 너무 길어도 줄바꿈 허용 */
@@ -46,7 +50,28 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            line-height: 1.5;
         }
+
+        .profile-menu {
+            position: relative; /* 하위 메뉴의 위치 기준이 됩니다 */
+        }
+
+        /* 서브 메뉴에 대한 스타일 */
+        .profile-sub-menu {
+            display: none;
+            position: absolute;
+            top: 100%; /* 상위 메뉴 항목 바로 아래에 위치하도록 설정 */
+            left: 0;
+            z-index: 1000; /* 다른 요소들 위에 오도록 z-index 설정 */
+            /* 여기에 추가적인 스타일을 적용하세요 */
+        }
+
+        /* 상위 메뉴에 마우스 오버 시 서브 메뉴 표시 */
+        .profile-menu:hover .profile-sub-menu {
+            display: block;
+        }
+
     </style>
 <body>
 <div class="navbar">
@@ -67,17 +92,14 @@
                     <li><a href="/gazami8">통계</a></li>
                     <li><a href="/map">병원 찾기</a></li>
                     <li><a href="/gazami9">커뮤니티</a></li>
+                    <li><a href="/gazami3">프로필</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">프로필<b class="caret"></b></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="username-color">[[${userName}]]</span>님, 환영합니다!<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/profile">프로필 카드</a></li>
-                            <li><a href="/user/turtle">마이페이지</a></li>
-                            <li>
-                                <a href="#" id="logoutLink">로그아웃</a>
-                            </li>
+                            <li><a href="/user/changeUserName">닉네임 변경</a></li>
+                            <li><a href="#" id="logoutLink">로그아웃</a></li>
                         </ul>
                     </li>
-                    <li><a href=""><span class="username-color">[[${userName}]]</span>님, 환영합니다!</a></li>
                 </ul>
             </div>
 
@@ -187,7 +209,7 @@
                          style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
-                            지도</h2>
+                            근처 병원 찾기</h2>
                         <p style="text-align: center; transition: transform 0.3s ease;">병원 진단이 필요한 경우 지역을 입력하면<br>주변에 있는
                             병원을 검색할 수 있습니다.</p>
                         <br><br>
@@ -207,15 +229,18 @@
     </div>
 </div>
 
-<div class="black-section"></div>
 <div class="section secondary-section " id="portfolio">
     <div class="triangle"></div>
     <div class="container">
         <div class=" title">
-            <h1>오늘의 추천 영상</h1>
-            <p style="font-weight: bold">카테고리별로 추천된 영상 리스트로 쉽고 효과적인 관리를 시작해보세요.<br>
-                매일 몇 분씩 투자하여 거북목 교정 운동을 실천하면, 목과 어깨의 긴장을 완화하고 전반적인 건강을 개선할 수 있습니다.</p>
+            <h1>추천 영상</h1>
+
+            <div class="container centered" style="padding-top: 5px">
+                <p style="color: #2b2b36; font-weight: bold">카테고리별로 추천된 영상 리스트로 쉽고 효과적인 관리를 시작해보세요.<br>
+                    매일 몇 분씩 투자하여 거북목 교정 운동을 실천하면, 목과 어깨의 긴장을 완화하고 전반적인 건강을 개선할 수 있습니다.</p>
+            </div>
         </div>
+
         <ul class="nav nav-pills">
             <li class="filter">
                 <a onclick="searchYouTube('거북목 운동')">거북목 운동</a>
