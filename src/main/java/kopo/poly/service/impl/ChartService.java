@@ -60,8 +60,7 @@ public class ChartService implements IChartService {
     @Override
     public void insertLineData(LineChartDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".insertLineData Start!");
-
-        chartMapper.insertLineData(pDTO);
+//        chartMapper.insertLineData(pDTO);
     }
 
     @Override

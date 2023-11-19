@@ -36,6 +36,7 @@ async function init() {
     document.getElementById("analysisText").style.display = "block";
 
     startTime = Date.now();
+    insertStart();
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -110,6 +111,38 @@ function updatePostureCounts() {
     document.getElementById('point').innerText = normalPostureCount / 15;
     // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
     // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
+}
+
+function insertStart() {
+    setInterval(insertData, 3000);
+}
+
+function insertData() {
+    endTime = Date.now();
+
+    const totalTime = endTime - startTime;
+
+    document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
+    document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
+    document.getElementById('hiddenTotalTime').value = totalTime / 1000;
+    document.getElementById('hiddenPoint').value = normalPostureCount / 15;
+
+    $.ajax({
+        url: "/chart/insertChart",
+        type: "post",
+        dataType: "JSON",
+        data: $("#postureDataForm").serialize(),
+        success: function (json) {
+
+
+        },
+        error: function (xhr, status, error) {
+            // 에러 핸들링
+            console.error("Error: " + error);
+            alert("데이터 전송 중 오류가 발생했습니다.");
+        }
+    });
+
 }
 
 document.getElementById("stopButton").onclick = function () {

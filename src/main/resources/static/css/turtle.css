@@ -444,12 +444,22 @@ section {
 
 @keyframes moveTowardsTurtle {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(450px, 150px); } /* 실제 위치에 맞게 조정 필요 */
+    100% { transform: translate(440px, 145px); } /* 실제 위치에 맞게 조정 필요 */
 }
 
 @keyframes moveTowardsTurtle2 {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(260px, 150px); } /* 실제 위치에 맞게 조정 필요 */
+    100% { transform: translate(250px, 135px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+@keyframes moveTowardsTurtle3 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(430px, -90px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+@keyframes moveTowardsTurtle4 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(230px, -80px); } /* 실제 위치에 맞게 조정 필요 */
 }
 
 .animate-towards-turtle {
@@ -458,6 +468,14 @@ section {
 
 .animate-towards-turtle2 {
     animation: moveTowardsTurtle2 1s forwards;
+}
+
+.animate-towards-turtle3 {
+    animation: moveTowardsTurtle3 1s forwards;
+}
+
+.animate-towards-turtle4 {
+    animation: moveTowardsTurtle4 1s forwards;
 }
 
 .happyText {
@@ -475,8 +493,35 @@ section {
 body {
     height: 100vh;
     background-image: url("/assets/img/019.png");
+    background-color: #333335;
     background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
     background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
     background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
     margin: 0;
+}
+
+#screenEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 다른 요소들과의 상호작용 방지 */
+    display: none; /* 기본적으로 숨김 */
+}
+
+.effect-active {
+    display: block; /* 이펙트 활성화시 표시 */
+    animation: sparkle 1s infinite alternate; /* 반짝임 애니메이션 */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+    background-image: radial-gradient(white, transparent); /* 반짝이는 별 효과 */
+}
+
+@keyframes sparkle {
+    0% {
+        background-size: 10px 10px;
+    }
+    100% {
+        background-size: 50px 50px;
+    }
 }

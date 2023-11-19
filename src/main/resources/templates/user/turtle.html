@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>거북이 키우기</title>
+    <link rel="preload" href="/assets/img/019.png" as="image">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.css"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
@@ -66,6 +67,11 @@
             document.getElementById('hiddenPoint').value = 5;
             document.getElementById('hiddenExp').value = 25;
 
+            if([[${rDTO.exp}]] < 15) {
+                alert("2레벨부터 구매할 수 있는 아이템입니다.");
+                return;
+            }
+
             if ([[${rDTO.point}]] < 5) {
                 alert("포인트가 부족합니다.");
                 return;
@@ -78,7 +84,7 @@
                 dataType: "JSON",
                 data: $("#postureDataForm").serialize(),
                 success: function (json) {
-                    showHappyMessage();
+                    showHappyMessage2();
                     addFeedEffect2();
                 }
             });
@@ -88,6 +94,11 @@
 
             document.getElementById('hiddenPoint').value = 30;
             document.getElementById('hiddenExp').value = 150;
+
+            if([[${rDTO.exp}]] < 60) {
+                alert("3레벨부터 구매할 수 있는 아이템입니다.");
+                return;
+            }
 
             if ([[${rDTO.point}]] < 30) {
                 alert("포인트가 부족합니다.");
@@ -101,7 +112,8 @@
                 dataType: "JSON",
                 data: $("#postureDataForm").serialize(),
                 success: function (json) {
-                    addFeedEffect();
+                    showHappyMessage3();
+                    addFeedEffect3();
                 }
             });
         };
@@ -110,6 +122,11 @@
 
             document.getElementById('hiddenPoint').value = 100;
             document.getElementById('hiddenExp').value = 500;
+
+            if([[${rDTO.exp}]] < 300) {
+                alert("4레벨부터 구매할 수 있는 아이템입니다.");
+                return;
+            }
 
             if ([[${rDTO.point}]] < 100) {
                 alert("포인트가 부족합니다.");
@@ -123,14 +140,36 @@
                 dataType: "JSON",
                 data: $("#postureDataForm").serialize(),
                 success: function (json) {
-                    addFeedEffect();
+                    showHappyMessage4();
+                    addFeedEffect4();
                 }
             });
         };
 
         function showHappyMessage() {
             var messageDiv = document.getElementById("turtleMessage");
-            messageDiv.innerHTML = "거북이가 행복해합니다! (+5 경험치!)";
+            messageDiv.innerHTML = "거북이가 행복해합니다!<br>(+5 경험치!)";
+            // 메시지를 표시하는 동안 클래스 추가하여 스타일 적용 가능
+            messageDiv.classList.add("happyMessageStyle");
+        }
+
+        function showHappyMessage2() {
+            var messageDiv = document.getElementById("turtleMessage");
+            messageDiv.innerHTML = "거북이의 힘이 솟아오릅니다!<br>(+25 경험치!)";
+            // 메시지를 표시하는 동안 클래스 추가하여 스타일 적용 가능
+            messageDiv.classList.add("happyMessageStyle");
+        }
+
+        function showHappyMessage3() {
+            var messageDiv = document.getElementById("turtleMessage");
+            messageDiv.innerHTML = "거북이가 달콤한 맛에 즐거워합니다!<br>(+150 경험치!)";
+            // 메시지를 표시하는 동안 클래스 추가하여 스타일 적용 가능
+            messageDiv.classList.add("happyMessageStyle");
+        }
+
+        function showHappyMessage4() {
+            var messageDiv = document.getElementById("turtleMessage");
+            messageDiv.innerHTML = "수박을 먹고 거북이가 시원해합니다!<br>(+500 경험치!)";
             // 메시지를 표시하는 동안 클래스 추가하여 스타일 적용 가능
             messageDiv.classList.add("happyMessageStyle");
         }
@@ -151,6 +190,8 @@
     </script>
 </head>
 <body>
+<div id="screenEffect"></div>
+<audio id="feedSound" src="/assets/img/eat.mp3"></audio>
 <div class="navbar" style="border-bottom: 1px solid #15c6e5;">
     <div class="navbar-inner">
         <div class="container">
@@ -211,7 +252,7 @@
                 <div class="item-info">
                     <div class="item-description">샤인머스켓</div>
                 </div>
-                <img src="/assets/img/food3.png" alt="아이템 3">
+                <img class="item-img3" src="/assets/img/food3.png" alt="아이템 3">
 
                 <button id="Button3" class="item-button"><span style="color: #49ddfd">30</span> 포인트</button>
             </div>
@@ -219,17 +260,18 @@
                 <div class="item-info">
                     <div class="item-description">수박</div>
                 </div>
-                <img src="/assets/img/food4.png" alt="아이템 4">
+                <img class="item-img4" src="/assets/img/food4.png" alt="아이템 4">
 
                 <button id="Button4" class="item-button"><span style="color: #49ddfd">100</span> 포인트</button>
             </div>
         </div>
-        <div class="myPet">
+        <div class="myPet" style="position: relative;">
             <div class="swiper mySwiper">
-                <h2 id="required-level" style="font-family: 'NIXGONM-Vb'; color: #ffffff; font-weight: normal"></h2>
+                <h2 id="required-level" style="font-family: 'NIXGONM-Vb'; color: #ffffff; font-weight: normal;"></h2>
 
-                <div id="turtleMessage" style="color: #5dfa32"></div>
-                <img id="turtleImage" alt="" style="width: 70%; margin-top: 70px; margin-left: 45px">
+                <div id="turtleMessage" style="color: #5dfa32;"></div>
+                <img id="turtleImage" alt="" style="width: 70%; position: absolute; top:160px; left: 30px">
+                <div style="height: 150px;"></div>
                 <div class="exp-bar-outer" style="margin-top: 15px; margin-bottom: 20px">
                     <div class="exp-bar-inner" id="expBar"></div>
                 </div>
@@ -260,27 +302,29 @@
     if (currentExp >= 0 && currentExp < 15) {
         requiredExp = 15;
         expSpan.innerHTML = "15";
-        turtleImage.style.marginTop = "10px";
         turtleImage.src = "/assets/img/turtlelv1.gif";
+        turtleImage.style.top = "123px";
         levelSpan.innerHTML = "Lv. 1 <span style='color: #5dfa32'>새싹거북</span>";
     } else if (currentExp > 14 && currentExp < 60) {
         requiredExp = 60;
         expSpan.innerHTML = "60";
         levelSpan.innerHTML = "Lv. 2 <span style='color: #ff6434'>거북게</span>";
-        turtleImage.style.marginTop = "5px";
         turtleImage.src = "/assets/img/turtlelv2.gif";
     } else if (currentExp > 59 && currentExp < 300) {
         requiredExp = 300;
         expSpan.innerHTML = "300";
-        turtleImage.style.marginTop = "10px";
         levelSpan.innerHTML = "Lv. 3 <span style='color: #34e1ff'>천사거북</span>";
         turtleImage.src = "/assets/img/turtlelv3.gif";
     } else if (currentExp > 299 && currentExp < 1000) {
         requiredExp = 1000;
         expSpan.innerHTML = "1000";
+        levelSpan.innerHTML = "Lv. 4 <span style='color: #e687f5'>거북</span>";
+        turtleImage.src = "/assets/img/turtleg2.gif";
     } else if (currentExp > 999 && currentExp < 10000) {
         requiredExp = 10000;
         expSpan.innerHTML = "10000";
+        levelSpan.innerHTML = "Lv. 5 <span style='color: #40e09f'>거북</span>";
+        turtleImage.src = "/assets/img/turtleg2.gif";
     }
 
     var exp = (currentExp / requiredExp) * 100;
