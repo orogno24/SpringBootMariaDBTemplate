@@ -15,4 +15,6 @@ public interface IChartService {
     List<ChartDTO> getWeek(ChartDTO pDTO) throws Exception;
 
     void insertLineData(LineChartDTO pDTO) throws Exception;
+
+    ChartDTO getTime(ChartDTO pDTO) throws Exception;
 }

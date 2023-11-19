@@ -64,4 +64,11 @@ public class ChartService implements IChartService {
         chartMapper.insertLineData(pDTO);
     }
 
+    @Override
+    public ChartDTO getTime(ChartDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".getTime Start!");
+
+        return chartMapper.getTime(pDTO);
+    }
+
 }

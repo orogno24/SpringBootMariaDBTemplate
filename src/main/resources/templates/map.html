@@ -3,24 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>병원 검색</title>
-  <!-- Load css styles -->
+  <title>근처 병원 찾기</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
   <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css"/>
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
   <link rel="stylesheet" type="text/css" href="css/pluton.css"/>
-  <!--[if IE 7]>
   <link rel="stylesheet" type="text/css" href="css/pluton-ie7.css"/>
-  <![endif]-->
   <link rel="stylesheet" type="text/css" href="css/jquery.cslider.css"/>
   <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css"/>
   <link rel="stylesheet" type="text/css" href="css/animate.css"/>
-  <!-- Fav and touch icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144.png">
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114.png">
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72.png">
-  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57.png">
-  <link rel="shortcut icon" href="images/ico/favicon.ico">
   <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
   <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
   <style>
@@ -86,6 +77,7 @@
     var map;
 
     function searchHospital() {
+      document.getElementById('hospitalList').style.opacity = 1;
       var keyword = document.getElementById('address').value;
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
@@ -184,15 +176,31 @@
 
     // 지도를 생성합니다
     function initMap() {
-      var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-              mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-              };
+      var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+      var mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 기본 중심좌표
+        level: 3 // 지도의 확대 레벨
+      };
 
-      // 지도를 생성합니다
-      map = new kakao.maps.Map(mapContainer, mapOption);
+      // 사용자의 현재 위치를 얻는 함수
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude, // 위도
+                  lon = position.coords.longitude; // 경도
+
+          var locPosition = new kakao.maps.LatLng(lat, lon); // 현재 위치를 좌표로 변환
+          mapOption.center = locPosition; // 지도의 중심좌표를 현재 위치로 업데이트
+          map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+        }, function(error) {
+          console.error("Geolocation failed: " + error.message);
+          map = new kakao.maps.Map(mapContainer, mapOption); // 현재 위치를 얻지 못했을 때 기본 좌표로 지도 생성
+        });
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+        map = new kakao.maps.Map(mapContainer, mapOption); // Geolocation API를 지원하지 않는 경우 기본 좌표로 지도 생성
+      }
     }
+
 
     // 문서가 로드될 때 지도를 초기화합니다
     window.onload = function () {
@@ -232,8 +240,8 @@
 </div>
 <br><br>
 <div class="container">
-  <div class="title" style="border-bottom: 2px solid #FFF;">
-    <h1>병원 찾기</h1>
+  <div class="title" style="border-bottom: 1px solid #FFF;">
+    <h1>근처 병원 찾기</h1>
   </div>
   <div class="container centered" style="padding-top: 5px">
     <p style="color: #ffffff;">사용자의 현재 위치 또는 원하는 지역을 입력하여 가까운 병원을 찾을 수 있습니다.<br>
@@ -250,7 +258,7 @@
 </div>
 
 <div id="map"></div>
-<ul id="hospitalList"></ul>
+<ul id="hospitalList" style="opacity: 0;"></ul>
 <div style="height: 100px;"></div>
 
 <script src="js/jquery.js"></script>
