@@ -444,12 +444,12 @@ section {
 
 @keyframes moveTowardsTurtle {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(440px, 145px); } /* 실제 위치에 맞게 조정 필요 */
+    100% { transform: translate(430px, 135px); } /* 실제 위치에 맞게 조정 필요 */
 }
 
 @keyframes moveTowardsTurtle2 {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(250px, 135px); } /* 실제 위치에 맞게 조정 필요 */
+    100% { transform: translate(240px, 135px); } /* 실제 위치에 맞게 조정 필요 */
 }
 
 @keyframes moveTowardsTurtle3 {

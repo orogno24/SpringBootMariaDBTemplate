@@ -278,7 +278,7 @@
                 <div class="points-display" style="font-size: 17px;">
                     <div><[[${rDTO.userName}]]님의 파트너></div>
                     <div>정상 자세 포인트: <span id="current-gold"><span style="color: #49ddfd">[[${rDTO.point}]]</span>포인트</span></div>
-                    <div>현재 경험치: <span id="current-exp" style="color: #5dfa32">[[${rDTO.exp}]]</span> / <span id="required-exp"></span></div>
+                    <div>현재 경험치: <span id="current-exp" style="color: #5dfa32"></span> / <span id="required-exp"></span></div>
                 </div>
             </div>
         </div>
@@ -303,29 +303,48 @@
         requiredExp = 15;
         expSpan.innerHTML = "15";
         turtleImage.src = "/assets/img/turtlelv1.gif";
-        turtleImage.style.top = "123px";
+        turtleImage.style.top = "130px";
         levelSpan.innerHTML = "Lv. 1 <span style='color: #5dfa32'>새싹거북</span>";
-    } else if (currentExp > 14 && currentExp < 60) {
-        requiredExp = 60;
-        expSpan.innerHTML = "60";
+        document.getElementById('current-exp').textContent = currentExp;
+    } else if (currentExp > 14 && currentExp < 65) {
+        currentExp -= 15;
+        requiredExp = 50;
+        expSpan.innerHTML = "50";
         levelSpan.innerHTML = "Lv. 2 <span style='color: #ff6434'>거북게</span>";
         turtleImage.src = "/assets/img/turtlelv2.gif";
-    } else if (currentExp > 59 && currentExp < 300) {
+        document.getElementById('current-exp').textContent = currentExp;
+    } else if (currentExp > 64 && currentExp < 365) {
+        currentExp -= 65;
         requiredExp = 300;
         expSpan.innerHTML = "300";
         levelSpan.innerHTML = "Lv. 3 <span style='color: #34e1ff'>천사거북</span>";
         turtleImage.src = "/assets/img/turtlelv3.gif";
-    } else if (currentExp > 299 && currentExp < 1000) {
+        document.getElementById('current-exp').textContent = currentExp;
+    } else if (currentExp > 364 && currentExp < 1365) {
+        currentExp -= 365;
         requiredExp = 1000;
         expSpan.innerHTML = "1000";
-        levelSpan.innerHTML = "Lv. 4 <span style='color: #e687f5'>거북</span>";
-        turtleImage.src = "/assets/img/turtleg2.gif";
-    } else if (currentExp > 999 && currentExp < 10000) {
-        requiredExp = 10000;
-        expSpan.innerHTML = "10000";
-        levelSpan.innerHTML = "Lv. 5 <span style='color: #40e09f'>거북</span>";
-        turtleImage.src = "/assets/img/turtleg2.gif";
+        levelSpan.innerHTML = "Lv. 4 <span style='color: #3e88fa'>아이스거북</span>";
+        turtleImage.src = "/assets/img/turtlelv4.gif";
+        document.getElementById('current-exp').textContent = currentExp;
+    } else if (currentExp > 1364 && currentExp < 6365) {
+        currentExp -= 1365;
+        requiredExp = 5000;
+        expSpan.innerHTML = "5000";
+        levelSpan.innerHTML = "Lv. 5 <span style='color: #20bd7d'>이끼거북</span>";
+        turtleImage.src = "/assets/img/turtlelv5.gif";
+        document.getElementById('current-exp').textContent = currentExp;
+    } else if (currentExp > 6364) {
+        currentExp -= 6365;
+        requiredExp = 100000;
+        expSpan.innerHTML = "100000";
+        levelSpan.innerHTML = "Lv. 6 <span style='color: #fdc512'>거북왕</span>";
+        turtleImage.src = "/assets/img/turtlelv6.gif";
+        turtleImage.style.top = "150px";
+        document.getElementById('current-exp').textContent = currentExp;
     }
+
+
 
     var exp = (currentExp / requiredExp) * 100;
 

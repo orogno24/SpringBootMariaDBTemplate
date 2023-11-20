@@ -3,8 +3,6 @@ let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
 let startTime, endTime;
-let minnormalPostureCount = 0;
-let minabnormalPostureCount = 0;
 let totalTime = 0;
 
 async function init() {
@@ -109,8 +107,6 @@ function updatePostureCounts() {
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
     document.getElementById('totalTime').innerText = totalTime;
     document.getElementById('point').innerText = normalPostureCount / 15;
-    // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
-    // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
 }
 
 function insertStart() {
@@ -133,7 +129,7 @@ function insertData() {
         dataType: "JSON",
         data: $("#postureDataForm").serialize(),
         success: function (json) {
-
+            normalPostureCount = 0;
 
         },
         error: function (xhr, status, error) {
