@@ -3,8 +3,6 @@ let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
 let abnormalPostureCount = 0;
 let startTime, endTime;
-let minnormalPostureCount = 0;
-let minabnormalPostureCount = 0;
 let totalTime = 0;
 
 async function init() {
@@ -36,6 +34,7 @@ async function init() {
     document.getElementById("analysisText").style.display = "block";
 
     startTime = Date.now();
+    insertStart();
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -108,8 +107,38 @@ function updatePostureCounts() {
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
     document.getElementById('totalTime').innerText = totalTime;
     document.getElementById('point').innerText = normalPostureCount / 15;
-    // document.getElementById('minnormalPostureCount').innerText = minnormalPostureCount;         // 분당 카운트
-    // document.getElementById('minabnormalPostureCount').innerText = minabnormalPostureCount;
+}
+
+function insertStart() {
+    setInterval(insertData, 3000);
+}
+
+function insertData() {
+    endTime = Date.now();
+
+    const totalTime = endTime - startTime;
+
+    document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
+    document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
+    document.getElementById('hiddenTotalTime').value = totalTime / 1000;
+    document.getElementById('hiddenPoint').value = normalPostureCount / 15;
+
+    $.ajax({
+        url: "/chart/insertChart",
+        type: "post",
+        dataType: "JSON",
+        data: $("#postureDataForm").serialize(),
+        success: function (json) {
+            normalPostureCount = 0;
+
+        },
+        error: function (xhr, status, error) {
+            // 에러 핸들링
+            console.error("Error: " + error);
+            alert("데이터 전송 중 오류가 발생했습니다.");
+        }
+    });
+
 }
 
 document.getElementById("stopButton").onclick = function () {

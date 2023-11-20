@@ -95,12 +95,12 @@ public class ChartController {
 
         try {
             String userId = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-            String normal = CmmUtil.nvl(request.getParameter("minnormalPostureCount"));
-            String abnormal = CmmUtil.nvl(request.getParameter("minabnormalPostureCount"));
+            String normal = CmmUtil.nvl(request.getParameter("normalPostureCount"));
+            String abnormal = CmmUtil.nvl(request.getParameter("abnormalPostureCount"));
 
             log.info("session user_id : " + userId);
-            log.info("minnormal : " + normal);
-            log.info("minabnormal : " + abnormal);
+            log.info("normal : " + normal);
+            log.info("abnormal : " + abnormal);
 
             // 데이터 저장하기 위해 DTO에 저장하기
             LineChartDTO pDTO = new LineChartDTO();
@@ -168,14 +168,5 @@ public class ChartController {
 
         return "/chart/dashboard";
     }
-
-    @GetMapping("/dashboard2")
-    public String dashboard2(HttpSession session, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".dashboard2 함수 실행");
-        String userName = (String) session.getAttribute("SS_USER_NAME");
-        model.addAttribute("userName", userName);
-        return "/chart/dashboard2";
-    }
-
 
 }
