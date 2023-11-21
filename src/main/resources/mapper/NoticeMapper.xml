@@ -62,6 +62,17 @@
 		WHERE NOTICE_SEQ = #{noticeSeq}
 			
 	</delete>
+
+	<insert id="insertComment" parameterType="CommentDTO">
+		INSERT INTO COMMENT
+		(
+			COMMENT_SEQ, NOTICE_SEQ, CONTENTS, USER_ID, REG_DT
+		)
+		VALUES(
+					  (SELECT NULLIF (MAX(A.COMMENT_SEQ),0)+1 FROM COMMENT A),
+					  #{noticeSeq}, #{contents}, #{userId}, SYSDATE()
+			  )
+	</insert>
 			
 </mapper>
 

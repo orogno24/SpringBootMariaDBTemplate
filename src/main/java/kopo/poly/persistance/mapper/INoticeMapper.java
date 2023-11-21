@@ -1,5 +1,6 @@
 package kopo.poly.persistance.mapper;
 
+import kopo.poly.dto.CommentDTO;
 import kopo.poly.dto.NoticeDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,5 +26,7 @@ public interface INoticeMapper {
 	
 	//게시판 글 삭제
 	void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
+
+	void insertComment(CommentDTO pDTO) throws Exception;
 	
 }

@@ -1,5 +1,6 @@
 package kopo.poly.service.impl;
 
+import kopo.poly.dto.CommentDTO;
 import kopo.poly.dto.NoticeDTO;
 import kopo.poly.persistance.mapper.INoticeMapper;
 import kopo.poly.service.INoticeService;
@@ -73,4 +74,13 @@ public class NoticeService implements INoticeService {
         noticeMapper.deleteNoticeInfo(pDTO);
 
     }
+    @Transactional
+    @Override
+    public void insertComment(CommentDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".insertComment start!");
+
+        noticeMapper.insertComment(pDTO);
+    }
+
 }

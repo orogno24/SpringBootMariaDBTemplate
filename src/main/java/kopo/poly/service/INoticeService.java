@@ -1,5 +1,6 @@
 package kopo.poly.service;
 
+import kopo.poly.dto.CommentDTO;
 import kopo.poly.dto.NoticeDTO;
 
 import java.util.List;
@@ -44,5 +45,6 @@ public interface INoticeService {
      */
     void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
 
+    void insertComment(CommentDTO pDTO) throws Exception;
 }
 

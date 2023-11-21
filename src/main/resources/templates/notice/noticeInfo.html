@@ -114,6 +114,37 @@
         }
         /*]]>*/
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSend").on("click", function () {
+                doSubmit();
+            })
+        })
+
+        function doSubmit() {
+
+            let f = document.getElementById("f");
+
+            if (f.contents.value === "") {
+                alert("내용을 입력하시기 바랍니다.");
+                f.contents.focus();
+                return;
+            }
+
+            $.ajax({
+                    url: "/notice/commentInsert",
+                    type: "post",
+                    dataType: "JSON",
+                    data: $("#f").serialize(),
+                    success: function (json) {
+                        alert(json.msg);
+                        location.href = "/notice/noticeInfo?nSeq=" + nSeq;
+                    }
+                }
+            )
+        }
+    </script>
 </head>
 <body>
 <div class="container" >
@@ -131,13 +162,13 @@
                     <th>작성자</th>
                     <td th:text="${rDTO.userName}"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <th>공지글 여부</th>-->
-<!--                    <td>-->
-<!--                        예<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'Y'}"/>-->
-<!--                        아니오<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'N'}"/>-->
-<!--                    </td>-->
-<!--                </tr>-->
+                <!--                <tr>-->
+                <!--                    <th>공지글 여부</th>-->
+                <!--                    <td>-->
+                <!--                        예<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'Y'}"/>-->
+                <!--                        아니오<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'N'}"/>-->
+                <!--                    </td>-->
+                <!--                </tr>-->
                 <tr>
                     <th>작성일</th>
                     <td th:text="${rDTO.regDt}"></td>
@@ -152,13 +183,42 @@
                 </tr>
             </table>
         </div>
-        <div class="card-footer text-right">
+
+        <div class="card-footer text-right" style="border-top: none">
             <button id="btnEdit" type="button" class="btn btn-primary"><i class="fas fa-edit"></i>수정</button>
             <button id="btnDelete" type="button" class="btn btn-danger"><i class="fas fa-trash"></i>삭제</button>
             <button id="btnList" type="button" class="btn btn-secondary"><i class="fas fa-list"></i>목록</button>
         </div>
+
+        <div class="card my-4" style="box-shadow: none; margin-top: -0.7rem!important;">
+            <div class="card-body">
+
+                <!-- 댓글 목록 -->
+                <div id="comments">
+                    <div th:each="comment : ${comments}" class="mt-4">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 th:text="${comment.authorName}">작성자 이름</h5>
+                                <p th:text="${comment.text}">댓글 내용</p>
+                            </div>
+                            <small th:text="${comment.creationTime}">작성 시간</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form name="f" id="f">
+                    <div class="form-group" style="margin-top: -25px">
+                        <label for="contents">내용</label>
+                        <textarea class="form-control" name="contents" id="contents" rows="3" placeholder="댓글을 입력하세요" required></textarea>
+                    </div>
+                    <input type="hidden" name="nSeq" th:value="${rDTO.noticeSeq}"/>
+                    <button id="btnSend" type="button" class="btn btn-primary float-right" style="margin-top: -0.5%; margin-bottom: -1.5%"><i class="fas fa-edit"></i> 댓글 작성</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
 <ul class="circles">
     <li></li>
     <li></li>
