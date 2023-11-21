@@ -76,7 +76,7 @@
         WHERE USER_ID = #{userId}
     </select>
 
-    <select id="getTimeList" resultType="ChartDTO">
+<!--    <select id="getTimeList" resultType="ChartDTO">
         SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H') AS checkHour,
                SUM(NORMAL) AS totalNormalTime,
                SUM(ABNORMAL) AS totalAbnormalTime
@@ -85,7 +85,7 @@
           AND USER_ID = #{userId}
         GROUP BY DATE_FORMAT(`DATE`, '%Y-%m-%d %H')
         ORDER BY checkHour;
-    </select>
+    </select>-->
 
     <select id="getTimeMinute" resultType="ChartDTO">
         SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H:%i') AS checkMinute,
@@ -113,5 +113,22 @@
           AND USER_ID = #{userId}
         GROUP BY checkFive
         ORDER BY checkFive;
+    </select>
+
+    <select id="getTimeList" resultType="ChartDTO">
+        SELECT DATE_FORMAT(
+                       DATE_ADD(
+                               `DATE`,
+                               INTERVAL -MINUTE(`DATE`) % 10 MINUTE
+                   ),
+                       '%Y-%m-%d %H:%i'
+                   ) AS checkTen,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY checkTen
+        ORDER BY checkTen;
     </select>
 </mapper>

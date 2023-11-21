@@ -229,7 +229,7 @@ var lineConfig = new Chart(ctx5, {
     data: {
         labels: labels5,
         datasets: [{
-            label: '정상 사용 시간 비율 (%)',
+            label: '정상 자세 유지 비율 (%)',
             data: normalRatioData5,
             fill: false,
             borderColor: "#55e7ff",

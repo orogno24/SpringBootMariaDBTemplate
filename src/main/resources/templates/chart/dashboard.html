@@ -91,11 +91,7 @@
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>안녕하세요, 루미아 섬의 생존자 여러분!
-                            11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
-
-                            다양한 선물을 준비했으니
-                            이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
+                        <p>자세 모니터링의 결과를 점수로 알수 있습니다.<br>또한, 전체 사용자들의 평균 점수와 비교해볼 수 있습니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
@@ -126,11 +122,7 @@
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText2" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>안녕하세요, 루미아 섬의 생존자 여러분!
-                            11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
-
-                            다양한 선물을 준비했으니
-                            이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
+                        <p>오늘의 서비스 이용시간을 알 수 있습니다.<br>거북이를 키울 수 있는 사용자의 현재 포인트 보유량도 알 수 있습니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
@@ -459,8 +451,8 @@
     const abnormalData = rList.map(item => item.totalAbnormal);
 
     const labels2 = tList.map(item => {
-        const splitString = item.checkHour.split(' ');
-        return splitString[1] + '시';
+        const splitString = item.checkTen.split(' ');
+        return splitString[1];
     });
     const normalData2 = tList.map(item => item.totalNormalTime);
     const abnormalData2 = tList.map(item => item.totalAbnormalTime);

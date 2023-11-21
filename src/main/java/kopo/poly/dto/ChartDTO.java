@@ -36,6 +36,8 @@ public class ChartDTO {
 
     private String checkFive;
 
+    private String checkTen;
+
     @Override
     public String toString() {
         return "ChartDTO{" +
