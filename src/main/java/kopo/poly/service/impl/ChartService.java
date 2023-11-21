@@ -1,12 +1,10 @@
 package kopo.poly.service.impl;
 
 import kopo.poly.dto.ChartDTO;
-import kopo.poly.dto.LineChartDTO;
 import kopo.poly.persistance.mapper.IChartMapper;
 import kopo.poly.service.IChartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,20 +52,33 @@ public class ChartService implements IChartService {
 
         return chartMapper.getWeek(pDTO);
     }
-
-    @Scheduled(fixedRate = 600)           // 1분주기로 실행
-    @Transactional
-    @Override
-    public void insertLineData(LineChartDTO pDTO) throws Exception {
-        log.info(this.getClass().getName() + ".insertLineData Start!");
-//        chartMapper.insertLineData(pDTO);
-    }
-
     @Override
     public ChartDTO getTime(ChartDTO pDTO) throws Exception {
         log.info(this.getClass().getName() + ".getTime Start!");
 
         return chartMapper.getTime(pDTO);
     }
+
+    @Override
+    public List<ChartDTO> getTimeList(ChartDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".getTimeList Start!");
+
+        return chartMapper.getTimeList(pDTO);
+    }
+
+    @Override
+    public List<ChartDTO> getTimeMinute(ChartDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".getTimeMinute Start!");
+
+        return chartMapper.getTimeMinute(pDTO);
+    }
+
+    @Override
+    public List<ChartDTO> getTimeFive(ChartDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".getTimeFive Start!");
+
+        return chartMapper.getTimeFive(pDTO);
+    }
+
 
 }

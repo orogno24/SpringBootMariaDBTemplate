@@ -18,9 +18,9 @@
                 #{abnormal},
                 #{totalTime})
             ON DUPLICATE KEY UPDATE
-            WEEK = VALUES(WEEK),
-            NORMAL = VALUES(NORMAL),
-            ABNORMAL = VALUES(ABNORMAL);
+                                 WEEK = VALUES(WEEK),
+                                 NORMAL = VALUES(NORMAL),
+                                 ABNORMAL = VALUES(ABNORMAL);
     </insert>
 
     <select id="getData" resultType="ChartDTO">
@@ -68,24 +68,50 @@
             DATE;
     </select>
 
-    <insert id="insertLineData" parameterType="LineChartDTO">
-        INSERT INTO LINECHART
-        (NORMAL,
-         ABNORMAL,
-         POSE_SEQ)
-        VALUES (#{normal},
-                #{abnormal},
-                (SELECT MAX(POSE_SEQ) FROM CHART WHERE USER_ID = #{userId}))
-            ON DUPLICATE KEY UPDATE
-                        NORMAL = VALUES(NORMAL),
-                        ABNORMAL = VALUES(ABNORMAL);
-    </insert>
-
     <select id="getTime" resultType="ChartDTO">
         SELECT
             COALESCE(SUM(TOTALTIME), 0) AS TOTALTIME
         FROM
             CHART
         WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="getTimeList" resultType="ChartDTO">
+        SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H') AS checkHour,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY DATE_FORMAT(`DATE`, '%Y-%m-%d %H')
+        ORDER BY checkHour;
+    </select>
+
+    <select id="getTimeMinute" resultType="ChartDTO">
+        SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H:%i') AS checkMinute,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY DATE_FORMAT(`DATE`, '%Y-%m-%d %H:%i')
+        ORDER BY checkMinute;
+    </select>
+
+    <select id="getTimeFive" resultType="ChartDTO">
+        SELECT DATE_FORMAT(
+                       DATE_ADD(
+                               `DATE`,
+                               INTERVAL -MINUTE(`DATE`) % 5 MINUTE
+                   ),
+                       '%Y-%m-%d %H:%i'
+                   ) AS checkFive,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY checkFive
+        ORDER BY checkFive;
     </select>
 </mapper>

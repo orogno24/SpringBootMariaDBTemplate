@@ -26,4 +26,22 @@ public class ChartDTO {
 
     private String weekday;
 
+    private int totalNormalTime;
+
+    private int totalAbnormalTime;
+
+    private String checkHour;
+
+    private String checkMinute;
+
+    private String checkFive;
+
+    @Override
+    public String toString() {
+        return "ChartDTO{" +
+                "checkHour='" + checkHour + '\'' +
+                ", totalNormalTime=" + totalNormalTime +
+                ", totalAbnormalTime=" + totalAbnormalTime +
+                '}';
+    }
 }

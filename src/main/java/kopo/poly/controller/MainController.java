@@ -180,11 +180,4 @@ public class MainController {
         return "user/login"; // 로그인 페이지 또는 홈페이지로 리다이렉트
     }
 
-    @GetMapping("/main2")
-    public String main2() throws Exception {
-        log.info(this.getClass().getName() + ".main2 함수 실행");
-        return "/main2";
-    }
-
-
 }

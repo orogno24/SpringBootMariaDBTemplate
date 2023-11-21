@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/noticeInfo.css"/>
     <style>
         @font-face {
             font-family: 'NIXGONM-Vb';
@@ -22,7 +22,7 @@
         }
 
         body {
-            background-color: #d0d0d0;
+            background-color: #2b2b36;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -130,9 +130,9 @@
 </head>
 <body>
 <div class="container">
-    <div class="card">
+    <div style="z-index: 10" class="card">
         <div class="card-header">
-            <h2>게시글 수정하기</h2>
+            <h2><i class="fas fa-edit"></i> 게시글 수정하기</h2>
         </div>
         <div class="card-body">
             <form name="f" id="f">
@@ -153,10 +153,25 @@
                     <textarea name="contents" id="contents" class="form-control" style="height: 400px" th:text="${rDTO.contents}" required></textarea>
                 </div>
                 <button id="btnSend" type="button" class="btn btn-primary"><i class="fas fa-save"></i> 수정</button>
-                <button type="reset" class="btn btn-secondary"><i class="fas fa-undo"></i> 다시 작성</button>
+                <button type="reset" class="btn btn-danger"><i class="fas fa-undo"></i> 다시 작성</button>
+                <button type="button" class="btn btn-secondary float-right" onclick=location.href="/notice/noticeList">
+                    <i class="fas fa-list"></i> 목록
+                </button>
             </form>
         </div>
     </div>
 </div>
+<ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
 </body>
 </html>
