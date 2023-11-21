@@ -124,22 +124,25 @@ function insertData() {
     document.getElementById('hiddenTotalTime').value = totalTime / 1000;
     document.getElementById('hiddenPoint').value = pointCount / 10;
 
-    $.ajax({
-        url: "/chart/insertChart",
-        type: "post",
-        dataType: "JSON",
-        data: $("#postureDataForm").serialize(),
-        success: function (json) {
+    fetch("/chart/insertChart", {
+        method: "POST", // HTTP 요청 메서드
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded", // 콘텐츠 타입
+        },
+        body: new URLSearchParams(new FormData(document.getElementById("postureDataForm"))).toString() // 폼 데이터
+    })
+        .then(response => response.json()) // 응답을 JSON으로 변환
+        .then(json => {
             normalPostureCount = 0;
             abnormalPostureCount = 0;
             startTime = Date.now();
-        },
-        error: function (xhr, status, error) {
+        })
+        .catch(error => {
             // 에러 핸들링
             console.error("Error: " + error);
             alert("데이터 전송 중 오류가 발생했습니다.");
-        }
-    });
+        });
+
 
 }
 

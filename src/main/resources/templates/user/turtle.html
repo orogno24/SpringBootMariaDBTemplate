@@ -24,7 +24,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Button1").on("click", function () {
-                doSubmit1();
+                doSubmit("#Button1", 1, 5);
             })
 
             $("#Button2").on("click", function () {
@@ -33,23 +33,33 @@
 
             $("#Button3").on("click", function () {
                 doSubmit3();
-            })
+            });
 
             $("#Button4").on("click", function () {
                 doSubmit4();
-            })
+            });
         })
-        function doSubmit1() {
+        function doSubmit(buttonId, points, exp) {
+            var button = $(buttonId);
+            var lastClickTime = button.data('lastClickTime') || 0;
+            var currentTime = new Date().getTime();
 
-            document.getElementById('hiddenPoint').value = 1;
-            document.getElementById('hiddenExp').value = 5;
-
-            if ([[${rDTO.point}]] < 1) {
-                alert("포인트가 부족합니다.");
+            if (currentTime - lastClickTime < 1000) { // 1초 간격으로 클릭 제한
                 return;
             }
 
-            // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+            button.data('lastClickTime', currentTime);
+            button.prop('disabled', true); // 버튼 비활성화
+
+            document.getElementById('hiddenPoint').value = points;
+            document.getElementById('hiddenExp').value = exp;
+
+            if ([[${rDTO.point}]] < points) {
+                alert("포인트가 부족합니다.");
+                button.prop('disabled', false); // 버튼 다시 활성화
+                return;
+            }
+
             $.ajax({
                 url: "/user/expUpdate",
                 type: "post",
@@ -58,11 +68,27 @@
                 success: function (json) {
                     showHappyMessage();
                     addFeedEffect();
+                },
+                error: function (xhr, status, error) {
+                    // 에러 처리
+                },
+                complete: function () {
+                    button.prop('disabled', false); // AJAX 요청 완료 후 버튼 다시 활성화
                 }
             });
-        };
+        }
 
         function doSubmit2() {
+            var button = $("#Button2");
+            var lastClickTime = button.data('lastClickTime') || 0;
+            var currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime < 1000) { // 1초 간격으로 클릭 제한
+                return;
+            }
+
+            button.data('lastClickTime', currentTime);
+            button.prop('disabled', true); // 버튼 비활성화
 
             document.getElementById('hiddenPoint').value = 5;
             document.getElementById('hiddenExp').value = 25;
@@ -86,11 +112,27 @@
                 success: function (json) {
                     showHappyMessage2();
                     addFeedEffect2();
+                },
+                error: function (xhr, status, error) {
+                    // 에러 처리
+                },
+                complete: function () {
+                    button.prop('disabled', false); // AJAX 요청 완료 후 버튼 다시 활성화
                 }
             });
         };
 
         function doSubmit3() {
+            var button = $("#Button3");
+            var lastClickTime = button.data('lastClickTime') || 0;
+            var currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime < 1000) { // 1초 간격으로 클릭 제한
+                return;
+            }
+
+            button.data('lastClickTime', currentTime);
+            button.prop('disabled', true); // 버튼 비활성화
 
             document.getElementById('hiddenPoint').value = 30;
             document.getElementById('hiddenExp').value = 150;
@@ -114,11 +156,27 @@
                 success: function (json) {
                     showHappyMessage3();
                     addFeedEffect3();
+                },
+                error: function (xhr, status, error) {
+                    // 에러 처리
+                },
+                complete: function () {
+                    button.prop('disabled', false); // AJAX 요청 완료 후 버튼 다시 활성화
                 }
             });
         };
 
         function doSubmit4() {
+            var button = $("#Button3");
+            var lastClickTime = button.data('lastClickTime') || 0;
+            var currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime < 1000) { // 1초 간격으로 클릭 제한
+                return;
+            }
+
+            button.data('lastClickTime', currentTime);
+            button.prop('disabled', true); // 버튼 비활성화
 
             document.getElementById('hiddenPoint').value = 100;
             document.getElementById('hiddenExp').value = 500;
@@ -142,6 +200,12 @@
                 success: function (json) {
                     showHappyMessage4();
                     addFeedEffect4();
+                },
+                error: function (xhr, status, error) {
+                    // 에러 처리
+                },
+                complete: function () {
+                    button.prop('disabled', false); // AJAX 요청 완료 후 버튼 다시 활성화
                 }
             });
         };

@@ -41,7 +41,7 @@ public class ChartDTO {
     @Override
     public String toString() {
         return "ChartDTO{" +
-                "checkHour='" + checkHour + '\'' +
+                "checkTen='" + checkTen + '\'' +
                 ", totalNormalTime=" + totalNormalTime +
                 ", totalAbnormalTime=" + totalAbnormalTime +
                 '}';

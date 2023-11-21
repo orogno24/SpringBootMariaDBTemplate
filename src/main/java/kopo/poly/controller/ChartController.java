@@ -130,7 +130,6 @@ public class ChartController {
         model.addAttribute("tList", tList); // 분당 사용 통계 리스트를 통계 페이지로 전송
         model.addAttribute("vList", vList); // 5분당 사용 통계 리스트를 통계 페이지로 전송
         model.addAttribute("jList", jList); // 1시간당 사용 통계 리스트를 통계 페이지로 전송
-
         model.addAttribute("rDTO", rDTO);
         model.addAttribute("tDTO", tDTO);
         model.addAttribute("Point", Point);

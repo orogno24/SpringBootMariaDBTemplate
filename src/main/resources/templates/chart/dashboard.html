@@ -52,10 +52,11 @@
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
+    <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지</b></a> </li>
     <li id="dash_dashboard2"><a class="waves-effect" href="/monitoring"><b>자세 모니터링</b></a> </li>
-    <li id="dash_dashboard3"><a class="waves-effect" href="/map"><b>지도</b></a> </li>
+    <li id="dash_dashboard3"><a class="waves-effect" href="/map"><b>병원 찾기</b></a> </li>
     <li id="dash_dashboard4"><a class="waves-effect" href="/gazami9"><b>커뮤니티</b></a> </li>
+    <li id="dash_dashboard5"><a class="waves-effect" href="/user/turtle"><b>육성</b></a> </li>
 
 </ul>
 <header>
@@ -91,7 +92,7 @@
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>자세 모니터링의 결과를 점수로 알수 있습니다.<br>또한, 전체 사용자들의 평균 점수와 비교해볼 수 있습니다.</p>
+                        <p>자신의 자세 점수와 전체 사용자들의 평균 점수를 확인할 수 있습니다.<br>자세 점수는 정상 자세의 정확도와 유지 시간을 기반으로 계산됩니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
@@ -122,7 +123,7 @@
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText2" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>오늘의 서비스 이용시간을 알 수 있습니다.<br>거북이를 키울 수 있는 사용자의 현재 포인트 보유량도 알 수 있습니다.</p>
+                        <p>자세 모니터링 서비스를 이용한 총 시간을 확인할 수 있습니다.<br>거북이를 키울 수 있는 사용자의 현재 포인트 보유량도 알 수 있습니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
@@ -277,7 +278,8 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h5 class="white-text">🌟 정상 자세를 유지하여 포인트를 획득하셨습니다! 🌟</h5>
+                <br>
+                <h5 class="white-text">정상 자세를 유지하여 포인트를 획득하셨습니다!</h5>
                 <ul id='credits'>
                     <li>
                         현재 [[${Point.userName}]]님이 보유하신 포인트는 [[${Point.point}]]포인트입니다.
@@ -288,13 +290,17 @@
                         <br><br>
                         🐢 당신의 건강한 자세는 거북이의 성장에 큰 도움이 됩니다. 건강한 습관을 유지하며 함께 성장해 나가요! 🐢
                     </li>
+                    <li>
+                        <br>
+                        <span><a style='font-weight: bold; color: #BCC2E2' href="/user/turtle">[육성 페이지로 이동하기]</a></span>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="footer-copyright">
         <div class="container">
-            <span><a style='font-weight: bold;' href="/user/turtle">[육성 페이지로 이동하기]</a></span>
+
         </div>
     </div>
 </footer>
