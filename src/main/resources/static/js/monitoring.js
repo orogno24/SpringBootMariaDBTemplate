@@ -1,6 +1,7 @@
 const URL = "/assets/my_model/";
 let model, webcam, ctx, maxPredictions;
 let normalPostureCount = 0;
+let pointCount = 0;
 let abnormalPostureCount = 0;
 let startTime, endTime;
 let totalTime = 0;
@@ -106,7 +107,7 @@ function updatePostureCounts() {
     document.getElementById('normalPostureCount').innerText = normalPostureCount;
     document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
     document.getElementById('totalTime').innerText = totalTime;
-    document.getElementById('point').innerText = normalPostureCount / 15;
+    document.getElementById('point').innerText = pointCount / 10;
 }
 
 function insertStart() {
@@ -116,12 +117,12 @@ function insertStart() {
 function insertData() {
     endTime = Date.now();
 
-    const totalTime = endTime - startTime;
+    totalTime = endTime - startTime;
 
     document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
     document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
     document.getElementById('hiddenTotalTime').value = totalTime / 1000;
-    document.getElementById('hiddenPoint').value = normalPostureCount / 15;
+    document.getElementById('hiddenPoint').value = pointCount / 10;
 
     $.ajax({
         url: "/chart/insertChart",
@@ -130,7 +131,8 @@ function insertData() {
         data: $("#postureDataForm").serialize(),
         success: function (json) {
             normalPostureCount = 0;
-
+            abnormalPostureCount = 0;
+            startTime = Date.now();
         },
         error: function (xhr, status, error) {
             // 에러 핸들링
@@ -246,6 +248,7 @@ async function predict() {
     } else {
         if (currentTime - lastUpdateTime >= updateInterval) {
             normalPostureCount++;
+            pointCount++;
             lastUpdateTime = currentTime;
         }
         updatePostureCounts();

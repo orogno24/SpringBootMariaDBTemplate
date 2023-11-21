@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style type="text/css">
 
         .waves-effect:hover {
@@ -53,8 +53,8 @@
     </li>
 
     <li id="dash_dashboard"><a class="waves-effect" href="/main"><b>메인페이지로</b></a> </li>
-    <li id="dash_dashboard2"><a class="waves-effect" href="/gazami7"><b>자세 모니터링</b></a> </li>
-    <li id="dash_dashboard3"><a class="waves-effect" href="/main"><b>지도</b></a> </li>
+    <li id="dash_dashboard2"><a class="waves-effect" href="/monitoring"><b>자세 모니터링</b></a> </li>
+    <li id="dash_dashboard3"><a class="waves-effect" href="/map"><b>지도</b></a> </li>
     <li id="dash_dashboard4"><a class="waves-effect" href="/gazami9"><b>커뮤니티</b></a> </li>
 
 </ul>
@@ -67,7 +67,7 @@
 
             <ul class="right hide-on-med-and-down">
                 <li>
-                    <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+                    <a class='right dropdown-button' href='/user/profile' data-activates='user_dropdown'><i class="fa fa-user-circle" aria-hidden="true"></i></a>
                 </li>
             </ul>
 
@@ -89,7 +89,7 @@
             <div style="padding: 35px; position: relative;" align="center"
                  class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon" onclick="toggleInfo()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>안녕하세요, 루미아 섬의 생존자 여러분!
                             11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
@@ -98,8 +98,8 @@
                             이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
                     </div>
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">오늘의
-                            자세 점수</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 오늘의 자세 점수</b>
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@
             <div style="padding: 35px;" align="center"
                  class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText2" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>안녕하세요, 루미아 섬의 생존자 여러분!
                             11월 9일 신규 캐릭터 레니 출시 기념으로 쿠폰 이벤트가 시작됩니다.
@@ -133,7 +133,8 @@
                             이벤트를 확인하시고 기간 내 쿠폰을 꼭 사용해 주세요.</p>
                     </div>
                     <div class="left card-title">
-                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">자세 모니터링 이용 시간</b>
+                        <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 자세 모니터링 이용 시간</b>
                     </div>
                 </div>
 
@@ -157,20 +158,20 @@
         <div class="col s6" style="margin-right: -2.5rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon3" onclick="toggleInfo3()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon3" onclick="toggleInfo3()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText3" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>자세 모니터링 기능을 사용하는 동안 사용자가 거북목 자세와 올바른 자세로 있었던 시간을 비율로 나타냅니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
-                            자세 분석 통계
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 자세 분석 통계
                         </b>
                     </div>
                 </div>
                 <canvas class="pie-chart" width="400" height="300" id="pie">
                 </canvas>
                 <p style="font-size: 18px;">
-                    개인별 정상/비정상 자세 통계값을 나타내는 그래프입니다
+                    사용자의 정상/비정상 자세 통계값을 나타내는 그래프입니다.
                 </p>
 
             </div>
@@ -179,7 +180,7 @@
         <div class="col s6">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon4" onclick="toggleInfo4()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon4" onclick="toggleInfo4()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText4" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>모든 사용자가 자세 모니터링 기능을 사용하는 동안<br>
                             거북목 자세와 올바른 자세로 있었던 시간을 비율로 나타냅니다.<br>
@@ -187,14 +188,14 @@
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
-                            사용자 평균 자세 분석 통계
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 사용자 평균 자세 분석 통계
                         </b>
                     </div>
                 </div>
                 <canvas class="pie-chart" width="400" height="300" id="pie2">
                 </canvas>
                 <p style="font-size: 18px;">
-                    전체 사용자 정상/비정상 자세 통계값을 나타내는 그래프입니다.
+                    전체 사용자의 정상/비정상 자세 통계값을 나타내는 그래프입니다.
                 </p>
             </div>
         </div>
@@ -203,20 +204,20 @@
         <div class="col s6" style="margin-right: -2.5rem; margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon5" onclick="toggleInfo5()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon5" onclick="toggleInfo5()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText5" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
                         <p>자세 모니터링을 사용하는 동안 모인 데이터를 주간별로 나타냅니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
-                            주간 사용 통계
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 주간 사용 통계
                         </b>
                     </div>
                 </div>
                 <canvas id="postureChart">
                 </canvas>
                 <p style="font-size: 18px;">
-                    개인별 주간 사용 통계값을 나타내는 그래프입니다.
+                    사용자의 주간 사용 통계값을 나타내는 그래프입니다.
                 </p>
 
             </div>
@@ -225,22 +226,25 @@
         <div class="col s6" style="margin-bottom: 1.6rem">
             <div style="padding: 35px;" align="center" class="card">
                 <div class="row">
-                    <span class="emoticon" id="infoEmoticon6" onclick="toggleInfo6()" style="cursor: pointer">📣</span>
+                    <span class="emoticon" id="infoEmoticon6" onclick="toggleInfo6()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText6" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>자세 모니터링을 사용한 가장 최근 기록을 나타냅니다.<br>
-                            기록은 측정시간을 다섯 구간으로 나누어 사용자가 어느 시점에서 주로 자세가 흐트러지는지 알 수 있습니다.</p>
+                        <p>각 시간대별 정상 사용 시간의 비율을 보여주며,<br>어느 시간대에 자세 관리가 필요한지 명확히 파악할 수 있게 도와줍니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
-                            시간별 사용 통계
+                            <i class="fa fa-caret-down" aria-hidden="true"></i> 시간별 사용 통계
                         </b>
                     </div>
                 </div>
                 <div style="height: 85%">
-                    <canvas id="line">
+                    <canvas id="MinuteChart">
+                    </canvas>
+                    <canvas id="FiveChart" style="display: none">
+                    </canvas>
+                    <canvas id="timeUsageChart" style="display: none">
                     </canvas>
                     <p style="font-size: 18px;">
-                        전체 사용자별 주간 사용 통계값을 나타내는 그래프입니다.
+                        각 시간대에 따른 정상 자세 비율을 나타내는 그래프입니다.
                     </p>
                 </div>
             </div>
@@ -249,7 +253,7 @@
 
     <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">account_circle</i>
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
         </a>
 
         <ul>
@@ -281,14 +285,16 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h5 class="white-text">개인별 자세 평균 통계</h5>
+                <h5 class="white-text">🌟 정상 자세를 유지하여 포인트를 획득하셨습니다! 🌟</h5>
                 <ul id='credits'>
                     <li>
-                        사용자의 자세 점수는 <a href="/guide1">거북목 측정</a> 과 <a href="/guide2">자세 모니터링</a>에서 추출한 점수이며
+                        현재 [[${Point.userName}]]님이 보유하신 포인트는 [[${Point.point}]]포인트입니다.
                     </li>
                     <li>
-                        간단한 관찰 도구로써 사용될 수 있지만, 의학적 진단이나 전문적인 건강 상담을 대체할 수는 없습니다. <br/>
-                        실제 거북목의 정도나 상태를 정확히 평가하려면 전문적인 검진이 필요할 수 있습니다.
+                        이 포인트를 사용하여 육성 페이지에서 거북이를 더 크고 건강하게 성장시켜 보세요.<br>
+                        정상 자세를 지속적으로 유지하면 포인트가 계속 쌓여 거북이를 더욱 특별하게 키울 수 있습니다!
+                        <br><br>
+                        🐢 당신의 건강한 자세는 거북이의 성장에 큰 도움이 됩니다. 건강한 습관을 유지하며 함께 성장해 나가요! 🐢
                     </li>
                 </ul>
             </div>
@@ -296,7 +302,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            <span>주변 병원 정보를 찾고싶으면 >>> <a style='font-weight: bold;' href="/map">병원 찾기</a></span>
+            <span><a style='font-weight: bold;' href="/user/turtle">[육성 페이지로 이동하기]</a></span>
         </div>
     </div>
 </footer>
@@ -401,14 +407,37 @@
     }
 
 </script>
+
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const chartData = [[${chartData}]];
+    const rList = [[${rList}]];
     /*]]>*/
     /*<![CDATA[*/
-    const LinechartData = [[${LinechartData}]];
+    const tList = [[${tList}]];
     /*]]>*/
-
+    /*<![CDATA[*/
+    const vList = [[${vList}]];
+    document.addEventListener('DOMContentLoaded', function() {
+        if (vList.length >= 16) {  //만약 사용자가 15분 이상 자세 모니터링을 했을 경우 분당 통계를 숨기고 5분당 통계를 표시
+            document.getElementById('MinuteChart').style.display = 'none';
+            document.getElementById('FiveChart').style.display = 'block';
+        }
+    });
+    /*]]>*/
+    /*<![CDATA[*/
+    const jList = [[${jList}]];
+    document.addEventListener('DOMContentLoaded', function() {
+        if (jList.length >= 12) { //만약 사용자가 60분 이상 자세 모니터링을 했을 경우 5분당 통계를 숨기고 시간당 통계를 표시
+            document.getElementById('MinuteChart').style.display = 'none';
+            document.getElementById('FiveChart').style.display = 'none';
+            document.getElementById('timeUsageChart').style.display = 'block';
+        }
+    });
+    /*]]>*/
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
+</script>
+<script>
     const dayMapping = {
         "Monday": "월요일",
         "Tuesday": "화요일",
@@ -418,18 +447,31 @@
         "Saturday": "토요일",
         "Sunday": "일요일"
     };
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
-</script>
-<script>
     const totalNormal = [[${rDTO.totalNormal}]];
     const totalAbnormal = [[${rDTO.totalAbnormal}]];
+    const totalcount = [[${rDTO.totalAbnormal}]];
     const totalTime = [[${rDTO.totalTime}]];
     const totalNormal2 = [[${tDTO.totalNormal}]];
     const totalAbnormal2 = [[${tDTO.totalAbnormal}]];
-    const labels = chartData.map(item => dayMapping[item.weekday]);
-    const normalData = chartData.map(item => item.totalNormal);
-    const abnormalData = chartData.map(item => item.totalAbnormal);
+
+    const labels = rList.map(item => dayMapping[item.weekday]);
+    const normalData = rList.map(item => item.totalNormal);
+    const abnormalData = rList.map(item => item.totalAbnormal);
+
+    const labels2 = tList.map(item => {
+        const splitString = item.checkHour.split(' ');
+        return splitString[1] + '시';
+    });
+    const normalData2 = tList.map(item => item.totalNormalTime);
+    const abnormalData2 = tList.map(item => item.totalAbnormalTime);
+
+    const labels3 = vList.map(item => item.checkMinute.split(' ')[1]);
+    const normalData3 = vList.map(item => item.totalNormalTime);
+    const abnormalData3 = vList.map(item => item.totalAbnormalTime);
+
+    const labels5 = jList.map(item => item.checkFive.split(' ')[1]);
+    const normalData5 = jList.map(item => item.totalNormalTime);
+    const abnormalData5 = jList.map(item => item.totalAbnormalTime);
 
     document.addEventListener('DOMContentLoaded', (event) => {
 
