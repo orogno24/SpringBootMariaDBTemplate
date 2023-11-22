@@ -48,6 +48,25 @@ public class NoticeService implements INoticeService {
 
     @Transactional
     @Override
+    public List<CommentDTO> getComment(CommentDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".getComment start!");
+
+        return noticeMapper.getComment(pDTO);
+
+    }
+
+    @Transactional
+    @Override
+    public void deleteComment(CommentDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".deleteComment start!");
+
+        noticeMapper.deleteComment(pDTO);
+    }
+
+    @Transactional
+    @Override
     public void insertNoticeInfo(NoticeDTO pDTO) throws Exception {
 
         log.info(this.getClass().getName() + ".InsertNoticeInfo start!");

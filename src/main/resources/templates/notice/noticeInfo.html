@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
     <title>게시글 상세보기</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
 
@@ -58,6 +58,11 @@
 
         .fa-edit, .fa-trash, .fa-list {
             margin-right: 5px;
+        }
+
+        #comments {
+            max-height: 500px; /* 원하는 최대 높이로 설정 */
+            overflow-y: auto; /* 세로 스크롤바 표시 */
         }
     </style>
     <link rel="stylesheet" type="text/css" href="/css/noticeInfo.css"/>
@@ -113,6 +118,28 @@
                 alert("본인이 작성한 글만 삭제 가능합니다.");
             }
         }
+
+        function sendCommentSeq(commentSeq) {
+            if (ss_user_id === user_id) {
+                if (confirm("작성한 댓글을 삭제하시겠습니까?")) {
+                    $.ajax({
+                        url: "/notice/deleteComment",
+                        type: "post",
+                        dataType: "JSON",
+                        data: {"commentSeq": commentSeq},
+                        success: function (json) {
+                            alert(json.msg);
+                            location.href = "/notice/noticeInfo?nSeq=" + nSeq;
+                        }
+                    });
+                }
+            } else if (ss_user_id === "") {
+                alert("로그인 하시길 바랍니다.");
+            } else {
+                alert("본인이 작성한 댓글만 삭제 가능합니다.");
+            }
+        }
+
         /*]]>*/
     </script>
 
@@ -163,13 +190,6 @@
                     <th>작성자</th>
                     <td th:text="${rDTO.userName}"></td>
                 </tr>
-                <!--                <tr>-->
-                <!--                    <th>공지글 여부</th>-->
-                <!--                    <td>-->
-                <!--                        예<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'Y'}"/>-->
-                <!--                        아니오<input type="radio" name="noticeYn" th:checked="${rDTO.noticeYn eq 'N'}"/>-->
-                <!--                    </td>-->
-                <!--                </tr>-->
                 <tr>
                     <th>작성일</th>
                     <td th:text="${rDTO.regDt}"></td>
@@ -184,41 +204,48 @@
                 </tr>
             </table>
         </div>
-
-        <div class="card-footer text-right" style="border-top: none">
-            <button id="btnEdit" type="button" class="btn btn-primary"><i class="fas fa-edit"></i>수정</button>
-            <button id="btnDelete" type="button" class="btn btn-danger"><i class="fas fa-trash"></i>삭제</button>
-            <button id="btnList" type="button" class="btn btn-secondary"><i class="fas fa-list"></i>목록</button>
-        </div>
-
+        <hr>
         <div class="card my-4" style="box-shadow: none; margin-top: -0.7rem!important;">
+            <form name="f" id="f">
             <div class="card-body">
 
                 <!-- 댓글 목록 -->
                 <div id="comments">
-                    <div th:each="comment : ${comments}" class="mt-4">
+                    <div th:each="dto : ${rList}" class="mt-4">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h5 th:text="${comment.authorName}">작성자 이름</h5>
-                                <p th:text="${comment.text}">댓글 내용</p>
+                                <h5 th:text="${dto.userName}">작성자 이름</h5>
+                                <p th:text="${dto.contents}">댓글 내용</p>
+                                <p th:text="${dto.userId}">댓글 내용</p>
                             </div>
-                            <small th:text="${comment.creationTime}">작성 시간</small>
+
+                            <span><p th:text="${dto.regDt}">작성 시간 </span> <i class="fa-solid fa-square-xmark"
+                                                                             id="deleteButton"
+                                                                             style="color: #797979; cursor: pointer"
+                                                                             th:onclick="'sendCommentSeq(' + ${dto.commentSeq} + ')'" ></i>
                         </div>
+                        <hr>
                     </div>
                 </div>
 
-                <form name="f" id="f">
+
                     <div class="form-group" style="margin-top: -25px">
-                        <label for="contents">내용</label>
+                        <label for="contents"></label>
                         <textarea class="form-control" name="contents" id="contents" rows="3" placeholder="댓글을 입력하세요" required></textarea>
                     </div>
                     <input type="hidden" name="nSeq" th:value="${rDTO.noticeSeq}"/>
-                    <button id="btnSend" type="button" class="btn btn-primary float-right" style="margin-top: -0.5%; margin-bottom: -1.5%"><i class="fas fa-edit"></i> 댓글 작성</button>
-                </form>
+
+            </div>
+            </form>
+            <div class="card-footer text-right" style="border-top: none">
+                <button id="btnEdit" type="button" class="btn btn-primary"><i class="fas fa-edit"></i> 수정</button>
+                <button id="btnDelete" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> 삭제</button>
+                <button id="btnSend" type="button" class="btn btn-warning"><i class="fa-solid fa-comments"></i> 댓글 작성</button>
+                <button id="btnList" type="button" class="btn btn-secondary"><i class="fas fa-list"></i> 목록</button>
+            </div>
             </div>
         </div>
     </div>
-</div>
 
 <ul class="circles">
     <li></li>

@@ -1,5 +1,6 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.ChartDTO;
 import kopo.poly.dto.CommentDTO;
 import kopo.poly.dto.MsgDTO;
 import kopo.poly.dto.NoticeDTO;
@@ -196,15 +197,21 @@ public class NoticeController {
          * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
          */
         NoticeDTO pDTO = new NoticeDTO();
+        CommentDTO tDTO = new CommentDTO();
         pDTO.setNoticeSeq(Long.parseLong(nSeq)); // String 타입을 long 타입으로 변경
+        tDTO.setNoticeSeq(Long.parseLong(nSeq)); // String 타입을 long 타입으로 변경
 
         // 공지사항 상세정보 가져오기
         // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
         NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, true))
                 .orElseGet(NoticeDTO::new);
 
+        List<CommentDTO> rList = Optional.ofNullable(noticeService.getComment(tDTO))
+                .orElseGet(ArrayList::new);
+
         // 조회된 리스트 결과값 넣어주기
         model.addAttribute("rDTO", rDTO);
+        model.addAttribute("rList", rList);
 
         log.info(this.getClass().getName() + ".noticeInfo End!");
 
@@ -358,6 +365,45 @@ public class NoticeController {
 
         return dto;
     }
+
+    @ResponseBody
+    @PostMapping(value = "deleteComment")
+    public MsgDTO deleteComment(HttpServletRequest request) {
+
+        log.info(this.getClass().getName() + ".deleteComment Start!");
+
+        String msg = ""; // 메시지 내용
+        MsgDTO dto = null; // 결과 메시지 구조
+
+        try {
+            String commentSeq = CmmUtil.nvl(request.getParameter("commentSeq"));
+
+            log.info("commentSeq : " + commentSeq);
+
+            CommentDTO pDTO = new CommentDTO();
+            pDTO.setCommentSeq(Long.parseLong(commentSeq));
+
+            noticeService.deleteComment(pDTO);
+
+            msg = "삭제되었습니다.";
+
+        } catch (Exception e) {
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            // 결과 메시지 전달하기
+            dto = new MsgDTO();
+            dto.setMsg(msg);
+
+            log.info(this.getClass().getName() + ".deleteComment End!");
+
+        }
+
+        return dto;
+    }
+
 
     @ResponseBody
     @PostMapping(value = "commentInsert")

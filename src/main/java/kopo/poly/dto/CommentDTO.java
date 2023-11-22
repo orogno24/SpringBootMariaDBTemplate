@@ -18,6 +18,6 @@ public class CommentDTO {
     private String userId;
     private String contents;
     private String regDt;
-
+    private String userName;
 }
 

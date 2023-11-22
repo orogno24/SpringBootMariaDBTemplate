@@ -60,7 +60,6 @@
 	<delete id="deleteNoticeInfo" parameterType="NoticeDTO">
 		DELETE FROM NOTICE
 		WHERE NOTICE_SEQ = #{noticeSeq}
-			
 	</delete>
 
 	<insert id="insertComment" parameterType="CommentDTO">
@@ -73,6 +72,19 @@
 					  #{noticeSeq}, #{contents}, #{userId}, SYSDATE()
 			  )
 	</insert>
+
+	<select id="getComment" parameterType="CommentDTO" resultType="CommentDTO">
+		SELECT C.COMMENT_SEQ, C.NOTICE_SEQ, C.USER_ID, C.CONTENTS, DATE_FORMAT(C.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, U.USER_NAME
+		FROM COMMENT C
+				 JOIN USER_INFO U ON C.USER_ID = U.USER_ID
+		WHERE C.NOTICE_SEQ = #{noticeSeq};
+	</select>
+
+	<delete id="deleteComment" parameterType="CommentDTO">
+		DELETE FROM COMMENT
+		WHERE COMMENT_SEQ = #{commentSeq}
+		AND USER_ID = #{userId}
+	</delete>
 			
 </mapper>
 

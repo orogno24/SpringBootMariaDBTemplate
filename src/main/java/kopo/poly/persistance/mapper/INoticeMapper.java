@@ -28,5 +28,9 @@ public interface INoticeMapper {
 	void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
 
 	void insertComment(CommentDTO pDTO) throws Exception;
-	
+
+	List<CommentDTO> getComment(CommentDTO pDTO) throws Exception;
+
+	void deleteComment(CommentDTO pDTO) throws Exception;
+
 }
