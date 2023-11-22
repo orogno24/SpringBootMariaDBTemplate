@@ -83,7 +83,6 @@
 	<delete id="deleteComment" parameterType="CommentDTO">
 		DELETE FROM COMMENT
 		WHERE COMMENT_SEQ = #{commentSeq}
-		AND USER_ID = #{userId}
 	</delete>
 			
 </mapper>

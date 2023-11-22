@@ -40,7 +40,7 @@
 
         .card {
             border: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .card-header, .card-footer {
@@ -64,6 +64,34 @@
             max-height: 500px; /* 원하는 최대 높이로 설정 */
             overflow-y: auto; /* 세로 스크롤바 표시 */
         }
+
+        /* #comments 요소의 스크롤바 너비 설정 */
+        #comments::-webkit-scrollbar {
+            width: 14px; /* 스크롤바의 너비 */
+            border-radius: 6px; /* 스크롤바의 둥근 모서리 */
+            box-shadow: inset 0 0 5px lightgrey; /* 연한 회색으로 내부 그림자 효과 */
+        }
+
+        /* #comments 요소의 스크롤바 트랙 (배경) 스타일 */
+        #comments::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, #f9f9f9, #e0e0e0); /* 상단에서 하단으로 연한 그라데이션 */
+            border-radius: 6px; /* 트랙의 둥근 모서리 */
+        }
+
+        /* #comments 요소의 스크롤바 핸들 (움직이는 부분) 스타일 */
+        #comments::-webkit-scrollbar-thumb {
+            background: #bbbbbb;
+            border-radius: 6px; /* 핸들의 둥근 모서리 */
+            border: 2px solid transparent; /* 투명한 테두리 추가 */
+            background-clip: padding-box; /* 테두리 내부만 배경 색 적용 */
+        }
+
+        /* #comments 요소의 스크롤바 핸들이 마우스로 클릭될 때의 스타일 */
+        #comments::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to right, #aaa, #888); /* 마우스 오버시 연한 그라데이션 변경 */
+        }
+
+
     </style>
     <link rel="stylesheet" type="text/css" href="/css/noticeInfo.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
@@ -119,14 +147,19 @@
             }
         }
 
-        function sendCommentSeq(commentSeq) {
-            if (ss_user_id === user_id) {
+        function sendCommentSeq(element) {
+            var commentSeq = element.getAttribute('data-comment-seq');
+            var userId = element.getAttribute('data-user-id');
+            if (ss_user_id === userId) {
                 if (confirm("작성한 댓글을 삭제하시겠습니까?")) {
                     $.ajax({
                         url: "/notice/deleteComment",
                         type: "post",
                         dataType: "JSON",
-                        data: {"commentSeq": commentSeq},
+                        data: {
+                            "commentSeq": commentSeq,
+                            "userId": userId
+                        },
                         success: function (json) {
                             alert(json.msg);
                             location.href = "/notice/noticeInfo?nSeq=" + nSeq;
@@ -136,7 +169,7 @@
             } else if (ss_user_id === "") {
                 alert("로그인 하시길 바랍니다.");
             } else {
-                alert("본인이 작성한 댓글만 삭제 가능합니다.");
+                alert("본인이 작성한 글만 삭제 가능합니다.");
             }
         }
 
@@ -175,7 +208,7 @@
     </script>
 </head>
 <body>
-<div class="container" >
+<div class="container">
     <div style="z-index: 10" class="card">
         <div class="card-header">
             <h2><i class="fa fa-search" aria-hidden="true"></i> 게시글 상세보기</h2>
@@ -207,45 +240,48 @@
         <hr>
         <div class="card my-4" style="box-shadow: none; margin-top: -0.7rem!important;">
             <form name="f" id="f">
-            <div class="card-body">
+                <div class="card-body">
 
-                <!-- 댓글 목록 -->
-                <div id="comments">
-                    <div th:each="dto : ${rList}" class="mt-4">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 th:text="${dto.userName}">작성자 이름</h5>
-                                <p th:text="${dto.contents}">댓글 내용</p>
-                                <p th:text="${dto.userId}">댓글 내용</p>
+                    <!-- 댓글 목록 -->
+                    <div id="comments">
+                        <div th:each="dto : ${rList}" class="mt-4" style="margin-top: 0.1rem!important">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 th:text="${dto.userName}">작성자 이름</h5>
+                                    <p style="white-space: pre" th:text="${dto.contents}">댓글 내용</p>
+                                </div>
+
+                                <span><p th:text="${dto.regDt}">작성 시간 </span>
+                                <i class="fa-solid fa-square-xmark"
+                                   style="color: #858585; cursor: pointer"
+                                   th:data-comment-seq="${dto.commentSeq}"
+                                   th:data-user-id="${dto.userId}"
+                                   onclick="sendCommentSeq(this)"></i>
                             </div>
-
-                            <span><p th:text="${dto.regDt}">작성 시간 </span> <i class="fa-solid fa-square-xmark"
-                                                                             id="deleteButton"
-                                                                             style="color: #797979; cursor: pointer"
-                                                                             th:onclick="'sendCommentSeq(' + ${dto.commentSeq} + ')'" ></i>
+                            <hr>
                         </div>
-                        <hr>
                     </div>
-                </div>
 
 
                     <div class="form-group" style="margin-top: -25px">
                         <label for="contents"></label>
-                        <textarea class="form-control" name="contents" id="contents" rows="3" placeholder="댓글을 입력하세요" required></textarea>
+                        <textarea class="form-control" name="contents" id="contents" rows="3" placeholder="댓글을 입력하세요."
+                                  required></textarea>
                     </div>
                     <input type="hidden" name="nSeq" th:value="${rDTO.noticeSeq}"/>
 
-            </div>
+                </div>
             </form>
-            <div class="card-footer text-right" style="border-top: none">
+            <div class="card-footer text-right" style="border-top: none; margin-top: -2rem; margin-bottom: -1.2rem;">
                 <button id="btnEdit" type="button" class="btn btn-primary"><i class="fas fa-edit"></i> 수정</button>
                 <button id="btnDelete" type="button" class="btn btn-danger"><i class="fas fa-trash"></i> 삭제</button>
-                <button id="btnSend" type="button" class="btn btn-warning"><i class="fa-solid fa-comments"></i> 댓글 작성</button>
+                <button id="btnSend" type="button" class="btn btn-warning"><i class="fa-solid fa-comments"></i> 댓글 작성
+                </button>
                 <button id="btnList" type="button" class="btn btn-secondary"><i class="fas fa-list"></i> 목록</button>
-            </div>
             </div>
         </div>
     </div>
+</div>
 
 <ul class="circles">
     <li></li>
