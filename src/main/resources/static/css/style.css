@@ -974,7 +974,7 @@ p {
     padding: 10px; /* 패딩을 조금 더 넉넉하게 줍니다 */
     font-size: 14px; /* 글씨 크기를 조금 더 크게 합니다 */
     color: #fff; /* 글씨 색상을 흰색으로 변경하여 대비를 높입니다 */
-    background-color: #33343f; /* 배경 색상은 그대로 유지합니다 */
+    background-color: #2b2b36; /* 배경 색상은 그대로 유지합니다 */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과를 추가하여 입체감을 줍니다 */
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 글씨에 약간의 텍스트 그림자를 추가합니다 */
     line-height: 1.4; /* 줄 간격을 조금 더 넓게 합니다 */
