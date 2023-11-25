@@ -276,7 +276,7 @@
                     success: function (json) {
 
                         if (json.result === 1) {
-                            location.href = "/redirect";
+                            location.href = "/alert";
                         } else {
                             alert(json.msg);
                             $("#userId").focus();

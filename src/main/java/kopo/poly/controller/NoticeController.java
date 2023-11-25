@@ -94,20 +94,6 @@ public class NoticeController {
         return "notice/noticeReg";
     }
 
-    @GetMapping("/redirect")
-    public String redirectPage(HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception {
-        log.info(this.getClass().getName() + ".redirect 페이지 보여주는 함수 실행");
-
-        String userName = (String) session.getAttribute("SS_USER_NAME");
-
-        String msg = userName + "님 어서오세요!";
-
-        modelMap.addAttribute("msg", msg);
-        modelMap.addAttribute("url", "/main");
-
-        return "/redirect";
-    }
-
     /**
      * 게시판 글 등록
      * <p>

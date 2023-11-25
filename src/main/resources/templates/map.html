@@ -266,7 +266,18 @@
 <div id="map"></div>
 <ul id="hospitalList" style="opacity: 0;"></ul>
 <div style="height: 100px;"></div>
-
+<script>
+  document.getElementById('logoutLink').addEventListener('click', function (event) {
+    event.preventDefault();
+    fetch('/logout', {method: 'POST'})
+            .then(response => {
+              window.location.href = '/user/login';
+            })
+            .catch(error => {
+              console.error('Logout failed:', error);
+            });
+  });
+</script>
 <script src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery.mixitup.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>

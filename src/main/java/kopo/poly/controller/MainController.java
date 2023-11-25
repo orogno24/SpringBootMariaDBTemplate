@@ -40,9 +40,9 @@ public class MainController {
         return "pose";
     }
 
-    @GetMapping("/redirect")
+    @GetMapping("/alert")
     public String redirectPage(HttpServletRequest request, ModelMap modelMap, HttpSession session) throws Exception {
-        log.info(this.getClass().getName() + ".redirect 페이지 보여주는 함수 실행");
+        log.info(this.getClass().getName() + ".alert 페이지 보여주는 함수 실행");
 
         String userName = (String) session.getAttribute("SS_USER_NAME");
 
@@ -51,15 +51,15 @@ public class MainController {
         modelMap.addAttribute("msg", msg);
         modelMap.addAttribute("url", "/main");
 
-        return "/redirect";
+        return "/alert";
     }
 
-    @GetMapping("/redirect2")
+    @GetMapping("/alert2")
     public String redirectPage2(HttpServletRequest request, ModelMap modelMap) throws Exception {
-        log.info(this.getClass().getName() + ".redirect2 페이지 보여주는 함수 실행");
+        log.info(this.getClass().getName() + ".alert2 페이지 보여주는 함수 실행");
         String msg = CmmUtil.nvl(request.getParameter("msg"), "로그인 페이지로 이동합니다.");
         modelMap.addAttribute("msg", msg);
-        return "/redirect2";
+        return "/alert2";
     }
 
     @GetMapping("/scan")
