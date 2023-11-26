@@ -150,7 +150,7 @@ function onResultsPose(results) {
                 sendGrade(grade);
                 playNotificationSound4();
                 alert("거북목 측정이 완료되었습니다!");
-                window.location.href = "/gazami4";
+                window.location.href = "/redirect4";
             }, 5000);
         }
     } else {

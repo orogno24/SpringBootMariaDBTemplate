@@ -1,19 +1,16 @@
 package kopo.poly.controller;
 
-import kopo.poly.dto.VideoInfo;
 import kopo.poly.service.impl.YoutubeService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -72,73 +69,73 @@ public class MainController {
 
 
     // 로딩 페이지
-    @GetMapping("/gazami")
+    @GetMapping("/redirect")
     public String intro() throws Exception {
-        log.info(this.getClass().getName() + ".gazami 함수 실행");
-        return "/gazami";
+        log.info(this.getClass().getName() + ".redirect 함수 실행");
+        return "/redirect";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami2")
+    @GetMapping("/redirect2")
     public String intro2() throws Exception {
-        log.info(this.getClass().getName() + ".gazami2 함수 실행");
-        return "/gazami2";
+        log.info(this.getClass().getName() + ".redirect2 함수 실행");
+        return "redirect2";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami3")
+    @GetMapping("/redirect3")
     public String intro3() throws Exception {
-        log.info(this.getClass().getName() + ".gazami3 함수 실행");
-        return "/gazami3";
+        log.info(this.getClass().getName() + ".redirect3 함수 실행");
+        return "/redirect3";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami4")
+    @GetMapping("/redirect4")
     public String intro4() throws Exception {
-        log.info(this.getClass().getName() + ".gazami4 함수 실행");
-        return "/gazami4";
+        log.info(this.getClass().getName() + ".redirect4 함수 실행");
+        return "/redirect4";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami5")
+    @GetMapping("/redirect5")
     public String intro5() throws Exception {
-        log.info(this.getClass().getName() + ".gazami5 함수 실행");
-        return "/gazami5";
+        log.info(this.getClass().getName() + ".redirect5 함수 실행");
+        return "/redirect5";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami6")
+    @GetMapping("/redirect6")
     public String intro6() throws Exception {
-        log.info(this.getClass().getName() + ".gazami6 함수 실행");
-        return "/gazami6";
+        log.info(this.getClass().getName() + ".redirect6 함수 실행");
+        return "/redirect6";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami7")
+    @GetMapping("/redirect7")
     public String intro7() throws Exception {
-        log.info(this.getClass().getName() + ".gazami7 함수 실행");
-        return "/gazami7";
+        log.info(this.getClass().getName() + ".redirect7 함수 실행");
+        return "/redirect7";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami8")
+    @GetMapping("/redirect8")
     public String intro8() throws Exception {
-        log.info(this.getClass().getName() + ".gazami8 함수 실행");
-        return "/gazami8";
+        log.info(this.getClass().getName() + ".redirect8 함수 실행");
+        return "/redirect8";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami9")
+    @GetMapping("/redirect9")
     public String intro9() throws Exception {
-        log.info(this.getClass().getName() + ".gazami9 함수 실행");
-        return "/gazami9";
+        log.info(this.getClass().getName() + ".redirect9 함수 실행");
+        return "/redirect9";
     }
 
     // 로딩 페이지
-    @GetMapping("/gazami10")
+    @GetMapping("/redirect10")
     public String intro10() throws Exception {
-        log.info(this.getClass().getName() + ".gazami10 함수 실행");
-        return "/gazami10";
+        log.info(this.getClass().getName() + ".redirect10 함수 실행");
+        return "/redirect10";
     }
 
     // 가이드 페이지

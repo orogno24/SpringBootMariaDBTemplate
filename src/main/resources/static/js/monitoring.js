@@ -166,7 +166,7 @@ document.getElementById("stopButton").onclick = function () {
         data: $("#postureDataForm").serialize(),
         success: function (json) {
             alert(json.msg);
-            location.href = "/gazami10";
+            location.href = "/redirect10";
         },
         error: function (xhr, status, error) {
             // 에러 핸들링

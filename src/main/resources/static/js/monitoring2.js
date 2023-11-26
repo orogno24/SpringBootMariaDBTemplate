@@ -159,10 +159,10 @@ function changeAlertSound() {
             // 선택된 alertOption에 따라 오디오 파일을 변경합니다.
             switch (alertOptions[i].value) {
                 case 'alertA':
-                    audioElement.src = '/assets/img/alarm.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+                    audioElement.src = '/assets/img/alarm3.mp3'; // 실제 오디오 파일 경로로 변경하세요.
                     break;
                 case 'alertB':
-                    audioElement.src = '/assets/img/guide2.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+                    audioElement.src = '/assets/img/tts1.mp3'; // 실제 오디오 파일 경로로 변경하세요.
                     break;
                 // 추가적인 alertOption에 대한 case를 여기에 추가할 수 있습니다.
             }
