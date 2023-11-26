@@ -59,15 +59,6 @@ public class MainController {
         return "/alert2";
     }
 
-    @GetMapping("/scan")
-    public String scan(HttpSession session, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".scan 함수 실행");
-        String userName = (String) session.getAttribute("SS_USER_NAME");
-        model.addAttribute("userName", userName);
-        return "/scan";
-    }
-
-
     // 로딩 페이지
     @GetMapping("/redirect")
     public String intro() throws Exception {
