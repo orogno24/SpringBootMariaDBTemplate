@@ -147,33 +147,32 @@ function insertData() {
 }
 
 document.getElementById("stopButton").onclick = function () {
+    //
+    // endTime = Date.now();
+    //
+    // const totalTime = endTime - startTime;
+    //
+    // // 숨겨진 입력 필드에 카운트 값을 설정합니다.
+    // document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
+    // document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
+    // document.getElementById('hiddenTotalTime').value = totalTime / 1000;
+    // document.getElementById('hiddenPoint').value = normalPostureCount / 15;
+    //
+    // // AJAX 요청을 통해 서버로 데이터를 전송합니다.
+    // $.ajax({
+    //     url: "/chart/insertChart",
+    //     type: "post",
+    //     dataType: "JSON",
+    //     data: $("#postureDataForm").serialize(),
+    //     success: function (json) {
+    //         alert(json.msg);
+    //         location.href = "/redirect10";
+    //     },
+    //     error: function (xhr, status, error) {
+    //     }
+    // });
 
-    endTime = Date.now();
-
-    const totalTime = endTime - startTime;
-
-    // 숨겨진 입력 필드에 카운트 값을 설정합니다.
-    document.getElementById('hiddenNormalPostureCount').value = normalPostureCount;
-    document.getElementById('hiddenAbnormalPostureCount').value = abnormalPostureCount;
-    document.getElementById('hiddenTotalTime').value = totalTime / 1000;
-    document.getElementById('hiddenPoint').value = normalPostureCount / 15;
-
-    // AJAX 요청을 통해 서버로 데이터를 전송합니다.
-    $.ajax({
-        url: "/chart/insertChart",
-        type: "post",
-        dataType: "JSON",
-        data: $("#postureDataForm").serialize(),
-        success: function (json) {
-            alert(json.msg);
-            location.href = "/redirect10";
-        },
-        error: function (xhr, status, error) {
-            // 에러 핸들링
-            console.error("Error: " + error);
-            alert("데이터 전송 중 오류가 발생했습니다.");
-        }
-    });
+    location.href = "/redirect10";
 };
 
 async function predict() {
