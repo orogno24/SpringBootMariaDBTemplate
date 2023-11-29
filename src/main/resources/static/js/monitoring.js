@@ -37,6 +37,11 @@ async function init() {
     startTime = Date.now();
     insertStart();
 
+    setTimeout(() => {
+        alert("장시간 앉아있는 것은 거북목에 좋지 않습니다.\n" +
+            "잠시 일어나서 몸을 움직여주세요!");
+    },  3000000); //
+
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
         timeSettingBox.style.display = timeSettingBox.style.display === "none" ? "block" : "none";
@@ -140,7 +145,6 @@ function insertData() {
         .catch(error => {
             // 에러 핸들링
             console.error("Error: " + error);
-            alert("데이터 전송 중 오류가 발생했습니다.");
         });
 
 
@@ -171,6 +175,8 @@ document.getElementById("stopButton").onclick = function () {
     //     error: function (xhr, status, error) {
     //     }
     // });
+
+    alert("등록되었습니다.");
 
     location.href = "/redirect10";
 };

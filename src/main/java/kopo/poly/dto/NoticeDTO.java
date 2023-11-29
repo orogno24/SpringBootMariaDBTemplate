@@ -25,5 +25,7 @@ public class NoticeDTO {
     private String chgDt; // 수정일
     private String userName; // 등록자명
 
+    private String grade; // 등급
+
 }
 
