@@ -87,12 +87,12 @@
             </div>
         </div>
 
-        <div>
-            <p>정상 자세 횟수: <span id="normalPostureCount">0</span></p>
-            <p>비정상 자세 횟수: <span id="abnormalPostureCount">0</span></p>
-            <p>시간: <span id="totalTime">0</span></p>
-            <p>포인트: <span id="point">0</span></p>
-        </div>
+<!--        <div>-->
+<!--            <p>정상 자세 횟수: <span id="normalPostureCount">0</span></p>-->
+<!--            <p>비정상 자세 횟수: <span id="abnormalPostureCount">0</span></p>-->
+<!--            <p>시간: <span id="totalTime">0</span></p>-->
+<!--            <p>포인트: <span id="point">0</span></p>-->
+<!--        </div>-->
 
         <form id="postureDataForm">
             <input type="hidden" name="normalPostureCount" id="hiddenNormalPostureCount" value="0">
@@ -135,13 +135,13 @@
             <form id="timeSettingForm">
                 <div id="timeSetting" style="display: block; padding-top: 10px;">
                     <label>
+                        <input type="radio" name="timeOption" value="30000" checked> 30초
+                    </label>
+                    <label>
                         <input type="radio" name="timeOption" value="60000"> 1분
                     </label>
                     <label>
-                        <input type="radio" name="timeOption" value="180000" checked> 3분
-                    </label>
-                    <label>
-                        <input type="radio" name="timeOption" value="300000"> 5분
+                        <input type="radio" name="timeOption" value="180000"> 3분
                     </label>
                     <label>
                         <input type="radio" name="timeOption" value="600000"> 10분

@@ -109,14 +109,14 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 
 
 function updatePostureCounts() {
-    document.getElementById('normalPostureCount').innerText = normalPostureCount;
-    document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
-    document.getElementById('totalTime').innerText = totalTime;
-    document.getElementById('point').innerText = pointCount / 10;
+    // document.getElementById('normalPostureCount').innerText = normalPostureCount;
+    // document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
+    // document.getElementById('totalTime').innerText = totalTime;
+    // document.getElementById('point').innerText = pointCount / 10;
 }
 
 function insertStart() {
-    setInterval(insertData, 3000);
+    setInterval(insertData, 30000); // 자세 모니터링 시간 조정
 }
 
 function insertData() {

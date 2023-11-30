@@ -86,6 +86,11 @@
             background-clip: padding-box; /* 테두리 내부만 배경 색 적용 */
         }
 
+        .grade-icon {
+            width: 20px; /* 아이콘 크기 조정 */
+            height: 20px;
+        }
+
     </style>
     <link rel="stylesheet" type="text/css" href="/css/noticeInfo.css"/>
     <script src="/js/jquery-3.6.0.min.js"></script>
@@ -214,8 +219,13 @@
                     <td th:text="${rDTO.title}"></td>
                 </tr>
                 <tr>
-                    <th>작성자</th>
-                    <td th:text="${rDTO.userName} + ' (' + ${rDTO.grade} + '등급)'"></td>
+                    <th>작성자
+                    <td>
+
+                        <span th:text="${rDTO.userName} + ' (' + ${rDTO.grade} + '등급)'"></span>
+                        <img th:if="${rDTO.grade} == 1" src="/assets/img/turtle.png" style="width: 4%;"/>
+                        <img th:if="${rDTO.grade} == 2" src="/assets/img/turtle2.png" style="width: 4%;"/>
+                    </td>
                 </tr>
                 <tr>
                     <th>작성일</th>
