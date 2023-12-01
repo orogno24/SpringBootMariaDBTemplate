@@ -116,8 +116,9 @@ function onResultsPose(results) {
     const EyetoEarpx = Math.abs(earCenter - eyeCenter);                                  // 눈과 귀의 거리 x좌표 차이
     const ShouldertoEarpx = Math.abs(shoulderCenter - earCenter);                        // 어깨 중심점과 귀 중심점의 좌표차이
     const EyetoShoulderpx = Math.abs(shoulderCenter - eyeCenter);                        // 어깨 중심점과 눈 중심점의 좌표차이
-    const Distance = (EyetoShoulderpx * 10 / EyetoEarpx) - 10;                                   // 어깨 중심점과 귀 중심점의 좌표차이를 실제 거리로 나타냄.
-
+    // 배포
+    // const Distance = (EyetoShoulderpx * 10 / EyetoEarpx) - 10;                                   // 어깨 중심점과 귀 중심점의 좌표차이를 실제 거리로 나타냄.
+    const Distance = (7.5 * ShouldertoEarpx) / EyetoEarpx;
 
     // 10 : (10 + distance) = EartoEyepx : ShouldertoEyepx                                  // 실제 거리 구하는 식
     //
@@ -135,15 +136,29 @@ function onResultsPose(results) {
             conditionMet = true;
             conditionTimer = setTimeout(() => {
 
-                if (Distance < 2.5) {
+
+                // 배포
+                // if (Distance < 2.5) {
+                //     grade = 1;
+                // } else if (Distance >= 2.5 && Distance < 5.0) {
+                //     grade = 2;
+                // } else if (Distance >= 5.0 && Distance < 6.5) {
+                //     grade = 3;
+                // } else if (Distance >= 6.5 && Distance < 8.0) {
+                //     grade = 4;
+                // } else if (Distance >= 8.0) {
+                //     grade = 5;
+                // }
+
+                if (Distance < 5.5) {
                     grade = 1;
-                } else if (Distance >= 2.5 && Distance < 5.0) {
+                } else if (Distance >= 5.5 && Distance < 8.0) {
                     grade = 2;
-                } else if (Distance >= 5.0 && Distance < 6.5) {
+                } else if (Distance >= 8.0 && Distance < 11) {
                     grade = 3;
-                } else if (Distance >= 6.5 && Distance < 8.0) {
+                } else if (Distance >= 11 && Distance < 13) {
                     grade = 4;
-                } else if (Distance >= 8.0) {
+                } else if (Distance >= 13) {
                     grade = 5;
                 }
 
