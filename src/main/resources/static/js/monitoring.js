@@ -40,7 +40,7 @@ async function init() {
     setTimeout(() => {
         alert("장시간 앉아있는 것은 거북목에 좋지 않습니다.\n" +
             "잠시 일어나서 몸을 움직여주세요!");
-    },  3000000); //
+    },  3000000);
 
     document.getElementById("editButton").onclick = function () {
         var timeSettingBox = document.getElementById("timeSettingBox");
@@ -108,7 +108,7 @@ document.querySelectorAll('input[name="timeOption"]').forEach(function(radio) {
 });
 
 
-function updatePostureCounts() {
+function updatePostureCounts() { // 배포
     // document.getElementById('normalPostureCount').innerText = normalPostureCount;
     // document.getElementById('abnormalPostureCount').innerText = abnormalPostureCount;
     // document.getElementById('totalTime').innerText = totalTime;
