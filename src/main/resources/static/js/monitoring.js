@@ -116,7 +116,7 @@ function updatePostureCounts() { // 배포
 }
 
 function insertStart() {
-    setInterval(insertData, 30000); // 자세 모니터링 시간 조정
+    setInterval(insertData, 3000); // insert 간격 조정
 }
 
 function insertData() {
