@@ -221,10 +221,10 @@
                 <tr>
                     <th>작성자
                     <td>
-
-                        <span th:text="${rDTO.userName} + ' (레벨 : ' + ${rDTO.grade} + ')'"></span>
-                        <img th:if="${rDTO.grade} == 1" src="/assets/img/turtle.png" style="width: 4%;"/>
-                        <img th:if="${rDTO.grade} == 2" src="/assets/img/turtle2.png" style="width: 4%;"/>
+                        <span th:text="${rDTO.userName}"></span>
+                        <span th:if="${rDTO.exp} > 6364" th:text="' (현재 레벨 : 6)'"></span>
+                        <img th:if="${rDTO.exp} == 1" src="/assets/img/turtle.png" style="width: 4%;"/>
+                        <img th:if="${rDTO.exp} == 2" src="/assets/img/turtle2.png" style="width: 4%;"/>
                     </td>
                 </tr>
                 <tr>
