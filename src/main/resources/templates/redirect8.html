@@ -181,9 +181,38 @@
             }
         }
 
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 가로 중앙 정렬 */
+            align-items: center;     /* 세로 중앙 정렬 */
+            height: 50vh;           /* 뷰포트 높이와 같게 설정 */
+            position: absolute;      /* 절대 위치 설정 */
+            width: 100%;             /* 전체 너비 설정 */
+            top: 0;                  /* 상단에 위치 */
+            left: 0;                 /* 왼쪽에 위치 */
+            z-index: 10;             /* 다른 요소 위에 표시 */
+            padding-top: 10%;        /* 상단에 여백 추가 */
+        }
+
+        /* 팁 표시 스타일 */
+        .tip {
+            color: #15c6e5;
+            font-size: 20px;
+            padding: 20px;
+            background-color: #26262f; /* 반투명 배경색 */
+            border-radius: 15px; /* 둥근 모서리 추가 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* 그림자 효과 추가 */
+            max-width: 80%; /* 최대 너비 제한 */
+            text-align: center; /* 텍스트 중앙 정렬 */
+        }
+
     </style>
 </head>
 <body>
+<div class="center-container">
+    <div id="tip" class="tip"></div> <!-- 팁을 표시할 요소 -->
+</div>
 <div class="container">
     <div class="ball"></div>
     <div class="ball"></div>
@@ -195,8 +224,25 @@
 </div>
 <script th:inline="javascript">
     window.onload = function () {
+        let tips = [
+            "모니터는 눈높이에 맞춰서 설정하여, 목을 과도하게 굽히거나 뻗지 않도록 해주세요.",
+            "자세가 건강을 좌우합니다. 의자에 앉을 때 등을 곧게 펴고 어깨를 펴주세요.",
+            "거북목 예방을 위해 스트레칭을 자주 해주세요.",
+            "충분한 수분 섭취는 근육의 이완에 도움이 됩니다.",
+            "거북목은 전반적인 자세 이상을 초래하며, 척추 건강에 악영향을 미칠 수 있습니다.",
+            "거북목 자세로 인해 머리가 앞으로 기울어질 때마다, 목에 가해지는 하중은 기하급수적으로 증가합니다.",
+            "장시간 동안 같은 자세로 있지 마세요. 몸을 자주 움직여 혈액 순환을 돕고, 근육을 이완시켜주세요.",
+            "여러분의 건강은 소중합니다. 오늘 하루도 건강을 지키는 습관을 실천하세요!",
+            "작은 변화가 큰 차이를 만듭니다. 오늘 하루도 바른 자세를 유지해보세요!",
+        ];
+
+        // 랜덤한 팁 선택
+        let randomTip = tips[Math.floor(Math.random() * tips.length)];
+
+        document.getElementById('tip').innerText = randomTip;
+
         // 지연 시간 (밀리초)
-        let delayTime = 800; // 1초 지연 예시, 필요에 따라 조정 가능함
+        let delayTime = 2000; // 2초 지연 예시, 필요에 따라 조정 가능함
 
         setTimeout(function () {
             let url = "/chart/dashboard";

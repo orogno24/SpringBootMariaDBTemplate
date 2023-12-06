@@ -74,7 +74,7 @@
 	</insert>
 
 	<select id="getComment" parameterType="CommentDTO" resultType="CommentDTO">
-		SELECT C.COMMENT_SEQ, C.NOTICE_SEQ, C.USER_ID, C.CONTENTS, DATE_FORMAT(C.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, U.USER_NAME
+		SELECT C.COMMENT_SEQ, C.NOTICE_SEQ, C.USER_ID, C.CONTENTS, DATE_FORMAT(C.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, U.USER_NAME, U.EXP
 		FROM COMMENT C
 				 JOIN USER_INFO U ON C.USER_ID = U.USER_ID
 		WHERE C.NOTICE_SEQ = #{noticeSeq};

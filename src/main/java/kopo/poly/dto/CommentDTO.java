@@ -19,5 +19,6 @@ public class CommentDTO {
     private String contents;
     private String regDt;
     private String userName;
+    private long exp;
 }
 
