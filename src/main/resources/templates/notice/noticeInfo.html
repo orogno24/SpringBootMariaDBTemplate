@@ -222,7 +222,7 @@
                     <th>작성자
                     <td>
 
-                        <span th:text="${rDTO.userName} + ' (거북이 레벨 : ' + ${rDTO.grade} + 'lv)'"></span>
+                        <span th:text="${rDTO.userName} + ' (레벨 : ' + ${rDTO.grade} + ')'"></span>
                         <img th:if="${rDTO.grade} == 1" src="/assets/img/turtle.png" style="width: 4%;"/>
                         <img th:if="${rDTO.grade} == 2" src="/assets/img/turtle2.png" style="width: 4%;"/>
                     </td>
