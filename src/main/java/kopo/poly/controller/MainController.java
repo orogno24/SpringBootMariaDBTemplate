@@ -122,6 +122,13 @@ public class MainController {
         return "/redirect10";
     }
 
+    // 로딩 페이지
+    @GetMapping("/redirect11")
+    public String intro11() throws Exception {
+        log.info(this.getClass().getName() + ".redirect11 함수 실행");
+        return "/redirect11";
+    }
+
     // 가이드 페이지
     @GetMapping("/guide1")
     public String guide1(HttpSession session, ModelMap model) throws Exception {

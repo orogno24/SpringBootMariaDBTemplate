@@ -77,7 +77,11 @@ function updateTimeline() {
     const newRow = tbody.insertRow(0); // 맨 위에 새로운 행 추가
     newRow.innerHTML = `<td>${formattedTime} - <span><strong>거북목 자세 경고 </strong></span></td>`;
 
-    sound();
+    if (document.querySelector('input[name="alertOption"]:checked').value === "alertA") {
+        sound();
+    } else {
+        sound2();
+    }
 
     alert("거북목 자세 경고! 자세를 바로잡아주세요.");
 
@@ -97,9 +101,14 @@ function showStretchingTips() {
 }
 
 const playSound = document.getElementById("playSound");
+const playSound2 = document.getElementById("playSound2");
 
 function sound() {
     playSound.play();
+}
+
+function sound2() {
+    playSound2.play();
 }
 
 window.onload = function () {
@@ -147,29 +156,28 @@ function toggleWebcam() {
     }
 }
 
-// alertOption 라디오 버튼의 값을 확인하고, 해당하는 효과음을 재생하는 함수
-function changeAlertSound() {
-    // 오디오 요소를 가져옵니다.
-    var audioElement = document.getElementById('playSound');
-
-    // 선택된 라디오 버튼의 값을 찾습니다.
-    var alertOptions = document.getElementsByName('alertOption');
-    for (var i = 0; i < alertOptions.length; i++) {
-        if (alertOptions[i].checked) {
-            // 선택된 alertOption에 따라 오디오 파일을 변경합니다.
-            switch (alertOptions[i].value) {
-                case 'alertA':
-                    audioElement.src = '/assets/img/alarm3.mp3'; // 실제 오디오 파일 경로로 변경하세요.
-                    break;
-                case 'alertB':
-                    audioElement.src = '/assets/img/tts1.mp3'; // 실제 오디오 파일 경로로 변경하세요.
-                    break;
-                // 추가적인 alertOption에 대한 case를 여기에 추가할 수 있습니다.
-            }
-            break;
-        }
-    }
-}
+// // alertOption 라디오 버튼의 값을 확인하고, 해당하는 효과음을 재생하는 함수
+// function changeAlertSound() {
+//     // 오디오 요소를 가져옵니다.
+//     var audioElement = document.getElementById('playSound');
+//
+//     // 선택된 라디오 버튼의 값을 찾습니다.
+//     var alertOptions = document.getElementsByName('alertOption');
+//     for (var i = 0; i < alertOptions.length; i++) {
+//         if (alertOptions[i].checked) {
+//             // 선택된 alertOption에 따라 오디오 파일을 변경합니다.
+//             switch (alertOptions[i].value) {
+//                 case 'alertA':
+//                     audioElement.src = '/assets/img/alarm3.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+//                     break;
+//                 case 'alertB':
+//                     audioElement.src = '/assets/img/tts1.mp3'; // 실제 오디오 파일 경로로 변경하세요.
+//                     break;
+//             }
+//             break;
+//         }
+//     }
+// }
 
 // 모든 라디오 버튼에 이벤트 리스너를 추가하여, 값이 변경될 때마다 changeAlertSound 함수가 호출되도록 합니다.
 var alertOptions = document.getElementsByName('alertOption');

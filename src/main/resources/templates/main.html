@@ -4,6 +4,7 @@
 <head>
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>메인 페이지</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css"/>
@@ -68,8 +69,8 @@
                     <li><a href="/redirect6">거북목 진단</a></li>
                     <li><a href="/redirect7">자세 모니터링</a></li>
                     <li><a href="/redirect8">통계</a></li>
-                    <li><a href="/map">병원 찾기</a></li>
-                    <li><a href="/redirect9">커뮤니티</a></li>
+                    <li><a href="/redirect9">병원 찾기</a></li>
+                    <li><a href="/redirect11">커뮤니티</a></li>
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="username-color">[[${userName}]]</span>님의 마이페이지<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -182,7 +183,7 @@
                         <p style="text-align: center; transition: transform 0.3s ease;">정확한 운동 방법부터 생활 속 스트레칭 팁까지,<br>사용자에게
                             맞춤형 영상을 제공합니다. </p>
                     </div>
-                    <div class="feature" onclick="location.href='/map';"
+                    <div class="feature" onclick="location.href='/redirect9';"
                          style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon4.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
@@ -191,7 +192,7 @@
                             병원을 검색할 수 있습니다.</p>
                         <br><br>
                     </div>
-                    <div class="feature" onclick="location.href='/redirect9';"
+                    <div class="feature" onclick="location.href='/redirect11';"
                          style="position: relative; overflow: hidden; transition: transform 0.3s ease; cursor: pointer;">
                         <img class="icon" src="/assets/img/icon6.png" style="position: absolute; width: 14%" alt="">
                         <h2 style="font-size: 22px; text-align: center; padding-top: 40px; transition: transform 0.3s ease;">
@@ -252,7 +253,7 @@
                             <div class="span4">
                                 <div class="testimonial">
                                     <p>이 서비스는 근로자가 더 나은 자세를 유지할 수<br>있도록 도와줌으로써,
-                                        장기적인 건강 증진과 생산성 향상에 기여합니다.
+                                        장기적인 건강 증진과<br>생산성 향상에 기여합니다.
                                     </p>
                                     <div class="whopic">
                                         <div class="arrow"></div>
@@ -293,7 +294,7 @@
 
             <div class="section third-section" style="background-color: #2b2b36; padding-top: 50px;">
                 <div class="container centered">
-                    <p style="color: #ffffff;">머신러닝 기반 거북목 개선 프로젝트는<br>일상적인 건강 문제에 대응하고 건강한 습관 형성을 촉진합니다.</p>
+                    <p style="color: #ffffff;">머신러닝 기반 거북목 개선 프로젝트는<br>일상적인 건강 문제에 대응하고 건강한 습관 형성을 지원합니다.</p>
                 </div>
             </div>
 
@@ -355,7 +356,7 @@
 </script>
 <script>
     // YouTube API 키
-    var API_KEY = 'AIzaSyCq16BL6KkZ07QvpJ9XEMA8coki2_mPMdA';
+    var API_KEY = 'AIzaSyDA9LFxcFVZSeLSemP3PS_p8hZ4f6hyHjM';
 
     // 유튜브 검색 실행
     function searchYouTube(searchTerm) {
