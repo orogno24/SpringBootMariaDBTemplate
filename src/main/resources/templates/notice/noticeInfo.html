@@ -168,7 +168,7 @@
             } else if (ss_user_id === "") {
                 alert("로그인 하시길 바랍니다.");
             } else {
-                alert("본인이 작성한 글만 삭제 가능합니다.");
+                alert("본인이 작성한 댓글만 삭제 가능합니다.");
             }
         }
 
@@ -267,7 +267,7 @@
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td style="white-space: pre" th:text="${rDTO.contents}"></td>
+                    <td style="white-space: pre-line; max-width: 1000px;  overflow: hidden; word-wrap: break-word; overflow-wrap: break-word;" th:text="${rDTO.contents}"></td>
                 </tr>
             </table>
         </div>
