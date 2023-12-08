@@ -93,7 +93,7 @@ async function loop(timestamp) {
 let count = 0;
 let class2StartTime = 0;
 let isClass2Active = false;
-let selectedTime = 15000; // 기본값
+let selectedTime = 10000; // 기본값 (10초)
 const USER_NOT_PRESENT_THRESHOLD = 0.1; // 실험을 통해 적절한 값을 찾아야함
 let userNotPresentTimer = null; // 사용자가 보이지 않는 시간을 추적하는 타이머
 const USER_NOT_PRESENT_DELAY = 5000; // 5초 지연
