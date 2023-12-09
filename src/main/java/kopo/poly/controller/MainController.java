@@ -130,20 +130,20 @@ public class MainController {
     }
 
     // 가이드 페이지
-    @GetMapping("/guide1")
-    public String guide1(HttpSession session, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".guide1 함수 실행");
+    @GetMapping("/guide3")
+    public String guide3(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".guide3 함수 실행");
         String userName = (String) session.getAttribute("SS_USER_NAME");
         model.addAttribute("userName", userName);
-        return "/guide1";
+        return "/guide3";
     }
 
-    @GetMapping("/guide2")
-    public String guide2(HttpSession session, ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".guide2 함수 실행");
+    @GetMapping("/guide5")
+    public String guide5(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".guide5 함수 실행");
         String userName = (String) session.getAttribute("SS_USER_NAME");
         model.addAttribute("userName", userName);
-        return "/guide2";
+        return "/guide5";
     }
 
     @GetMapping("/monitoring")

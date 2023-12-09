@@ -11,7 +11,7 @@ spinner.ontransitionend = () => {
 };
 
 const notificationSound = document.getElementById("notificationSound");
-const notificationSound2 = document.getElementById("notificationSound2");
+// const notificationSound2 = document.getElementById("notificationSound2");
 const notificationSound4 = document.getElementById("notificationSound4");
 
 function removeElements(landmarks, elements) {
@@ -32,9 +32,9 @@ function playNotificationSound() {
     notificationSound.play();
 }
 
-function playNotificationSound2() {
-    notificationSound2.play();
-}
+// function playNotificationSound2() {
+//     notificationSound2.play();
+// }
 
 function playNotificationSound4() {
     notificationSound4.play();
@@ -58,9 +58,9 @@ function calculateDistance(point1, point2) {
 
 let regularWarningTimer = null;
 
-function startRegularWarning() {
-    regularWarningTimer = setInterval(playNotificationSound2, 200); // 1초마다 기존 경고음 재생
-}
+// function startRegularWarning() {
+//     regularWarningTimer = setInterval(playNotificationSound2, 200); // 1초마다 기존 경고음 재생
+// }
 
 function stopRegularWarning() {
     if (regularWarningTimer) {
@@ -70,7 +70,7 @@ function stopRegularWarning() {
 }
 
 // 웹 페이지 로드 시 기존 경고음 재생 시작
-window.onload = startRegularWarning;
+// window.onload = startRegularWarning;
 
 
 function onResultsPose(results) {
@@ -173,7 +173,7 @@ function onResultsPose(results) {
         articleElement.style.backgroundColor = '#f8f8f8';
         articleElement2.style.backgroundColor = '#f8f8f8';
         if (conditionMet) {
-            startRegularWarning();
+            // startRegularWarning();
             clearTimeout(conditionTimer); // 타이머 초기화
             conditionMet = false;
         }
