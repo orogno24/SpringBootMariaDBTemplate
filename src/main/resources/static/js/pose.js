@@ -154,11 +154,11 @@ function onResultsPose(results) {
                     grade = 1;
                 } else if (Distance >= 5.5 && Distance < 8.0) {
                     grade = 2;
-                } else if (Distance >= 8.0 && Distance < 11) {
+                } else if (Distance >= 8.0 && Distance < 12) {
                     grade = 3;
-                } else if (Distance >= 11 && Distance < 13) {
+                } else if (Distance >= 12 && Distance < 14) {
                     grade = 4;
-                } else if (Distance >= 13) {
+                } else if (Distance >= 14) {
                     grade = 5;
                 }
 
