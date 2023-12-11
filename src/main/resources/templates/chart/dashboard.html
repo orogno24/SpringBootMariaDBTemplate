@@ -125,7 +125,7 @@
                 <div class="row">
                     <span class="emoticon" id="infoEmoticon2" onclick="toggleInfo2()" style="cursor: pointer"><i class="fa fa-search-plus" style="color: #565656;" aria-hidden="true"></i></span>
                     <div id="infoText2" class="infoBubble" style="display: none; margin-top: 20px; color: #555;">
-                        <p>자세 모니터링 서비스를 이용한 총 시간을 확인할 수 있습니다.<br>거북이를 키울 수 있는 사용자의 현재 포인트 보유량도 알 수 있습니다.</p>
+                        <p>자세 모니터링 서비스를 이용한 총 시간을 확인할 수 있습니다.<br>현재 정상 자세 포인트 보유량도 알 수 있습니다.</p>
                     </div>
                     <div class="left card-title">
                         <b style="color: #2b2b36; font-size: 24px; border-bottom: 2px solid #464646; display: inline-block; padding-bottom : 2px">
@@ -136,8 +136,11 @@
                 <img src="/assets/img/turtle.png" alt="Posture Icon" style="height: 100px; margin-top: 55px; margin-bottom: -20px">
 
                 <div class="score">
-                    <p style="font-size: 40px; font-weight: bold; color: #333;">오늘의 서비스 이용 시간: <span id="score3"
+                    <p style="font-size: 35px; font-weight: bold; color: #333;">오늘의 서비스 이용 시간: <span id="score3"
                             style="color: #343434;"></span>
+                    </p>
+                    <p style="font-size: 35px; font-weight: bold; color: #333; margin-top: -25px">획득한 포인트: <span id="score7"
+                                                                                                                 style="color: #343434;">[[${Point.point}]]</span>포인트
                     </p>
                 </div>
 
@@ -504,20 +507,12 @@
         const endScore = totalTime; // 설정한 최종 시간
         let currentScore = 1; // 시작 시간
 
-        const timer = setInterval(() => {
-            // 분과 초로 변환
-            let minutes = Math.floor(currentScore / 60);
-            let seconds = currentScore % 60;
+        // 분과 초로 변환
+        let minutes = Math.floor(endScore / 60);
+        let seconds = endScore % 60;
 
-            // 분과 초를 문자열로 형식화
-            scoreElement.textContent = `${minutes}분 ${seconds}초`;
-
-            if (currentScore < endScore) {
-                currentScore++;
-            } else {
-                clearInterval(timer);
-            }
-        }, 5); // 숫자가 증가하는 속도를 조절 (밀리초 단위)
+        // 분과 초를 문자열로 형식화
+        scoreElement.textContent = `${minutes}분 ${seconds}초`;
     });
 
 </script>

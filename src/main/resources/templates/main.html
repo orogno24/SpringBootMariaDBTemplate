@@ -356,26 +356,37 @@
 </script>
 <script>
     // YouTube API 키
-    var API_KEY = 'AIzaSyDA9LFxcFVZSeLSemP3PS_p8hZ4f6hyHjM';
+    var API_KEYS = ['AIzaSyDA9LFxcFVZSeLSemP3PS_p8hZ4f6hyHjM', 'AIzaSyC7Z6CURRfB6TPRSKaE66Q1VKb31kCJXUc', 'AIzaSyCq16BL6KkZ07QvpJ9XEMA8coki2_mPMdA']; // API 키 배열
+    var currentKeyIndex = 0; // 현재 사용 중인 키의 인덱스
 
-    // 유튜브 검색 실행
     function searchYouTube(searchTerm) {
         var encodedSearchTerm = encodeURIComponent(searchTerm);
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=' + encodedSearchTerm + '&type=video&key=' + API_KEY, true);
+        var apiKey = API_KEYS[currentKeyIndex];
+        request.open('GET', 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=' + encodedSearchTerm + '&type=video&key=' + apiKey, true);
+
         request.onload = function () {
             if (this.status == 200) {
                 var data = JSON.parse(this.responseText);
                 displayVideos(data.items);
+            } else if (this.status == 403) { // 한도 초과 오류 감지
+                currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length; // 다음 키로 전환
+                if (currentKeyIndex !== 0) { // 첫 번째 키로 돌아오지 않았는지 확인
+                    searchYouTube(searchTerm); // 재시도
+                } else {
+                    console.error('모든 API 키의 한도가 초과됨');
+                }
             } else {
                 console.error('API 요청 실패:', this.responseText);
             }
         };
+
         request.onerror = function () {
             console.error('네트워크 오류 발생');
         };
         request.send();
     }
+
 
     // 비디오 목록을 표시하는 함수
     function displayVideos(videos) {
