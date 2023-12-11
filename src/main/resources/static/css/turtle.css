@@ -492,7 +492,7 @@ section {
 
 body {
     height: 100vh;
-    background-image: url("/assets/img/019.png");
+    background-image: url("/assets/img/bg4.png");
     background-color: #333335;
     background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
     background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
