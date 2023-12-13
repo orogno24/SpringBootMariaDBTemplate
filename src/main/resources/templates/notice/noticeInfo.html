@@ -222,7 +222,6 @@
                     <th>작성자
                     <td>
                         <span th:text="${rDTO.userName}"></span>
-                        <!--                        <span th:text="${rDTO.userName} + ' (경험치 : ' + ${rDTO.exp} + 'exp)'"></span>-->
                         <span>
                             <span th:if="${rDTO.exp} >= 0 and ${rDTO.exp} < 15"
                                   th:text="' (레벨 1)'"></span>
@@ -275,7 +274,6 @@
         <div class="card my-4" style="box-shadow: none; margin-top: -0.7rem!important;">
             <form name="f" id="f">
                 <div class="card-body">
-
                     <!-- 댓글 목록 -->
                     <div id="comments">
                         <div th:each="dto : ${rList}" class="mt-4" style="margin-top: 0.1rem!important">
