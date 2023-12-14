@@ -22,5 +22,6 @@ public interface IChartMapper {
     List<ChartDTO> getTimeList(ChartDTO pDTO) throws Exception;
 
     List<ChartDTO> getTimeMinute(ChartDTO pDTO) throws Exception;
+
     List<ChartDTO> getTimeFive(ChartDTO pDTO) throws Exception;
 }

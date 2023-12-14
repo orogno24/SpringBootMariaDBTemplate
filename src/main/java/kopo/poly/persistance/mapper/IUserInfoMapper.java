@@ -30,9 +30,6 @@ public interface IUserInfoMapper {
     // 비밀번호 재설정
     int updatePassword(UserInfoDTO pDTO) throws Exception;
 
-    // 비밀번호 찾기에서 아이디와 이메일 일치하는지
-    UserInfoDTO checkUserIdAndEmail(UserInfoDTO pDTO) throws Exception;
-
     // 닉네임 바꾸기
     void changeUserName(UserInfoDTO pDTO) throws Exception;
 
