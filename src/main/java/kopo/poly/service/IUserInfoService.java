@@ -5,6 +5,7 @@ import kopo.poly.dto.UserInfoDTO;
 public interface IUserInfoService {
 
 
+
     // 아이디 중복 체크
     UserInfoDTO getUserIdExists(UserInfoDTO pDTO) throws Exception;
 
@@ -44,4 +45,5 @@ public interface IUserInfoService {
     void updatePoint(UserInfoDTO pDTO) throws Exception;
 
     void updateExp(UserInfoDTO pDTO) throws Exception;
+
 }
