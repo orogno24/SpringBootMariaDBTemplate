@@ -5,7 +5,6 @@ import kopo.poly.dto.UserInfoDTO;
 public interface IUserInfoService {
 
 
-
     // 아이디 중복 체크
     UserInfoDTO getUserIdExists(UserInfoDTO pDTO) throws Exception;
 
@@ -22,13 +21,8 @@ public interface IUserInfoService {
 
     UserInfoDTO searchUserIdOrPasswordProc(UserInfoDTO pDTO) throws Exception;
 
-    // 아이디, 비밀번호 찾기에 활용
-    UserInfoDTO getUserId(UserInfoDTO pDTO) throws Exception;
-
     // 비밀번호 재설정
     void newPasswordProc(UserInfoDTO pDTO) throws Exception;
-
-    UserInfoDTO checkUserId(UserInfoDTO pDTO) throws Exception;
 
     // 닉네임 중복체크
     UserInfoDTO getUserNameExists(UserInfoDTO pDTO) throws Exception;
