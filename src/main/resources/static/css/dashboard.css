@@ -1,0 +1,160 @@
+@font-face {
+    font-family: 'NIXGONM-Vb';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'NIXGONM-Vb';
+}
+
+#pie, #pie2 {
+    display: block;
+    margin: 0 auto;
+}
+
+header,
+main,
+footer {
+    padding-left: 240px;
+}
+
+body {
+    background-color: #d0d0d0;
+}
+
+@media only screen and (max-width: 992px) {
+    header,
+    main,
+    footer {
+        padding-left: 0;
+    }
+}
+
+#credits li,
+#credits li a {
+    color: white;
+}
+
+#credits li a {
+    font-weight: bold;
+}
+
+.footer-copyright .container,
+.footer-copyright .container a {
+    color: #BCC2E2;
+}
+
+.fab-tip {
+    position: fixed;
+    right: 85px;
+    padding: 0px 0.5rem;
+    text-align: right;
+    background-color: #323232;
+    border-radius: 2px;
+    color: #FFF;
+    width: auto;
+}
+
+.indigo.darken-2 {
+    background-color: #15c6e5!important;
+}
+
+.indigo.darken-3 {
+    background-color: #2b2b36!important;
+}
+
+.indigo {
+    background-color: #33343f !important;
+}
+
+.pink {
+    background-color: #15c6e5 !important;
+}
+
+.score {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+ b{
+     color: #ffffff;
+     font-weight: normal;
+ }
+
+ .card{
+     margin: 2rem 0 -1rem 0;
+ }
+
+.infoBubble {
+    display: none;
+    position: relative;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #555;
+    /* Add more styling as needed */
+}
+
+.infoBubble:after {
+    content: '';
+    position: absolute;
+    right: -10px; /* Adjust as needed */
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: #f9f9f9;
+    border-right: 0;
+    margin-top: -10px;
+    transform: translateX(100%);
+}
+
+#infoText, #infoText2, #infoText3, #infoText4, #infoText5, #infoText6 {
+    display: none; /* 처음에는 숨김 상태 */
+    position: absolute;
+    right: 10px; /* 필요에 따라 조정 */
+    top: 50px; /* 필요에 따라 조정 */
+    width: 500px; /* 필요에 따라 조정 */
+    height: 0; /* 높이를 0으로 설정 */
+    overflow: visible; /* 내용이 보이도록 설정 */
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100; /* 다른 내용 위에 표시되도록 함 */
+}
+
+
+#infoText::after {
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent #f9f9f9;
+    transform: translate(0, -50%);
+}
+
+.card {
+    margin-left: 3.2rem;
+    overflow: hidden;
+    background-color: #fbfbfb;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 8px;
+    max-width: 750px;
+}
+
+.emoticon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px; /* Adjust the size as needed */
+}

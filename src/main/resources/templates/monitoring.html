@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자세 모니터링 페이지</title>
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/monitoring.css"/>
+    <style>
+
+    </style>
+</head>
+<audio id="myAudio" autoplay>
+    <source src="/assets/img/tts5.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+<body>
+<audio id="playSound" src="/assets/img/alarm3.mp3"></audio>
+<audio id="playSound2" src="/assets/img/tts1.mp3"></audio>
+<main>
+    <header class="p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="/main">
+                <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
+            </a>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: 3%;">
+        <h1 id="statusText" class="pose"
+            style="display:none; text-align: center; color: #464646; font-size: 24px;"></h1>
+        <h1 id="analysisText"
+            style="display:none; text-align: center; color: #2d2d2d; font-size: 17px; font-weight: normal">
+            [[${userName}]]님의 자세를 모니터링
+            중입니다.
+        </h1><br><br><br><br>
+
+        <div style="float: left; display: flex; justify-content: center; align-items: center; margin-left: 40px; margin-right: 75px;">
+            <canvas id="canvas" height="500px" width="500px"></canvas>
+            <img id="silhouetteImage" src="/assets/img/icon11.png" style="display: none;"/>
+            <img id="placeholderImage" src="/assets/img/logo4.png" height="500px" width="500px"
+                 style="display:none; border: 1px solid #6e6e6e;">
+        </div>
+
+        <div id="table-container" style="display: none; padding-left: 20px;">
+            <table style="height: 250px; width: 465px; color: #000000; font-size: 17px; border: 1px solid #6e6e6e;">
+                <thead style="color: #2b2b36; background-color: #56d0ea">
+                <tr>
+                    <th style="font-weight: normal">타임라인</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+
+        <div id="pbox" style="display: none;">
+            <div class="progress-bar-container">
+                <div class="progress-bar-text">&nbsp;&nbsp;정상 자세</div>
+                <div class="progress-bar-main">
+                    <div class="progress" style="height: 2rem">
+                        <div class="progress-bar bg-success" role="progressbar" style="width:0%">
+                            0%
+                        </div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width:100%">
+                            100%
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar-text">거북목 자세</div>
+            </div>
+        </div>
+
+<!--        <div>-->
+<!--            <p>정상 자세 횟수: <span id="normalPostureCount">0</span></p>-->
+<!--            <p>비정상 자세 횟수: <span id="abnormalPostureCount">0</span></p>-->
+<!--            <p>시간: <span id="totalTime">0</span></p>-->
+<!--            <p>포인트: <span id="point">0</span></p>-->
+<!--        </div>-->
+
+        <form id="postureDataForm">
+            <input type="hidden" name="normalPostureCount" id="hiddenNormalPostureCount" value="0">
+            <input type="hidden" name="abnormalPostureCount" id="hiddenAbnormalPostureCount" value="0">
+            <input type="hidden" name="totalTime" id="hiddenTotalTime" value="0">
+            <input type="hidden" name="point" id="hiddenPoint" value="0">
+        </form>
+
+        <br><br><br>
+
+        <button id="startButton" type="button" onclick="init()">자세 모니터링 시작하기</button>
+    </div>
+
+    <div id="neckExercise" class="neckExercise-box" style="display:none;">
+        <div class="neckExercise-content">
+            <span class="neckExercise-setting">&times;</span>
+            <h2>거북목 가이드</h2>
+            <img src="/assets/img/test.jpg" width="70%" height="70%" alt="" style="display: block; margin: auto;">
+            <p>1. 스마트폰 등의 사용 시간을 줄이고 장시간 사용 시 중간 중간 스트레칭을 해야합니다.</p><br>
+            <p>2. 앉을 때는 등과 목을 펴고, 눈과 화면 사이의 거리를 적절히 유지해야합니다.</p><br>
+            <p>3. 화면을 눈높이에 맞추어 목이 구부러지지 않도록 합니다.</p><br>
+            <p>&lt;추천 영상&gt;</p>
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/EksV9sxWXHw?si=GiNtGjLtMIbZCXME"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div style="margin-right: 20px; display: flex;">
+        <button id="hideCameraButton" type="button" onclick="toggleWebcam()" style="display:none;">카메라 숨기기</button>
+        <button id="editButton" type="button" onclick=" " style="margin-left: 10px; display:none;">설정</button>
+        <button id="stopButton" type="button" onclick=" " style="margin-left: 10px; display:none;">종료</button>
+    </div>
+    <div id="timeSettingBox" class="time-setting-box" style="display:none;">
+        <div class="time-setting-content">
+            <span class="close-time-setting">&times;</span>
+            <h2>시간 설정</h2>
+            <form id="timeSettingForm">
+                <div id="timeSetting" style="display: block; padding-top: 10px;">
+                    <label>
+                        <input type="radio" name="timeOption" value="10000" checked> 10초
+                    </label>
+                    <label>
+                        <input type="radio" name="timeOption" value="60000"> 1분
+                    </label>
+                    <label>
+                        <input type="radio" name="timeOption" value="180000"> 3분
+                    </label>
+                    <label>
+                        <input type="radio" name="timeOption" value="600000"> 10분
+                    </label>
+                </div>
+            </form>
+            <div id="alertSetting" style="display: block; padding-top: 20px;">
+                <h2>알림 설정</h2>
+                <form style="padding-top: 10px;">
+                    <label>
+                        <input type="radio" name="alertOption" value="alertA" checked> 알림음
+                    </label>
+                    <label>
+                        <input type="radio" name="alertOption" value="alertB"> TTS
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="label-container" style="color: #FFFFFF"></div>
+</main>
+
+<footer>
+</footer>
+<div class="black-section"></div>
+
+<script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+
+<script type="text/javascript" src="/js/monitoring.js"></script>
+<script type="text/javascript" src="/js/monitoring2.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>커뮤니티</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn-icons-pkg.bringhub.com/bootstrap-icons-font/v1.10.0/bootstrap-icons-font.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/search-bar.css">
+    <link rel="stylesheet" href="/css/articles/table-header.css">
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+    <style>
+
+        @font-face {
+            font-family: 'NIXGONM-Vb';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'NIXGONM-Vb';
+        }
+
+        button {
+            z-index: 10;
+            margin-top: -50px;
+            padding: 12px 40px;
+            border: none;
+            background-color: #ababab;
+            color: #fff;
+            font-size: 19px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        #btnWrite {
+            background-color: #2a83c2;
+        }
+
+        /* btnLogin에 대한 hover 효과 */
+        #btnWrite:hover {
+            background-color: #1f608d; /* 새로운 배경색 */;
+        }
+
+        header {
+            z-index: 10;
+            background-color: #2b2b36;
+            color: white;
+            padding: 20px;
+            border-bottom: 3px solid #2D8DB6;
+        }
+
+        .card {
+            z-index: 10;
+            cursor: pointer;
+            background-color: rgba(251, 251, 251, 0.9); /* Adjust opacity as needed */
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            transition: all 0.3s ease-in-out;
+            border: 1px solid #eaeaea; /* Optional: might blend well with a light background */
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            background-color: rgba(251, 251, 251, 1); /* Solid color on hover */
+        }
+
+        footer {
+            background-color: #2b2b36;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #fafafa;
+            font-size: 2.5rem; /* 폰트 크기 증가 */
+            text-align: center;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); /* 텍스트에 그림자 효과 추가 */
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+    </style>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/notice.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/noticeInfo.css"/>
+</head>
+<body style="background-color: #2b2b36">
+<header class="p-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a style="z-index: 10;" href="/main">
+            <img src="/assets/img/logo3.png" width="155" height="40" alt="Logo">
+        </a>
+        </div>
+</header>
+
+<main class="container my-5">
+    <div class="title" style="border-bottom: 1px solid #FFF;">
+        <h2 class="text-center mb-4">이용자 커뮤니티</h2>
+    </div>
+    <div class="container centered" style="padding-top: 5px">
+        <p style="color: #ffffff; text-align: center">커뮤니티 페이지는 거북목 문제와 관련된 경험과 정보를 나누는 공간입니다.<br>
+            여기서는 거북목 개선 팁과 건강한 생활 습관에 대해 서로 공유하며 함께 건강한 자세를 유지해 나갈 수 있습니다.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6" th:each="dto: ${rList}">
+            <div class="card" th:onclick="doDetail([[${dto.noticeSeq}]])">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${dto.title}"></h5>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-person"></i> <span th:text="${dto.userName}"
+                                                               style="font-weight: bold; color: #3595a4;"></span>
+                            &middot;
+                            <i class="bi bi-calendar"></i> <span th:text="${dto.regDt}"></span> &middot;
+                            <i class="bi bi-eye"></i> <span th:text="'조회수 : ' + ${dto.readCnt}"></span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <ul class="pagination">
+                <li style="z-index: 10">
+                    <a onclick="prevPage()" style="font-size: 30px; color: #939393; cursor: pointer; margin-right: 80px;"><strong>&lt;</strong></a>
+                </li>
+                <li style="z-index: 10">
+                    <a onclick="nextPage()" style="font-size: 30px; color: #939393; cursor: pointer; margin-left: 80px;"><strong>&gt;</strong></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <button id="btnWrite" type="button"><i class="fas fa-edit"></i> 글쓰기</button>
+    </div>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</main>
+
+</body>
+</html>

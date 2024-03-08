@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>회원가입</title>
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 자바스크립트에서 $ == 제이쿼리 문법을 쓸 수 있게 해주는 코드-->
+    <script type="text/javascript">
+
+        let userIdCheck = "Y";
+
+        let emailAuthNumber = "";
+
+        // HTML로딩이 완료되고, 실행됨
+        $(document).ready(function () {
+
+            let f = document.getElementById("f"); // form 태그
+
+            // 아이디 중복체크
+            $("#btnUserId").on("click", function () { // 버튼 클릭했을때, 발생되는 이벤트 생성함(onclick 이벤트와 동일함)
+                userIdExists(f)
+            })
+
+            // 이메일 중복체크
+            $("#btnEmail").on("click", function () { // 버튼 클릭했을때, 발생되는 이벤트 생성함(onclick 이벤트와 동일함)
+                emailExists(f)
+            })
+
+        })
+
+
+        // 회원아이디 중복 체크
+        function userIdExists(f) {
+
+            if (f.userId.value === "") {
+                alert("아이디를 입력하세요.");
+                f.userId.focus();
+                return;
+            }
+
+            // Ajax 호출해서 아이디 중복체크
+            $.ajax({
+                    url: "/user/getUserIdExists",
+                    type: "post", // 전송방식은 Post
+                    dataType: "JSON", // 전송 결과는 JSON으로 받기
+                    data: $("#f").serialize(), // form 태그 내 input 등 객체를 자동으로 전송할 형태로 변경하기
+                    success: function (json) { // 호출이 성공했다면..
+                        if (json.existsYn === "Y") {
+                            alert("이미 가입된 아이디가 존재합니다.");
+                            f.userId.focus();
+                        } else {
+                            alert("가입 가능한 아이디입니다.");
+                            userIdCheck = "N";
+                        }
+                    }
+                }
+            )
+        }
+
+        // 이메일 중복 체크
+        function emailExists(f) {
+            if (f.email.value === "") {
+                alert("이메일을 입력하세요.");
+                f.email.focus();
+                return;
+            }
+
+            $.ajax({
+                    url: "/user/getEmailExists",
+                    type: "post", // 전송방식은 Post
+                    dataType: "JSON", // 전송 결과는 JSON으로 받기
+                    data: $("#f").serialize(), // form 태그 내 input 등 객체를 자동으로 전송할 형태로 변경하기
+                    success: function (json) { // 호출이 성공했다면..
+                        if (json.existsYn === "Y") {
+                            alert("이미 가입된 이메일 주소가 존재합니다.");
+                            f.email.focus();
+                        } else {
+                            alert("이메일로 인증번호가 발송되었습니다. \n받은 메일의 인증번호를 입력하기 바랍니다.");
+                            emailAuthNumber = json.authNumber;
+                        }
+                    }
+                }
+            )
+        }
+
+        //회원가입 정보의 유효성 체크하기
+        function doSubmit(f) {
+
+            if (f.userId.value === "") {
+                alert("아이디를 입력하세요.");
+                f.userId.focus();
+                return false;
+            }
+
+            if (userIdCheck !== "N") {
+                alert("아이디 중복 체크 및 중복되지 않은 아이디로 가입 바랍니다.");
+                f.userId.focus();
+                return false;
+            }
+
+            if (f.password.value === "") {
+                alert("비밀번호를 입력하세요.");
+                f.password.focus();
+                return false;
+            }
+
+            if (f.password2.value === "") {
+                alert("비밀번호 확인해주세요.");
+                f.password2.focus();
+                return false;
+            }
+
+            if (f.password.value !== f.password2.value) {
+                alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                f.password.focus();
+                return false;
+            }
+
+            if (f.email.value === "") {
+                alert("이메일을 입력하세요.");
+                f.email.focus();
+                return false;
+            }
+
+            if (f.authNumber.value === "") {
+                alert("이메일 인증번호를 입력하세요.");
+                f.authNumber.focus();
+                return false;
+            }
+            console.log("비교1" + f.authNumber.value);
+            console.log("비교2" + emailAuthNumber);
+            if (f.authNumber.value != emailAuthNumber) {
+                alert("이메일 인증번호가 일치하지 않습니다.");
+                f.authNumber.focus();
+                return false;
+            }
+
+            if (f.userName.value === "") {
+                alert("닉네임을 입력하세요.");
+                f.userName.focus();
+                return false;
+            }
+
+            // alert("회원가입이 완료되었습니다!");
+
+            // Ajax 호출해서 회원가입하기
+            $.ajax({
+                    url: "/user/insertUserInfo",
+                    type: "post",
+                    datatype: "JSON",
+                    data: $("#f").serialize(),
+                    success: function (json) {
+
+                        if (json.result === 1) {
+                            // alert(json.msg);
+                            location.href = "/alert2";
+
+                        } else {
+                            alert(json.msg);
+                        }
+                    }
+                }
+            )
+
+        }
+    </script>
+
+</head>
+<style>
+    button {
+        padding: 6px 12px;
+        border: none;
+        background-color: #3498db;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+
+    @font-face {
+        font-family: 'NIXGONM-Vb';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    *{
+        font-family: 'NIXGONM-Vb';
+    }
+
+    @import url("//fonts.googleapis.com/earlyaccess/nanumgothic.css" );
+    /* 비번 입력시 공백문자 뜨는 문제 해결 */
+    input[type=password]{
+        font-family:"Nanum Gothic", sans-serif !important;
+    }
+
+    @import url('https://rsms.me/inter/inter-ui.css');
+    ::selection {
+        background: #2D2F36;
+    }
+    ::-moz-selection {
+        background: #2D2F36;
+    }
+    body {
+        background: white;
+        margin: 0;
+        padding: 20px;
+    }
+    .page {
+        background: #B9B2AA;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 40px);
+        position: absolute;
+        place-content: center;
+        width: calc(100% - 40px);
+    }
+    @media (max-width: 767px) {
+        .page {
+            height: auto;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+    }
+    .container {
+        display: flex;
+        height: 680px;
+        margin: 0 auto;
+        width: 970px;
+    }
+    @media (max-width: 767px) {
+        .container {
+            flex-direction: column;
+            height: 630px;
+            width: 320px;
+        }
+    }
+    .left {
+        background: #FAEDDA;
+        height: calc(100% - 40px);
+        top: 20px;
+        position: relative;
+        width: 70%;
+    }
+    @media (max-width: 767px) {
+        .left {
+            height: 100%;
+            left: 20px;
+            width: calc(100% - 40px);
+            max-height: 270px;
+        }
+    }
+    .login {
+        font-size: 25px;
+        color: #564F47;
+        margin: 50px 40px 40px;
+    }
+    .eula {
+        color: #656579;
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 40px;
+    }
+    .right {
+        background: #6D6E85;
+        box-shadow: 0px 0px 40px 16px rgba(159, 149, 149, 0.22);
+        color: #F1F1F2;
+        position: relative;
+        width: 70%;
+
+    }
+    @media (max-width: 767px) {
+        .right {
+            flex-shrink: 0;
+            height: 100%;
+            width: 100%;
+            max-height: 350px;
+        }
+    }
+    svg {
+        position: absolute;
+        width: 320px;
+    }
+    path {
+        fill: none;
+        stroke: url(#linearGradient);;
+        stroke-width: 4;
+        stroke-dasharray: 240 1386;
+    }
+    .form {
+        margin: 40px;
+        position: absolute;
+    }
+    label {
+        color: #fff;
+        display: block;
+        font-size: 15px;
+        height: 16px;
+        margin-top: 20px;
+        margin-bottom: 5px;
+    }
+    input {
+        background: transparent;
+        border: 0;
+        color: #f2f2f2;
+        font-size: 20px;
+        height: 30px;
+        line-height: 30px;
+        outline: none !important;
+        width: 120%;
+    }
+    input::-moz-focus-inner {
+        border: 0;
+    }
+    #submit {
+        color: #ffffff;
+        margin-top: 40px;
+        transition: color 300ms;
+    }
+    #submit:focus {
+        color: #f2f2f2;
+    }
+    #submit:active {
+        color: #d0d0d2;
+    }
+
+</style>
+<script src="/assets/js/jquery-3.6.0.js"></script>
+<script>
+    var current = null;
+    document.querySelector('#email').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: 0,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '240 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+    document.querySelector('#password').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: -336,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '240 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+    document.querySelector('#submit').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: -730,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '530 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+</script>
+<body>
+<div class="page">
+    <div class="container">
+        <div class="left">
+            <div class="login">signUp</div>
+            <div class="eula">거북목 자세교정 및 예방 시스템<br>
+                <img src="/assets/img/logo.png" alt="Your Image" class="square-image" style="width: 15%; height: 15%;">
+            </div>
+        </div>
+        <div class="right">
+            <form class="register-form" action="/user/insertUserInfo" id="f">
+
+                <div class="form" style="padding-top: 10%;">
+
+                    <label for="userId" style="display: inline-block">아이디를 입력해주세요.</label>&nbsp;&nbsp;
+                    <button id="btnUserId" type="button">중복확인</button>
+                    <input type="text" name="userId" id="userId">
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <label for="password">비밀번호를 입력해주세요.</label>
+                    <input type="password" name="password" id="password" minlength="4"  maxlength="20" >
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <label for="password2">비밀번호를 확인해주세요.</label>
+                    <input type="password" name="password2" id="password2" minlength="4"  maxlength="20">
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <label for="email" style="display: inline-block">이메일을 입력해주세요.</label>&nbsp;&nbsp;
+                    <button id="btnEmail" type="button">인증번호</button>
+                    <input type="text" name="email" id="email">
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <label for="authNumber">인증번호를 입력해주세요.</label>
+                    <input type="text" name="authNumber" id="authNumber">
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <label for="userName">닉네임을 입력해주세요.</label>
+                    <input type="text" name="userName" id="userName">
+                    <hr style="width: 400px; margin: auto; color: #fff;">
+
+                    <button id="submit" type="button" onclick="doSubmit(this.form)">회원가입</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

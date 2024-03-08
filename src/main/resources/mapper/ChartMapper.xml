@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.mapper.IChartMapper">
+
+    <insert id="insertData" parameterType="ChartDTO">
+        INSERT INTO CHART
+        (USER_ID,
+         DATE,
+         WEEK,
+         NORMAL,
+         ABNORMAL,
+         TOTALTIME)
+        VALUES (#{userId},
+                NOW(),
+                DAYNAME(NOW()),
+                #{normal},
+                #{abnormal},
+                #{totalTime})
+            ON DUPLICATE KEY UPDATE
+                                 WEEK = VALUES(WEEK),
+                                 NORMAL = VALUES(NORMAL),
+                                 ABNORMAL = VALUES(ABNORMAL);
+    </insert>
+
+    <select id="getData" resultType="ChartDTO">
+        SELECT
+            DATE(DATE) AS dateOnly,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal,
+            COALESCE(SUM(TOTALTIME), 3) AS TOTALTIME
+        FROM
+            CHART
+        WHERE
+            DATE(DATE) = CURDATE()
+          AND USER_ID = #{userId}
+        GROUP BY
+            dateOnly
+    </select>
+
+    <select id="getTotalData" resultType="ChartDTO">
+        SELECT
+            DATE(DATE) AS dateOnly,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal,
+            SUM(TOTALTIME) AS TOTALTIME
+        FROM
+            CHART
+        WHERE
+            DATE(DATE) = CURDATE()
+        GROUP BY
+            dateOnly
+    </select>
+
+    <select id="getWeek" resultType="ChartDTO">
+        SELECT
+            DAYNAME(DATE) AS weekday,
+            SUM(NORMAL) AS totalNormal,
+            SUM(ABNORMAL) AS totalAbnormal
+        FROM
+            CHART
+        WHERE
+            DATE >= CURDATE() - INTERVAL 7 DAY
+          AND USER_ID = #{userId}
+        GROUP BY
+            DAYOFWEEK(DATE)
+        ORDER BY
+            DATE;
+    </select>
+
+    <select id="getTime" resultType="ChartDTO">
+        SELECT
+            COALESCE(SUM(TOTALTIME), 0) AS TOTALTIME
+        FROM
+            CHART
+        WHERE USER_ID = #{userId}
+    </select>
+
+<!--    <select id="getTimeList" resultType="ChartDTO">
+        SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H') AS checkHour,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY DATE_FORMAT(`DATE`, '%Y-%m-%d %H')
+        ORDER BY checkHour;
+    </select>-->
+
+    <select id="getTimeMinute" resultType="ChartDTO">
+        SELECT DATE_FORMAT(`DATE`, '%Y-%m-%d %H:%i') AS checkMinute,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY DATE_FORMAT(`DATE`, '%Y-%m-%d %H:%i')
+        ORDER BY checkMinute;
+    </select>
+
+    <select id="getTimeFive" resultType="ChartDTO">
+        SELECT DATE_FORMAT(
+                       DATE_ADD(
+                               `DATE`,
+                               INTERVAL -MINUTE(`DATE`) % 5 MINUTE
+                   ),
+                       '%Y-%m-%d %H:%i'
+                   ) AS checkFive,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY checkFive
+        ORDER BY checkFive;
+    </select>
+
+    <select id="getTimeList" resultType="ChartDTO">
+        SELECT DATE_FORMAT(
+                       DATE_ADD(
+                               `DATE`,
+                               INTERVAL -MINUTE(`DATE`) % 10 MINUTE
+                   ),
+                       '%Y-%m-%d %H:%i'
+                   ) AS checkTen,
+               SUM(NORMAL) AS totalNormalTime,
+               SUM(ABNORMAL) AS totalAbnormalTime
+        FROM CHART
+        WHERE `DATE` BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59')
+          AND USER_ID = #{userId}
+        GROUP BY checkTen
+        ORDER BY checkTen;
+    </select>
+</mapper>

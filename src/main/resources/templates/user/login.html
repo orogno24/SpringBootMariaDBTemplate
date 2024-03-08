@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" xmlns:inkscape="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>로그인</title>
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+
+    <style>
+        #submit {
+            font-size: 30px;
+            color: #ffffff;
+            transition: color 300ms;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        @media (max-width: 767px) {
+            #submit {
+                margin-left: 0; /* 최대 767px 화면 너비에서는 margin-left를 해제합니다. 안녕하세요 */
+
+            }
+        }
+
+        @font-face {
+            font-family: 'NIXGONM-Vb';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: 'NIXGONM-Vb';
+        }
+
+        @import url('https://rsms.me/inter/inter-ui.css');
+        ::selection {
+            background: #2D2F36;
+        }
+
+        ::-moz-selection {
+            background: #2D2F36;
+        }
+
+        body {
+            background: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .page {
+            background: #B9B2AA;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 40px);
+            position: absolute;
+            place-content: center;
+            width: calc(100% - 40px);
+        }
+
+        @media (max-width: 767px) {
+            .page {
+                height: auto;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+            }
+        }
+
+        .container {
+            display: flex;
+            height: 480px;
+            margin: 0 auto;
+            width: 870px;
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                flex-direction: column;
+                height: 630px;
+                width: 320px;
+            }
+        }
+
+        .left {
+            background: #FAEDDA;
+            height: calc(100% - 40px);
+            top: 20px;
+            position: relative;
+            width: 70%;
+        }
+
+        @media (max-width: 767px) {
+            .left {
+                height: 100%;
+                left: 20px;
+                width: calc(100% - 40px);
+                max-height: 270px;
+            }
+        }
+
+        .login {
+            font-size: 25px;
+            color: #564F47;
+            margin: 50px 40px 40px;
+        }
+
+        .eula {
+            color: #656579;
+            font-size: 20px;
+            line-height: 1.5;
+            margin: 40px;
+        }
+
+        .right {
+            background: #6D6E85;
+            box-shadow: 0px 0px 40px 16px rgba(159, 149, 149, 0.22);
+            color: #F1F1F2;
+            position: relative;
+            width: 70%;
+        }
+
+        @media (max-width: 767px) {
+            .right {
+                flex-shrink: 0;
+                height: 100%;
+                width: 100%;
+                max-height: 350px;
+            }
+        }
+
+        svg {
+            position: absolute;
+            width: 320px;
+        }
+
+        path {
+            fill: none;
+            stroke: url(#linearGradient);;
+            stroke-width: 4;
+            stroke-dasharray: 240 1386;
+        }
+
+        .form {
+            margin: 40px;
+            position: absolute;
+        }
+
+        label {
+            color: #fff;
+            display: block;
+            font-size: 15px;
+            height: 16px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        input {
+            background: white;
+            border: 2px solid #6D6E85;
+            border-radius: 30px;
+            color: #626378;
+            font-size: 16px; /* 절대적인 픽셀 크기로 설정 */
+            height: 40px; /* 절대적인 픽셀 크기로 설정 */
+            line-height: 40px; /* 절대적인 픽셀 크기로 설정 */
+            outline: none !important;
+            padding: 0 10px; /* 내용과 테두리 사이의 여백을 절대적인 픽셀 크기로 설정 */
+            width: 100%; /* 너비를 뷰포트 너비(%) 대신 절대적인 픽셀 크기로 설정 */
+        }
+
+
+        input[type="password"] {
+            font-family: monospace; /* 비밀번호 입력란에 모노스페이스 폰트 설정 */
+        }
+
+        input::-moz-focus-inner {
+            border: 0;
+        }
+
+        input::placeholder {
+            color: #FFFFFF;
+        }
+
+        #submit {
+            color: #ffffff;
+            margin-top: 40px;
+            transition: color 300ms;
+        }
+
+        #submit:focus {
+            color: #f2f2f2;
+        }
+
+        #submit:active {
+            color: #d0d0d2;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+
+        /* 버튼 사이 여백 추가 */
+        button + button {
+            margin-left: 10px;
+        }
+
+        /* 특별한 스타일 적용 */
+        #btnLogin {
+            background-color: #3498db; /* 빨간색 배경 */
+        }
+
+        /* btnLogin에 대한 hover 효과 */
+        #btnLogin:hover {
+            background-color: #2a77ab; /* 새로운 배경색 */;
+        }
+
+        /* btnUserReg에 대한 기본 스타일 */
+        #btnUserReg {
+            background-color: #27ae60; /* 초록색 배경 */
+        }
+
+        /* btnUserReg에 대한 hover 효과 */
+        #btnUserReg:hover {
+            background-color: #17773f; /* 새로운 배경색 */;
+        }
+
+        /* btnSearchUserId에 대한 기본 스타일 */
+        #btnSearchUserId {
+            background-color: #f39c12; /* 주황색 배경 */
+        }
+
+        /* btnSearchUserId에 대한 hover 효과 */
+        #btnSearchUserId:hover {
+            background-color: #bb780f; /* 새로운 배경색 */;
+        }
+
+        /* btnSearchPassword에 대한 기본 스타일 */
+        #btnSearchPassword {
+            background-color: #9b59b6; /* 보라색 배경 */
+        }
+
+        /* btnSearchPassword에 대한 hover 효과 */
+        #btnSearchPassword:hover {
+            background-color: #714185; /* 새로운 배경색 */;
+        }
+
+    </style>
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // 회원가입
+            $("#btnUserReg").on("click", function () {
+                location.href = "/user/userRegForm";
+            })
+
+            // 아이디 찾기
+            $("#btnSearchUserId").on("click", function () {
+                location.href = "/user/searchUserId";
+            })
+
+            // 비밀번호 찾기
+            $("#btnSearchPassword").on("click", function () {
+                location.href = "/user/searchPassword";
+            })
+
+            // 로그인
+            $("#btnLogin").on("click", function () {
+                let f = document.getElementById("f");
+
+                if (f.userId.value === "") {
+                    alert("아이디를 입력하세요.");
+                    f.userId.focus();
+                    return;
+                }
+
+                if (f.password.value === "") {
+                    alert("비밀번호를 입력하세요.");
+                    f.password.focus();
+                    return;
+                }
+
+                $.ajax({
+                        url: "/user/loginProc",
+                        type: "post",
+                        dataType: "JSON",
+                        data: $("#f").serialize(),
+                        success: function (json) {
+
+                            if (json.result === 1) {
+                                location.href = "/alert";
+                            } else {
+                                alert(json.msg);
+                                $("#userId").focus();
+                            }
+
+                        }
+                    }
+                )
+
+            })
+
+            $("#password").keypress(function (event) {          // 비밀번호 입력란에서 엔터 입력시 로그인
+                if (event.which === 13) {
+                    $("#btnLogin").click();
+                }
+            });
+        })
+
+        function showPassword() {
+            const passwordInput = document.getElementById("password");
+            const displayPassword = document.getElementById("displayPassword");
+
+            // 비밀번호 입력란에 있는 값 가져오기
+            const password = passwordInput.value;
+
+            // Replace each character with a dot
+            const maskedPassword = password.replace(/./g, ".");
+
+            // Display the masked password
+            displayPassword.textContent = maskedPassword;
+        }
+
+        var current = null;
+        document.querySelector('#userId').addEventListener('focus', function (e) {
+            if (current) current.pause();
+            current = anime({
+                targets: 'path',
+                strokeDashoffset: {
+                    value: 0,
+                    duration: 700,
+                    easing: 'easeOutQuart'
+                },
+                strokeDasharray: {
+                    value: '240 1386',
+                    duration: 700,
+                    easing: 'easeOutQuart'
+                }
+            });
+        });
+        document.querySelector('#user_pwd').addEventListener('focus', function (e) {
+            if (current) current.pause();
+            current = anime({
+                targets: 'path',
+                strokeDashoffset: {
+                    value: -336,
+                    duration: 700,
+                    easing: 'easeOutQuart'
+                },
+                strokeDasharray: {
+                    value: '240 1386',
+                    duration: 700,
+                    easing: 'easeOutQuart'
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="page">
+    <div class="container">
+        <div class="left">
+            <div class="login">Login</div>
+            <div class="eula">거북목 자세교정 및 예방 시스템<br>
+                <img src="/assets/img/logo.png" alt="Your Image" class="square-image" style="width: 15%; height: 15%;">
+            </div>
+        </div>
+        <div class="right">
+            <svg viewBox="0 0 320 300" style="width: 80%;">
+                <defs>
+                    <linearGradient
+                            inkscape:collect="always"
+                            id="linearGradient"
+                            x1="13"
+                            y1="193.49992"
+                            x2="307"
+                            y2="193.49992"
+                            gradientUnits="userSpaceOnUse">
+                        <stop
+                                style="stop-color:#98ffcf;"
+                                offset="0"
+                                id="stop876"/>
+                        <stop
+                                style="stop-color:#98ffcf;"
+                                offset="0"
+                                id="stop878"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <form class="register-form" action="/user/loginProc" id="f">
+                <div class="form">
+                    <label for="userId">&nbsp;아이디를 입력해주세요.</label>
+                    <input type="text" id="userId" name="userId"><br><br>
+
+                    <label for="password">&nbsp;비밀번호를 입력해주세요.</label>
+                    <input type="password" id="password" name="password" oninput="showPassword()">
+                    <br><br>
+                    <div>
+                        <button id="btnLogin" type="button">로그인</button>
+                        <button id="btnUserReg" type="button">회원가입</button>
+                        <br><br>
+                        <button id="btnSearchUserId" type="button">아이디 찾기</button>
+                        <button id="btnSearchPassword" type="button">비밀번호 찾기</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

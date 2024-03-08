@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 카드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/pluton.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/pluton-ie7.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.cslider.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/animate.css"/>
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // rDTO.grade의 값을 가져와서 정수로 변환합니다.
+            var gradeValue = parseInt("[[${rDTO.grade}]]");
+
+            // gradeImage 요소를 선택합니다.
+            var gradeImage = document.getElementById("gradeImage");
+            var gradeText = document.getElementById("gradeText");
+            var gradeSpan = document.getElementById("gradeSpan");
+
+            // gradeValue에 따라 적절한 이미지 URL을 설정합니다.
+            if (gradeValue === 1) {
+                gradeImage.src = "/assets/img/turtle.png"; // 1등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>목과 얼굴의 위치가 표준에 가까워<br>거북목 증상이 전혀 관찰되지 않았습니다!<br>꾸준한 자세 유지와 스트레칭을 통해<br>이상적인 상태를 유지하세요!</p>";
+                gradeSpan.innerHTML = "양호";
+                gradeSpan.style.background = "#5bf35b"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 2) {
+                gradeImage.src = "/assets/img/turtle2.png"; // 2등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>목의 위치가 앞으로 기울어져<br>거북목의 특징이 보이기 시작합니다.<br>주기적인 스트레칭과 자세 교정을 통해<br>증상을 완화시킬 수 있습니다.</p>";
+                gradeSpan.innerHTML = "보통";
+                gradeSpan.style.background = "#cce865"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 3) {
+                gradeImage.src = "/assets/img/turtle3.png"; // 3등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>거북목 증상이 뚜렷하게 나타나고 있습니다.<br>지속적인 잘못된 자세는<br>목과 어깨의 통증을 유발할 수 있습니다.<br>매일 꾸준한 운동과 자세 교정이 필요합니다.</p>";
+                gradeSpan.innerHTML = "개선 필요";
+                gradeSpan.style.background = "#eee045"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 4) {
+                gradeImage.src = "/assets/img/turtle4.png"; // 4등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>목의 위치가 매우 앞으로 기울어져 있으며,<br>목 뿐만 아니라 상체 전체에도 영향을 미치고 있습니다.<br>교정 운동을 진행하는 것이 좋습니다.</p>";
+                gradeSpan.innerHTML = "주의";
+                gradeSpan.style.background = "#ea8738"
+                gradeSpan.style.color = "#151515"
+            } else if (gradeValue === 5) {
+                gradeImage.src = "/assets/img/turtle5.png"; // 5등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>거북목이 꽤 진행된 단계입니다.<br>지속적인 통증과 함께 다른 건강 문제도<br>유발할 수 있습니다.<br>꾸준한 교정 운동을 지금부터 시작해야 합니다.</p>";
+                gradeSpan.innerHTML = "위험";
+                gradeSpan.style.background = "#d92622"
+                gradeSpan.style.color = "#151515"
+            }else {
+                // 다른 등급에 해당하는 경우에 대한 처리를 추가할 수 있습니다.
+                // 예를 들어, 기본 이미지를 표시하거나 에러 메시지를 표시할 수 있습니다.
+                gradeImage.src = "/assets/img/logo.png"; // 0등급에 해당하는 이미지 URL
+                gradeText.innerHTML = "<p>거북목 정보를 확인하려면<br>먼저 거북목 진단을 완료하셔야 합니다.</p>";
+                gradeSpan.innerHTML = "";
+                gradeSpan.style.color = "#151515"
+            }
+        });
+    </script>
+
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const userName = /*[[${rDTO.userName}]]*/ 'defaultUserName';
+
+            if (userName === null || userName === '' || userName === 'null') {
+                alert("로그인 하시길 바랍니다.");
+                window.location.href = '/user/login';
+            }
+        });
+    </script>
+</head>
+<style>
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        background-image: url("/assets/img/bg.jpg");
+        background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+        background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+        background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+        margin: 0;
+    }
+
+    h6 {
+        margin: 5px 0;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 21px;
+    }
+
+    .card-container {
+        position: absolute;
+        top: 220px;
+        background: linear-gradient(135deg, #1c1a1e, #574c67);
+        border-radius: 5px;
+        box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+        color: #B3B8CD;
+        padding-top: 30px;
+        width: 350px;
+        max-width: 100%;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        transform: scale(1.3)
+    }
+
+    .card-container:hover {
+        transform: scale(1.32)
+    }
+
+    .card-container .pro {
+        border-radius: 3px;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 3px 7px;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
+
+    button.primary {
+        background-color: #03BFCB;
+        border: 1px solid #03BFCB;
+        border-radius: 3px;
+        color: #231E39;
+        font-weight: 500;
+        padding: 10px 25px;
+    }
+
+    button.primary.ghost {
+        background-color: transparent;
+        color: #02899C;
+    }
+
+    .skills {
+        background-color: #2d2931;
+        text-align: left;
+        padding: 15px;
+        margin-top: 30px;
+        align-items: center; /* 수직 가운데 정렬 */
+    }
+
+    .skills ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .skills ul li {
+        border: 1px solid #2D2747;
+        border-radius: 2px;
+        display: inline-block;
+        font-size: 12px;
+        margin: 0 7px 7px 0;
+        padding: 7px;
+    }
+
+    .main-button {
+        background-color: #03BFCB;
+        border: 1px solid #03BFCB;
+        border-radius: 3px;
+        color: #231E39;
+        padding: 10px 25px;
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        text-decoration: none;
+        overflow: hidden; /* 배경색이 버튼 경계 내에 유지되도록 설정 */
+    }
+
+    .main-button:hover {
+        background-color: #02899C; /* 마우스를 올렸을 때 배경색 변경 */
+        color: #fff; /* 마우스를 올렸을 때 텍스트 색상 변경 */
+    }
+
+    header {
+        background-color: #2b2b36;
+        color: white;
+        padding: 20px;
+        border-bottom: 3px solid #2D8DB6;
+        width: 100%;
+        margin-bottom: 60px; /* header 아래 여백을 추가합니다 */
+    }
+
+    @font-face {
+        font-family: 'NIXGONM-Vb';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        font-family: 'NIXGONM-Vb';
+    }
+
+    #shareButton:hover {
+        background-color: #02899C; /* Change the background color on hover */
+        color: #fff; /* Change the text color on hover */
+        border: 1px solid #02899C; /* Change the border color on hover */
+    }
+
+    .parent-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+
+</style>
+<body>
+<div class="navbar" style="border-bottom: 1px solid #15c6e5;">
+    <div class="navbar-inner">
+        <div class="container">
+            <a href="/main" class="brand">
+                <img src="/assets/img/logo3.png" width="170" height="41" alt="Logo">
+                <!-- This is website logo -->
+            </a>
+            <!-- Navigation button, visible on small resolution -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <img src="/assets/img/logo5.png" width="30" height="30" alt="Logo">
+            </button>
+            <div class="nav-collapse collapse pull-right">
+                <ul class="nav" id="top-navigation">
+                    <li><a style="border: 1px solid #15c6e5;" href="/main">메인 페이지</a></li>
+                    <li><a href="/redirect6">거북목 진단</a></li>
+                    <li><a href="/redirect7">자세 모니터링</a></li>
+                    <li><a href="/redirect8">통계</a></li>
+                    <li><a href="/redirect9">병원 찾기</a></li>
+                    <li><a href="/redirect11">커뮤니티</a></li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="username-color">[[${userName}]]</span>님의 마이페이지<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/redirect3">프로필 카드</a></li>
+                            <li><a href="/user/changeUserName">닉네임 변경</a></li>
+                            <li><a href="#" id="logoutLink">로그아웃</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="parent-container">
+<div id="profileCard" class="card-container">
+    <br><br>
+    <span id="gradeSpan" class="pro"></span>
+    <img id="gradeImage" class="round" src="" alt="user" width="45%" height="45%"/>
+    <br><br>
+    <h4 style="font-weight: bolder"><span style="color: #bfc4d9">[[${rDTO.userName}]]</span>님의 현재 거북목 등급 : </h4>
+    <h3 style="font-weight: bolder"><<span style="color: #fbb450">[[${rDTO.grade}]]</span>등급></h3>
+    <span id="gradeText"></span>
+    <button id="shareButton" style="cursor: pointer; margin-top: 2px; margin-bottom: -4px; padding: 6px 21px;" class="primary ghost">
+        공유하기
+    </button>
+    <div class="skills">
+        <a href="/user/turtle" class="main-button">육성 페이지로 이동</a>
+    </div>
+</div>
+</div>
+
+<script>
+    document.getElementById('logoutLink').addEventListener('click', function (event) {
+        event.preventDefault();
+        fetch('/logout', {method: 'POST'})
+            .then(response => {
+                window.location.href = '/user/login';
+            })
+            .catch(error => {
+                console.error('Logout failed:', error);
+            });
+    });
+</script>
+
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const link = document.querySelector(".main-button");
+
+        link.addEventListener("click", function (event) {
+            event.preventDefault(); // 기본 동작(페이지 이동)을 막습니다.
+            const totalTime = [[${tDTO.totalTime}]];
+
+            if (totalTime === 0) {
+                alert("해당 서비스를 이용하려면 자세 모니터링을 먼저 진행해야 합니다.");
+            } else {
+                window.location.href = "/user/turtle";
+            }
+        });
+    });
+
+    var changeNicknameButton = document.getElementById("shareButton");
+    changeNicknameButton.addEventListener("click", function () {
+
+        // 요소 선택
+        var profileCard = document.querySelector('#profileCard');
+
+        // html2canvas 옵션을 조정하여 렌더링 품질 향상
+        html2canvas(profileCard, {
+            scale: 2, // 해상도 향상
+            letterRendering: true, // 글자 렌더링 세부 조정
+            useCORS: true, // 외부 이미지 CORS 처리 활성화
+            allowTaint: false // 캔버스 '더럽히기' 방지
+        }).then(canvas => {
+            canvas.toBlob(function(blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]);
+                alert("프로필 카드 이미지가 클립보드에 복사되었습니다!\n이제 여러분의 멋진 프로필을 공유해보세요.");
+            });
+        });
+
+    });
+
+</script>
+
+<script src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.mixitup.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="/js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="/js/jquery.cslider.js"></script>
+<script type="text/javascript" src="/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="/js/jquery.inview.js"></script>
+<script src="/js/respond.min.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>
+</body>
+</html>

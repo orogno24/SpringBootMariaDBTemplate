@@ -1,0 +1,527 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@font-face {
+    font-family: 'NIXGONM-Vb';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/NIXGONM-Vb.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'NIXGONM-Vb';
+}
+
+section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.content {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    /*background: linear-gradient(*/
+    /*        180deg,*/
+    /*        rgba(255, 255, 255, 0.28) 0%,*/
+    /*        rgba(255, 255, 255, 0) 100%*/
+    /*);*/
+    backdrop-filter: blur(30px);
+    border-radius: 20px;
+    width: min(900px, 100%);
+    box-shadow: 0 0.5px 0 1px rgba(255, 255, 255, 0.23) inset, 0 1px 0 0 rgba(255, 255, 255, 0.66) inset, 0 4px 16px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+    min-width: 900px; /* 최소 길이 설정 */
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 450px;
+    padding: 0 35px;
+    text-align: justify;
+}
+
+.info p {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.movie-night {
+    background: linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%);
+}
+
+.btn {
+    display: block;
+    padding: 10px 40px;
+    margin: 10px auto;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    color: #784ba0;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+.btn:hover, .btn:focus, .btn:active, .btn:visited {
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+}
+
+@keyframes gelatine {
+
+    0%, 100% {
+        transform: scale(1, 1);
+    }
+    25% {
+        transform: scale(0.9, 1.1);
+    }
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+    75% {
+        transform: scale(0.95, 1.05);
+    }
+}
+
+/* SWIPER */
+
+.swiper {
+    width: 250px;
+    height: 450px;
+    padding: 50px 0;
+}
+
+.swiper-slide {
+    position: relative;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.swiper-slide span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    padding: 7px 18px;
+    margin: 10px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.095);
+    box-shadow: inset 2.01px -2.01px 20px rgba(214, 214, 214, 0.17), inset -3.01333px 3.01333px 3.01333px rgba(255, 255, 255, 0.39);
+    backdrop-filter: blur(74px);
+}
+
+.swiper-slide h2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin: 0 0 20px 20px;
+}
+
+.swiper-slide:nth-child(1n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(2n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(3n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(4n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(5n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/6b6ad966-79e1-4d3c-8f92-566d0fee8082") no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(6n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/2ad44f5d-2215-4416-9c9b-2bae3be51a67") no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(7n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(8n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url('/assets/img/turtleg2.gif') no-repeat 50% 50% / cover;
+}
+
+.swiper-slide:nth-child(9n) {
+    background: linear-gradient(to top, #0f2027, #203a4300, #2c536400), url("https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/7cbac263-7c55-4428-908e-31018dc1bce3") no-repeat 50% 50% / cover;
+}
+
+/* ANIMATED BACKGROUND */
+
+.circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background-color: #ff3cac;
+    background-image: linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+}
+
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+@keyframes animate {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+
+/*
+@media (max-width: 750px) {
+  .content {
+     flex-direction: column-reverse;
+  }
+
+  .btn {
+    margin: 10px auto 40px;
+  }
+}
+*/
+
+.myPet h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ff8026; /* Warm color for the level and name */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+}
+
+.points-display {
+    font-size: 18px; /* Slightly larger font size */
+    margin: 15px 0; /* More vertical spacing */
+    background: rgba(70, 70, 70, 0.4); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3); /* Inner shadow for depth */
+}
+
+.exp-bar-outer {
+    width: 80%; /* Adjusted width for better layout */
+    /* Center the bar */
+    margin: 20px auto;
+    background-color: #555; /* Dark background for contrast */
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+    overflow: hidden; /* Ensures the inner bar stays within the corners */
+}
+
+.exp-bar-inner {
+    height: 16px; /* Increased height for better visibility */
+    background: linear-gradient(to right, #76ff03, #8dec2a); /* Gradient effect */
+    width: 0%; /* Example width to represent the current exp percentage */
+    transition: width 2s ease;
+
+    position: relative; /* Position relative to allow pseudo-elements */
+}
+
+/* Adding a glow to the left of the bar to signify progress */
+.exp-bar-inner:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10px; /* Position slightly to the left of the bar */
+    width: 20px;
+    height: 100%;
+    background: radial-gradient(circle closest-side, #76ff03, transparent);
+    transition: width 2s ease;
+}
+
+/* Style for the text within the experience bar, if you decide to keep it */
+.exp-bar-inner .exp-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 24px; /* Match the bar height */
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+.item-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    font-size: 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 25px;
+    margin-left: 70px;
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    background-color: rgba(51, 51, 51, 0.55);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.myPet {
+    margin-left: 475px;
+}
+
+.item {
+    background-color: rgba(66, 66, 66, 0.94);
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.item img {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+}
+
+.item-info {
+    width: 100%;
+}
+
+.item-description {
+    text-align: center;
+    font-size: 16px;
+    color: #e5e5e5;
+}
+
+.item-button {
+    width: calc(100% - 20px);
+    padding: 12px 24px;
+    font-size: 17px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.item-button:hover {
+    background-color: #777;
+}
+
+.content {
+    display: flex;
+}
+
+.points-display {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px; /* Spacing before the experience bar */
+    text-align: center; /* Center the text */
+}
+
+@keyframes moveTowardsTurtle {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(430px, 135px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+@keyframes moveTowardsTurtle2 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(240px, 135px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+@keyframes moveTowardsTurtle3 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(430px, -90px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+@keyframes moveTowardsTurtle4 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(230px, -80px); } /* 실제 위치에 맞게 조정 필요 */
+}
+
+.animate-towards-turtle {
+    animation: moveTowardsTurtle 1s forwards;
+}
+
+.animate-towards-turtle2 {
+    animation: moveTowardsTurtle2 1s forwards;
+}
+
+.animate-towards-turtle3 {
+    animation: moveTowardsTurtle3 1s forwards;
+}
+
+.animate-towards-turtle4 {
+    animation: moveTowardsTurtle4 1s forwards;
+}
+
+.happyText {
+    position: absolute;
+    color: #5dfa32; /* 글자 색상 */
+    font-size: 20px; /* 글자 크기 */
+    animation: fadeInOut 3s ease-in-out; /* 3초 동안 서서히 나타났다 사라짐 */
+}
+
+#turtleMessage {
+    position: absolute;
+    z-index: 10; /* 다른 요소들 위에 표시되도록 z-index 설정 */
+}
+
+body {
+    height: 100vh;
+    background-image: url("/assets/img/bg4.png");
+    background-color: #333335;
+    background-size: cover; /* 배경 이미지를 화면 전체에 맞춥니다. */
+    background-repeat: no-repeat; /* 배경 이미지 반복 제거 */
+    background-attachment: fixed; /* 스크롤 시 배경 이미지 고정 */
+    margin: 0;
+}
+
+#screenEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 다른 요소들과의 상호작용 방지 */
+    display: none; /* 기본적으로 숨김 */
+}
+
+.effect-active {
+    display: block; /* 이펙트 활성화시 표시 */
+    animation: sparkle 1s infinite alternate; /* 반짝임 애니메이션 */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+    background-image: radial-gradient(white, transparent); /* 반짝이는 별 효과 */
+}
+
+@keyframes sparkle {
+    0% {
+        background-size: 10px 10px;
+    }
+    100% {
+        background-size: 50px 50px;
+    }
+}

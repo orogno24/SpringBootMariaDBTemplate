@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>안내 페이지</title>
+    <link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/img/logo.png" type="image/x-icon">
+</head>
+<body style="background-color: #FFFBF5;">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:inline="javascript">
+    window.onload = function () {
+        let msg = [[${msg}]];
+        let url = [[${url}]];
+
+        Swal.fire({
+            title: '로그인 성공!',
+            text: msg,
+            icon: 'success',
+            iconColor: '#6AC3FB', // 원하는 아이콘 색상으로 변경
+            confirmButtonColor: '#838398'
+        }).then(function () {
+            // 페이지 이동을 1초(1000 밀리초) 후에 실행
+            setTimeout(function () {
+                location.href = url;
+            }, 1500);
+        });
+
+    };
+</script>
+</body>
+</html>
